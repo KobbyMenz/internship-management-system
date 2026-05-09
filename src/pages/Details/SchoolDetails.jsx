@@ -17,6 +17,7 @@ import Skeleton from "../../components/UI/Skeleton/SkeletonPlaceholder";
 const SchoolDetails = () => {
   const [loading, setLoading] = useState(true);
   const [schoolData, setSchoolData] = useState({
+    studentId: "",
     schoolName: "",
     schoolAddress: "",
     town: "",
@@ -35,6 +36,7 @@ const SchoolDetails = () => {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
+      studentId: schoolData.studentId,
       schoolName: schoolData.schoolName,
       schoolAddress: schoolData.schoolAddress,
       town: schoolData.town,
@@ -118,7 +120,6 @@ const SchoolDetails = () => {
 
   const onSubmitHandler = (formData) => {
     console.log("submit: ", formData);
-    
 
     // const studentData = JSON.parse(localStorage.getItem("user"));
 

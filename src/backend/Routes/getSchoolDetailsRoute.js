@@ -28,7 +28,7 @@ export default function getSchoolDetailsRoute(app) {
       //   }
 
       res.status(200).json({
-        // indexNumber: result[0].studentId,
+        studentId: result[0].studentId,
         schoolName: result[0].schoolName,
         schoolAddress: result[0].schoolAddress,
         town: result[0].town,
