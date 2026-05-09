@@ -60,7 +60,7 @@ const StyledWrapper = styled.div`
   }
   .onoffswitch-inner:before {
     content: "ADMIN";
-    padding-left: 1.5rem;
+    padding-left: 2rem;
     background-color: var(--primary);
     color: #ffffff;
   }
@@ -75,7 +75,7 @@ const StyledWrapper = styled.div`
     width: 1.8rem;
     margin: 0.6rem;
     background: #ffffff;
-    border: 0.2rem solid #271616;
+    border: 0.2rem solid var(--primary);
     border-radius: 2rem;
     position: absolute;
     top: 0;

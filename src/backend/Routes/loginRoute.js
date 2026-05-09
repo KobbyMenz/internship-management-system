@@ -448,7 +448,7 @@ const loginRoute = (app) => {
           });
         });
 
-        console.log(user);
+        //console.log(user);
       });
     } catch (err) {
       console.error("Login error: ", err);

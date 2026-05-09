@@ -192,7 +192,9 @@ const SchoolDetails = () => {
             <div className={"form_box_container"}>
               <div className={"form_box"}>
                 <div className={classes.form_control}>
-                  <label htmlFor="schoolName">School Name</label>
+                  <label htmlFor="schoolName">
+                    School Name<span className={classes.required_field}>*</span>
+                  </label>
 
                   <input
                     className={
@@ -213,7 +215,10 @@ const SchoolDetails = () => {
                 </div>
 
                 <div className={classes.form_control}>
-                  <label htmlFor="schoolAddress">School Address</label>
+                  <label htmlFor="schoolAddress">
+                    School Address
+                    <span className={classes.required_field}>*</span>
+                  </label>
 
                   <input
                     className={
@@ -236,7 +241,9 @@ const SchoolDetails = () => {
                 </div>
 
                 <div className={classes.form_control}>
-                  <label htmlFor="town">Town</label>
+                  <label htmlFor="town">
+                    Town<span className={classes.required_field}>*</span>
+                  </label>
 
                   <input
                     className={
@@ -259,7 +266,9 @@ const SchoolDetails = () => {
 
               <div className={"form_box"}>
                 <div className={classes.form_control}>
-                  <label htmlFor="region">Region</label>
+                  <label htmlFor="region">
+                    Region<span className={classes.required_field}>*</span>
+                  </label>
 
                   <input
                     className={
@@ -280,7 +289,9 @@ const SchoolDetails = () => {
                 </div>
 
                 <div className={classes.form_control}>
-                  <label htmlFor="district">District</label>
+                  <label htmlFor="district">
+                    District<span className={classes.required_field}>*</span>
+                  </label>
 
                   <input
                     className={

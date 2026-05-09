@@ -197,7 +197,9 @@ const HeadDetails = () => {
             <div className={"form_box_container"}>
               <div className={"form_box"}>
                 <div className={classes.form_control}>
-                  <label htmlFor="title">Title</label>
+                  <label htmlFor="title">
+                    Title<span className={classes.required_field}>*</span>
+                  </label>
                   <select
                     className={
                       errors.title
@@ -222,7 +224,9 @@ const HeadDetails = () => {
                 </div>
 
                 <div className={classes.form_control}>
-                  <label htmlFor="name">Mentor Name</label>
+                  <label htmlFor="name">
+                    Mentor Name<span className={classes.required_field}>*</span>
+                  </label>
 
                   <input
                     className={
@@ -243,7 +247,9 @@ const HeadDetails = () => {
                 </div>
 
                 <div className={classes.form_control}>
-                  <label htmlFor="contact">Phone</label>
+                  <label htmlFor="contact">
+                    Phone<span className={classes.required_field}>*</span>
+                  </label>
 
                   <input
                     className={
@@ -274,7 +280,10 @@ const HeadDetails = () => {
 
               <div className={"form_box"}>
                 <div className={classes.form_control}>
-                  <label htmlFor="qualification">Qualification</label>
+                  <label htmlFor="qualification">
+                    Qualification
+                    <span className={classes.required_field}>*</span>
+                  </label>
                   <select
                     className={
                       errors.qualification
@@ -301,7 +310,9 @@ const HeadDetails = () => {
                 </div>
 
                 <div className={classes.form_control}>
-                  <label htmlFor="status">Status</label>
+                  <label htmlFor="status">
+                    Status<span className={classes.required_field}>*</span>
+                  </label>
                   <select
                     className={
                       errors.status
@@ -326,7 +337,10 @@ const HeadDetails = () => {
                 </div>
 
                 <div className={classes.form_control}>
-                  <label htmlFor="momoNumber">Mobile Money Number</label>
+                  <label htmlFor="momoNumber">
+                    Mobile Money Number
+                    <span className={classes.required_field}>*</span>
+                  </label>
 
                   <input
                     className={

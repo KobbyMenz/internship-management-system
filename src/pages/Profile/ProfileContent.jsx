@@ -294,7 +294,7 @@ const ProfileContent = () => {
               <div className="profile_container">
                 <div className="profile_form">
                   <div className={classes.form_control}>
-                    <label htmlFor="userId">Index Number</label>
+                    <label htmlFor="userId">Index Number<span className={classes.required_field}>*</span></label>
 
                     <input
                       className={
@@ -316,7 +316,7 @@ const ProfileContent = () => {
                   </div>
 
                   <div className={classes.form_control}>
-                    <label htmlFor="fullName">Full Name</label>
+                    <label htmlFor="fullName">Full Name<span className={classes.required_field}>*</span></label>
 
                     <input
                       className={
@@ -338,7 +338,7 @@ const ProfileContent = () => {
                   </div>
 
                   <div className={classes.form_control}>
-                    <label htmlFor="contact">Phone</label>
+                    <label htmlFor="contact">Phone<span className={classes.required_field}>*</span></label>
 
                     <input
                       className={
@@ -367,7 +367,7 @@ const ProfileContent = () => {
                   </div>
 
                   <div className={classes.form_control}>
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email">Email<span className={classes.required_field}>*</span></label>
 
                     <input
                       className={
@@ -388,7 +388,7 @@ const ProfileContent = () => {
 
                   {user.role === ROLES.USER && (
                     <div className={classes.form_control}>
-                      <label htmlFor="programme">Programme</label>
+                      <label htmlFor="programme">Programme<span className={classes.required_field}>*</span></label>
 
                       <input
                         className={

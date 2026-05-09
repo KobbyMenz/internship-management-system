@@ -53,13 +53,17 @@ const SignUp = () => {
     <>
       {/* 🔒 LOCKOUT MODAL WITH COUNTDOWN TIMER */}
 
-      <Card className={`${classes.form_container} ${classes.form_card_container}`}>
+      <Card
+        className={`${classes.form_container} ${classes.form_card_container}`}
+      >
         {/* <h2>SignUp</h2> */}
         <form onSubmit={handleSubmit(onSubmitHandler)}>
           <div className="form_box_container">
             <div className={"form_box"}>
               <div className={classes.form_control}>
-                <label htmlFor="userId">Index Number</label>
+                <label htmlFor="userId">
+                  Index Number<span className={classes.required_field}>*</span>
+                </label>
 
                 <input
                   className={
@@ -88,7 +92,9 @@ const SignUp = () => {
               </div>
 
               <div className={classes.form_control}>
-                <label htmlFor="name">Full Name</label>
+                <label htmlFor="name">
+                  Full Name<span className={classes.required_field}>*</span>
+                </label>
 
                 <input
                   className={
@@ -107,7 +113,9 @@ const SignUp = () => {
               </div>
 
               <div className={classes.form_control}>
-                <label htmlFor="contact">Phone</label>
+                <label htmlFor="contact">
+                  Phone<span className={classes.required_field}>*</span>
+                </label>
 
                 <input
                   className={
@@ -136,7 +144,9 @@ const SignUp = () => {
               </div>
 
               <div className={classes.form_control}>
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">
+                  Email<span className={classes.required_field}>*</span>
+                </label>
 
                 <input
                   className={
@@ -176,7 +186,9 @@ const SignUp = () => {
           </div> */}
             <div className={"form_box"}>
               <div className={classes.form_control}>
-                <label htmlFor="programme">Programme</label>
+                <label htmlFor="programme">
+                  Programme<span className={classes.required_field}>*</span>
+                </label>
 
                 <input
                   className={
@@ -204,7 +216,9 @@ const SignUp = () => {
               </div>
 
               <div className={classes.form_control}>
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">
+                  Password<span className={classes.required_field}>*</span>
+                </label>
                 <input
                   className={
                     errors.password
@@ -228,7 +242,10 @@ const SignUp = () => {
               </div>
 
               <div className={classes.form_control}>
-                <label htmlFor="confirmPassword">Confirm Password</label>
+                <label htmlFor="confirmPassword">
+                  Confirm Password
+                  <span className={classes.required_field}>*</span>
+                </label>
                 <input
                   className={
                     errors.password
