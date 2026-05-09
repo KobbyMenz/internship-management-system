@@ -1,0 +1,7 @@
+.card {
+  /* background: var(--bg-color2); */
+  box-shadow: 0rem 0.2rem 0.8rem rgba(0, 0, 0, 0.25);
+  /* box-shadow: 0 0.4rem 1.8rem 0 rgba(0, 0, 0, 0.25); */
+  border-radius: 0.5rem;
+  transition: all 0.5s ease-in-out;
+}

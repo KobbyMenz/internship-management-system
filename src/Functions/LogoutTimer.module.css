@@ -1,0 +1,16 @@
+.timer_container {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.timer_container .span_1 {
+  font-size: 1.3rem;
+}
+
+.timer_container .timer {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+

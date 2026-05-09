@@ -1,0 +1,276 @@
+//import { useState } from "react";
+import { useForm } from "react-hook-form";
+import classes from "./SignIn.module.css";
+import Card from "../UI/Card/Card";
+import Button from "../UI/Button/Button";
+import { Link, useNavigate } from "react-router-dom";
+import Toast from "../UI/Notification/Toast";
+import "../../pages/Details/Details.css";
+
+// import { useState } from "react";
+// import Table from "../Table/Table";
+
+const SignUp = () => {
+  //const [data, setData] = useState([]);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const navigate = useNavigate();
+
+  const onSubmitHandler = (formData) => {
+    if (formData.password !== formData.confirmPassword) {
+      Toast("error", "Password do not match");
+      return;
+    }
+
+    const loginData = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+    };
+
+    localStorage.setItem("user", JSON.stringify(loginData));
+    Toast("success", "Signup successfully.");
+    navigate("/");
+    reset();
+  };
+
+  const programmeOptions = [
+    "BSc. Information Technology",
+    "BSc. Mathematics Education",
+    "BSc. Management Education",
+    "BSc. Accounting Education",
+    "BSc. Catering and Hospitality",
+    "BSc. Social/Economics Education",
+    "BSc. Fashion Education",
+  ];
+
+  return (
+    <>
+      {/* 🔒 LOCKOUT MODAL WITH COUNTDOWN TIMER */}
+
+      <Card className={`${classes.form_container} ${classes.form_card_container}`}>
+        {/* <h2>SignUp</h2> */}
+        <form onSubmit={handleSubmit(onSubmitHandler)}>
+          <div className="form_box_container">
+            <div className={"form_box"}>
+              <div className={classes.form_control}>
+                <label htmlFor="userId">Index Number</label>
+
+                <input
+                  className={
+                    errors.userId
+                      ? `${classes.error} ${classes.input}`
+                      : `${classes.input} `
+                  }
+                  type="number"
+                  id="userId"
+                  placeholder="Enter your index number"
+                  {...register("userId", {
+                    required: "Index number is required",
+                    maxLength: {
+                      value: 10,
+                      message: "Index number must be 10 digits.",
+                    },
+                    minLength: {
+                      value: 10,
+                      message: "Index number must be 10 digits.",
+                    },
+                  })}
+                />
+                {errors.userId && (
+                  <small className="error">{errors.userId.message}</small>
+                )}
+              </div>
+
+              <div className={classes.form_control}>
+                <label htmlFor="name">Full Name</label>
+
+                <input
+                  className={
+                    errors.name
+                      ? `${classes.error} ${classes.input}`
+                      : `${classes.input} `
+                  }
+                  type="text"
+                  id="name"
+                  placeholder="Enter your full name"
+                  {...register("name", { required: "Name is required" })}
+                />
+                {errors.name && (
+                  <small className="error">{errors.name.message}</small>
+                )}
+              </div>
+
+              <div className={classes.form_control}>
+                <label htmlFor="contact">Phone</label>
+
+                <input
+                  className={
+                    errors.contact
+                      ? `${classes.error} ${classes.input}`
+                      : `${classes.input} `
+                  }
+                  type="tel"
+                  id="contact"
+                  placeholder="Enter your index number"
+                  {...register("contact", {
+                    required: "Contact is required",
+                    maxLength: {
+                      value: 10,
+                      message: "Contact number must be 10 digits.",
+                    },
+                    minLength: {
+                      value: 10,
+                      message: "Contact number must be 10 digits.",
+                    },
+                  })}
+                />
+                {errors.contact && (
+                  <small className="error">{errors.contact.message}</small>
+                )}
+              </div>
+
+              <div className={classes.form_control}>
+                <label htmlFor="email">Email</label>
+
+                <input
+                  className={
+                    errors.email
+                      ? `${classes.error} ${classes.input}`
+                      : `${classes.input} `
+                  }
+                  type="email"
+                  id="email"
+                  placeholder="Enter your email"
+                  {...register("email", { required: "Email is required" })}
+                />
+                {errors.email && (
+                  <small className="error">{errors.email.message}</small>
+                )}
+              </div>
+            </div>
+
+            {/* <div className={classes.form_control}>
+            <label htmlFor="programme">Programme</label>
+            <select
+              className={
+                errors.color
+                  ? `${classes.error} ${classes.select}`
+                  : `${classes.input} `
+              }
+              id="programme"
+              {...register("programme", {
+                required: "Please select an option",
+              })}
+            >
+              <option value="">Select your programme</option>
+            </select>
+            {errors.color && (
+              <small className="error">{errors.color.message}</small>
+            )}
+          </div> */}
+            <div className={"form_box"}>
+              <div className={classes.form_control}>
+                <label htmlFor="programme">Programme</label>
+
+                <input
+                  className={
+                    errors.programme
+                      ? `${classes.error} ${classes.select}`
+                      : `${classes.input} `
+                  }
+                  list="programmeOption"
+                  id="programme"
+                  type="text"
+                  placeholder="Select your programme of study"
+                  {...register("programme", {
+                    required: "Please select an option",
+                  })}
+                />
+                {errors.programme && (
+                  <small className="error">{errors.programme.message}</small>
+                )}
+
+                <datalist id="programmeOption">
+                  {programmeOptions.sort().map((optionValue, index) => (
+                    <option key={index} value={optionValue} />
+                  ))}
+                </datalist>
+              </div>
+
+              <div className={classes.form_control}>
+                <label htmlFor="password">Password</label>
+                <input
+                  className={
+                    errors.password
+                      ? `${classes.error} ${classes.input}`
+                      : `${classes.input} `
+                  }
+                  type="password"
+                  id="password"
+                  placeholder="Enter your password"
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 8,
+                      message: "Password must be at least 8 characters long",
+                    },
+                  })}
+                />
+                {errors.password && (
+                  <small className="error">{errors.password.message}</small>
+                )}
+              </div>
+
+              <div className={classes.form_control}>
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input
+                  className={
+                    errors.password
+                      ? `${classes.error} ${classes.input}`
+                      : `${classes.input} `
+                  }
+                  type="password"
+                  id="confirmPassword"
+                  placeholder="Confirm your password"
+                  {...register("confirmPassword", {
+                    required: "This field is required",
+                    // minLength: {
+                    //   value: 8,
+                    //   message: "Password must be at least 8 characters long",
+                    // },
+                  })}
+                />
+                {errors.confirmPassword && (
+                  <small className="error">
+                    {errors.confirmPassword.message}
+                  </small>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className={classes.btn_container}>
+            <Button type="submit">Signup</Button>
+          </div>
+
+          <p className={classes.link_container}>
+            Already have an account{" "}
+            <Link className={classes.link_btn} to="/">
+              signin
+            </Link>
+          </p>
+        </form>
+
+        {/*===== Table ======*/}
+        {/* <Table data={data} /> */}
+      </Card>
+    </>
+  );
+};
+export default SignUp;

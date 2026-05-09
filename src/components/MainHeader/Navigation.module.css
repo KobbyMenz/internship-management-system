@@ -1,0 +1,153 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav .user{
+  color: #fff;
+  font-size: 1.5rem;
+  margin-left: 0.6rem;
+}
+
+.nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+
+  transition: all 0.5s ease-in-out;
+}
+
+.nav li {
+  margin: 0;
+  padding: 0 1rem;
+  /* margin-left: 2rem; */
+}
+
+.nav .link,
+button {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: left;
+  flex-direction: row;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-size: 1.4rem;
+}
+
+.nav .link:hover,
+.nav .link:active {
+  color: #f3cafb;
+  cursor: pointer;
+}
+
+.nav svg {
+  display: block;
+  height: 2.1rem;
+  width: 2.1rem;
+}
+
+.nav button {
+  /* font-size: 1.4rem;
+  font-weight: 500; */
+  background: #fff;
+  padding: 0.7rem 1.4rem;
+  color: var(--primary);
+  /* cursor: pointer; */
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.45);
+  /* border-radius: 0.5rem; */
+}
+
+.nav button:focus {
+  outline: none;
+}
+
+.nav button:hover,
+.nav button:active {
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 750px) {
+  .backdrop{
+
+    position: fixed;
+    top: 8rem;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+  }
+
+  .nav ul {
+    position: absolute;
+    top: 104%;
+    right: -110%;
+    width: 25rem;
+    z-index: 50;
+    height: 36vh;
+    background: var(--primary);
+    -webkit-backdrop-filter: blur(0.8rem);
+    backdrop-filter: blur(0.8rem);
+    display: inline-block;
+    /* flex-direction: column; */
+    padding: 2rem 3rem;
+    border-radius: 0.5rem;
+    gap: 2rem;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .nav ul.active {
+    right: 0.2rem;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .nav li {
+    /* margin: 0; */
+    margin-bottom: 1rem;
+
+    padding: 0.8rem 2rem;
+    position: relative;
+    /* text-align: left; */
+  }
+
+  .nav li:last-child {
+    position: absolute;
+    bottom: 1.5rem;
+    /* right: 7.5rem; */
+    transform: translateX(20%);
+    padding: 0.5rem;
+  }
+
+  .nav .link {
+    padding: 0.5rem;
+  }
+
+  .nav .link.current {
+    background: #fff;
+    color: var(--primary);
+    padding: 0.5rem 0.8rem;
+    border-radius: 0.5rem;
+  }
+
+  .nav svg {
+    display: block;
+  }
+
+  .nav .link:hover {
+    background: #fff;
+    color: var(--primary);
+    padding: 0.5rem 0.8rem;
+    border-radius: 0.5rem;
+  }
+
+  /* .menu {
+    display: inline-block;
+  } */
+}

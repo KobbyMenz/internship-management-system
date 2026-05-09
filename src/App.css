@@ -1,0 +1,26 @@
+.route-container {
+  margin-top: 8rem;
+}
+
+.not_found_page {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 1.8rem;
+  transform: translate(-50%, -50%);
+}
+
+body{
+  padding: 0 5%;
+}
+
+
+@media (max-width: 750px) {
+  html {
+    font-size: 52%;
+  }
+
+  body{
+    padding: 0 3%;
+  }
+}

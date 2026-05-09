@@ -1,0 +1,28 @@
+/* .form_box_container{
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+} */
+
+.form_card_container {
+  width: 100%;
+  max-width: 100%;
+  margin: -0.2rem auto 1rem auto;
+  padding: 2rem 3rem;
+  border: 1px solid var(--border);
+  background: #fff;
+}
+
+.form_box_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+  align-items: self-start;
+  column-gap: 3rem;
+  row-gap: rem;
+  padding: 1rem 1.8rem;
+}
+
+.form_box {
+  width: 100%;
+  max-width: 100%;
+}

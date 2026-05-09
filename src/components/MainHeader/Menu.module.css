@@ -1,0 +1,80 @@
+/* .menu {
+  display: none;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+} */
+
+/* .menu:hover {
+  cursor: pointer;
+  color: #f3cafb;
+} */
+
+/* ==========MENU==================== */
+.menu__container {
+  display: none;
+  height: 3.4rem;
+  width: 3.4rem;
+  position: relative;
+
+  /* margin-top: 1rem; */
+}
+
+/* .menu {
+  height: 3.5rem;
+  width: 3.5rem;
+} */
+
+.menu_span {
+  background: #fff;
+  /* display: block; */
+  height: 0.25rem;
+  width: 56%;
+  border-radius: 5rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 0.3s ease-in-out;
+}
+
+.menu__container:hover {
+  cursor: pointer;
+}
+
+.menu__container:hover .menu_span {
+  background: #f3cafb;
+}
+
+.menu .menu_span:nth-child(1) {
+  top: 28%;
+}
+
+.menu .menu_span:nth-child(2) {
+  width: 50%;
+}
+
+.menu .menu_span:nth-child(3) {
+  top: 70%;
+}
+
+.active .menu_span:nth-child(1) {
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.active .menu_span:nth-child(2) {
+  display: none;
+}
+
+.active .menu_span:nth-child(3) {
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+/* =========================================== */
+
+@media (max-width: 750px) {
+  .menu__container {
+    display: block;
+  }
+}

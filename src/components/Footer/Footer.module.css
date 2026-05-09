@@ -1,0 +1,26 @@
+.footer {
+  font-size: 1.4rem;
+  color: hsl(0, 0%, 100%);
+  padding: 1.5rem 2.5rem;
+  text-align: center;
+  background: var(--primary);
+}
+
+/* .span_container {
+ 
+ 
+  
+} */
+
+.footer .span_1 {
+  font-weight: 600;
+  color: var(--primary);
+  background: #fff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.8rem;
+}
+
+.footer .span_2 {
+  font-weight: 600;
+  /* color: #fff; */
+}
