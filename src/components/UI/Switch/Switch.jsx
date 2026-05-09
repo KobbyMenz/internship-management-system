@@ -37,7 +37,9 @@ const StyledWrapper = styled.div`
     display: block;
     overflow: hidden;
     cursor: pointer;
-    border: 0.2rem solid #999999;
+
+    outline: 0.2rem solid var(--primary);
+    outline-offset: 0.22rem;
     border-radius: 2rem;
   }
   .onoffswitch-inner {
