@@ -105,11 +105,44 @@ const SignUp = () => {
                   type="text"
                   id="name"
                   placeholder="Enter your full name"
-                  {...register("name", { required: "Name is required" })}
+                  {...register("name", { required: "Your name is required" })}
                 />
                 {errors.name && (
                   <small className="error">{errors.name.message}</small>
                 )}
+              </div>
+
+              <div className={classes.form_control}>
+                <label htmlFor="gender">
+                  Gender<span className={classes.required_field}>*</span>
+                </label>
+
+                <select
+                  className={
+                    errors.gender
+                      ? `${classes.error} ${classes.select}`
+                      : `${classes.input} `
+                  }
+                  id="gender"
+                  type="text"
+                  // placeholder="Select your gender"
+                  {...register("gender", {
+                    required: "Please select your gender",
+                  })}
+                >
+                  <option value="">Select your gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+                {errors.gender && (
+                  <small className="error">{errors.gender.message}</small>
+                )}
+
+                {/* <datalist id="programmeOption">
+                  {programmeOptions.sort().map((optionValue, index) => (
+                    <option key={index} value={optionValue} />
+                  ))}
+                </datalist> */}
               </div>
 
               <div className={classes.form_control}>
@@ -142,50 +175,31 @@ const SignUp = () => {
                   <small className="error">{errors.contact.message}</small>
                 )}
               </div>
-
-              <div className={classes.form_control}>
-                <label htmlFor="email">
-                  Email<span className={classes.required_field}>*</span>
-                </label>
-
-                <input
-                  className={
-                    errors.email
-                      ? `${classes.error} ${classes.input}`
-                      : `${classes.input} `
-                  }
-                  type="email"
-                  id="email"
-                  placeholder="Enter your email"
-                  {...register("email", { required: "Email is required" })}
-                />
-                {errors.email && (
-                  <small className="error">{errors.email.message}</small>
-                )}
-              </div>
             </div>
 
-            {/* <div className={classes.form_control}>
-            <label htmlFor="programme">Programme</label>
-            <select
-              className={
-                errors.color
-                  ? `${classes.error} ${classes.select}`
-                  : `${classes.input} `
-              }
-              id="programme"
-              {...register("programme", {
-                required: "Please select an option",
-              })}
-            >
-              <option value="">Select your programme</option>
-            </select>
-            {errors.color && (
-              <small className="error">{errors.color.message}</small>
-            )}
-          </div> */}
             <div className={"form_box"}>
               <div className={classes.form_control}>
+                <div className={classes.form_control}>
+                  <label htmlFor="email">
+                    Email<span className={classes.required_field}>*</span>
+                  </label>
+
+                  <input
+                    className={
+                      errors.email
+                        ? `${classes.error} ${classes.input}`
+                        : `${classes.input} `
+                    }
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    {...register("email", { required: "Email is required" })}
+                  />
+                  {errors.email && (
+                    <small className="error">{errors.email.message}</small>
+                  )}
+                </div>
+
                 <label htmlFor="programme">
                   Programme<span className={classes.required_field}>*</span>
                 </label>

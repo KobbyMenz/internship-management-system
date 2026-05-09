@@ -38,7 +38,7 @@ const StyledWrapper = styled.div`
     overflow: hidden;
     cursor: pointer;
 
-    outline: 0.2rem solid var(--primary);
+    outline: 0.1rem solid var(--primary);
     outline-offset: 0.22rem;
     border-radius: 2rem;
   }
@@ -51,7 +51,7 @@ const StyledWrapper = styled.div`
   .onoffswitch-inner:after {
     float: left;
     width: 50%;
-    height: 3rem;
+    height: 2.8rem;
     padding: 0;
     line-height: 3rem;
     font-size: 1.3rem;
