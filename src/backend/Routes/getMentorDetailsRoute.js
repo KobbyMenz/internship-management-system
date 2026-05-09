@@ -13,7 +13,7 @@ export default function getMentorDetailsRoute(app) {
       }
 
       res.status(200).json({
-        // studentId: result[0].studentId,
+        studentId: result[0].studentId,
         title: result[0].title,
         name: result[0].name,
         contact: result[0].contact,

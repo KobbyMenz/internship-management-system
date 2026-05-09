@@ -92,6 +92,12 @@
   /* margin-bottom: 0.4rem; */
 }
 
+.switch {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
 .form_card_container {
   width: 60%;
   max-width: 100%;

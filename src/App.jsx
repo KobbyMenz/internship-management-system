@@ -162,21 +162,28 @@ function App() {
 
       <div className="route-container">
         <Routes>
+          {/*======= Global Routes =======*/}
           <Route path="/" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-          {/* Protected Admin Routes */}
-          <Route element={<ProtectedRoute allowedRoles={[ROLES.USER]} />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/schoolDetails" element={<SchoolDetails />} />
-            <Route path="/mentorDetails" element={<MentorDetails />} />
-            <Route path="/headDetails" element={<HeadDetails />} />
-          </Route>
+          <Route path="/profile" element={<Profile />} />
 
           <Route
             path="*"
             element={<h2 className="not_found_page">401 | Page not found</h2>}
           />
+
+          {/*====== Protected User Routes ======*/}
+          <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
+            {/*ADMIN ROUTES HERE*/}
+          </Route>
+
+          {/*====== Protected User Routes ======*/}
+          <Route element={<ProtectedRoute allowedRoles={[ROLES.USER]} />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/schoolDetails" element={<SchoolDetails />} />
+            <Route path="/mentorDetails" element={<MentorDetails />} />
+            <Route path="/headDetails" element={<HeadDetails />} />
+          </Route>
         </Routes>
       </div>
       {/* </AuthContextProvider> */}

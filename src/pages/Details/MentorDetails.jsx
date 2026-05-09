@@ -19,6 +19,7 @@ const MentorDetails = () => {
   const { user } = useAuth();
 
   const [mentorData, setMentorData] = useState({
+     studentId: "",
     title: "",
     name: "",
     contact: "",
@@ -34,6 +35,7 @@ const MentorDetails = () => {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
+      studentId:mentorData.studentId,
       title: mentorData.title,
       name: mentorData.name,
       contact: mentorData.contact,

@@ -17,6 +17,7 @@ import ImageBox from "../../components/UI/ImageBox/ImageBox";
 import app_api_url from "../../Services/app_api_url";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/useAuth";
+import ROLES from "../../Services/ROLES";
 //import PasswordInput from "../../UI/PasswordInput/PasswordInput";
 
 const ProfileContent = () => {
@@ -347,7 +348,7 @@ const ProfileContent = () => {
                       }
                       type="tel"
                       id="contact"
-                      placeholder="Enter your index number"
+                      placeholder="Enter your phone number"
                       {...register("contact", {
                         required: "Contact is required",
                         maxLength: {
@@ -385,29 +386,31 @@ const ProfileContent = () => {
                     )}
                   </div>
 
-                  <div className={classes.form_control}>
-                    <label htmlFor="programme">Programme</label>
+                  {user.role === ROLES.USER && (
+                    <div className={classes.form_control}>
+                      <label htmlFor="programme">Programme</label>
 
-                    <input
-                      className={
-                        errors.programme
-                          ? `${classes.error} ${classes.input}`
-                          : `${classes.input} `
-                      }
-                      type="text"
-                      id="programme"
-                      placeholder="Enter your email"
-                      {...register("programme", {
-                        required: "Email is required",
-                      })}
-                      readOnly
-                    />
-                    {errors.programme && (
-                      <small className="error">
-                        {errors.programme.message}
-                      </small>
-                    )}
-                  </div>
+                      <input
+                        className={
+                          errors.programme
+                            ? `${classes.error} ${classes.input}`
+                            : `${classes.input} `
+                        }
+                        type="text"
+                        id="programme"
+                        placeholder="Enter your email"
+                        {...register("programme", {
+                          required: "Email is required",
+                        })}
+                        readOnly
+                      />
+                      {errors.programme && (
+                        <small className="error">
+                          {errors.programme.message}
+                        </small>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <div className="profile_picture_container">

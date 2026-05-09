@@ -21,6 +21,7 @@ import process from "process";
 import dotenv from "dotenv";
 //import dayjs from "dayjs";
 import redis from "redis";
+import ROLES from "../../Services/ROLES.js";
 
 //import ROLES from "../../component/Utils/ROLES.js";
 
@@ -287,11 +288,11 @@ const loginRoute = (app) => {
    * ✅ Secure token handling with refresh tokens
    */
   app.post("/api/login", async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, mode } = req.body;
     //console.log("Request received: ", req.body);
 
     // ✅ SECURITY: Input validation
-    if (!username || !password) {
+    if (!username || !password || !mode) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
@@ -310,7 +311,10 @@ const loginRoute = (app) => {
 
     try {
       // if (role === ROLES.ADMIN) {
-      const sqlQuery = `SELECT * FROM internship_db.student WHERE studentId = ? OR email = ?`;
+      const sqlQuery =
+        mode === ROLES.USER
+          ? `SELECT * FROM internship_db.student WHERE studentId = ? OR email = ?`
+          : `SELECT * FROM internship_db.admin WHERE adminId = ? OR email = ?`;
 
       db.query(sqlQuery, [username, username], async (err, result) => {
         if (err) {
@@ -347,7 +351,7 @@ const loginRoute = (app) => {
 
           // ✅ SECURITY: Create minimal payload (no sensitive data in token)
           const tokenPayload = {
-            userId: user.studentId,
+            userId: mode === ROLES.USER ? user.studentId : user.adminId,
             role: user.role,
             type: "access", // 🔒 Token type for validation
             iat: Math.floor(Date.now() / 1000), // Issued at time
@@ -366,7 +370,7 @@ const loginRoute = (app) => {
 
           // 🔒 SECURITY: Long-lived refresh token (7 days)
           const refreshTokenPayload = {
-            userId: user.studentId,
+            userId: mode === ROLES.USER ? user.studentId : user.adminId,
             role: user.role,
             type: "refresh",
             iat: Math.floor(Date.now() / 1000),
@@ -382,7 +386,10 @@ const loginRoute = (app) => {
           );
 
           // 🔒 SECURITY: Store refresh token session info in Redis
-          await storeRefreshTokenSession(refreshToken, user.studentId);
+          await storeRefreshTokenSession(
+            refreshToken,
+            mode === ROLES.USER ? user.studentId : user.adminId,
+          );
 
           // ✅ SECURITY: Update last login timestamp with transaction
           // const currentDate = dayjs().format("YYYY-MM-DDTHH:mm:ss");
@@ -427,11 +434,11 @@ const loginRoute = (app) => {
           return res.status(200).json({
             success: true,
             user: {
-              userId: user.studentId,
+              userId: mode === ROLES.USER ? user.studentId : user.adminId,
               fullName: user.fullName,
-              contact: user.contact,
-              email: user.email,
-              programme: user.programme,
+              // contact: user.contact,
+              // email: user.email,
+              // programme: user.programme,
               role: user.role,
             },
             accessToken: accessToken, // For frontend to store in sessionStorage
@@ -440,117 +447,9 @@ const loginRoute = (app) => {
             refreshExpiresIn: "7d", // Refresh token expiry
           });
         });
+
+        console.log(user);
       });
-
-      // ========== VOTER LOGIN ==========
-      // }
-      // else if (role === ROLES.VOTER) {
-      //   const sqlQuery = `SELECT * FROM e_voting_db.voter WHERE voterId = ?`;
-
-      //   db.query(sqlQuery, [username], async (err, result) => {
-      //     if (err) {
-      //       console.error("Database error: ", err);
-      //       return res.status(500).json({
-      //         error: "Authentication service temporarily unavailable",
-      //       });
-      //     }
-
-      //     // ✅ SECURITY: Don't reveal whether user exists
-      //     if (result.length === 0) {
-      //       await recordFailedAttempt(username);
-      //       return res.status(401).json({ error: "Wrong credentials" });
-      //     }
-
-      //     const user = result[0];
-      //     const hashedPassword = user.password;
-
-      //     // ✅ SECURITY: Use bcrypt.compare for password verification
-      //     bcrypt.compare(password, hashedPassword, async (err, isMatch) => {
-      //       if (err) {
-      //         console.error("Password comparison error: ", err);
-      //         await recordFailedAttempt(username);
-      //         return res.status(401).json({ error: "Wrong credentials" });
-      //       }
-
-      //       if (!isMatch) {
-      //         await recordFailedAttempt(username);
-      //         return res.status(401).json({ error: "Wrong credentials" });
-      //       }
-
-      //       // ✅ SECURITY: Clear failed attempts
-      //       await clearFailedAttempts(username);
-
-      //       // ✅ SECURITY: Create secure tokens
-      //       const tokenPayload = {
-      //         userId: user.voterId,
-      //         role: user.role,
-      //         type: "access",
-      //         iat: Math.floor(Date.now() / 1000),
-      //       };
-
-      //       const accessToken = jwt.sign(
-      //         tokenPayload,
-      //         process.env.VITE_JWT_SECRET,
-      //         {
-      //           expiresIn: "30m",
-      //           algorithm: "HS256",
-      //         },
-      //       );
-
-      //       const refreshTokenPayload = {
-      //         userId: user.voterId,
-      //         role: user.role,
-      //         type: "refresh",
-      //         iat: Math.floor(Date.now() / 1000),
-      //       };
-
-      //       const refreshToken = jwt.sign(
-      //         refreshTokenPayload,
-      //         process.env.VITE_REFRESH_TOKEN_SECRET,
-      //         {
-      //           expiresIn: "7d",
-      //           algorithm: "HS256",
-      //         },
-      //       );
-
-      //       // 🔒 SECURITY: Store refresh token session in Redis
-      //       await storeRefreshTokenSession(refreshToken, user.voterId);
-
-      //       // ✅ SECURITY: Send secure httpOnly cookies
-      //       res.cookie("accessToken", accessToken, {
-      //         httpOnly: true,
-      //         secure: process.env.NODE_ENV === "production",
-      //         sameSite: "strict",
-      //         maxAge: 30 * 60 * 1000, // 30 minutes
-      //         path: "/",
-      //       });
-
-      //       res.cookie("refreshToken", refreshToken, {
-      //         httpOnly: true,
-      //         secure: process.env.NODE_ENV === "production",
-      //         sameSite: "strict",
-      //         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      //         path: "/",
-      //       });
-
-      //       return res.status(200).json({
-      //         success: true,
-      //         user: {
-      //           userId: user.voterId,
-      //           fullName: user.fullName,
-      //           role: user.role,
-      //           photo: user.photo,
-      //         },
-      //         accessToken: accessToken,
-      //         refreshToken: refreshToken,
-      //         expiresIn: "30m",
-      //         refreshExpiresIn: "7d",
-      //       });
-      //     });
-      //   });
-      // } else {
-      //   return res.status(400).json({ error: "Invalid user role" });
-      // }
     } catch (err) {
       console.error("Login error: ", err);
       return res

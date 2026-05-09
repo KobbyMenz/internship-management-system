@@ -5,6 +5,7 @@ import Menu from "./Menu";
 //import PropTypes from "prop-types";
 import Button from "../UI/Button/Button";
 import { useAuth } from "../../context/useAuth";
+import ROLES from "../../Services/ROLES";
 
 const Navigation = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -41,7 +42,14 @@ const Navigation = () => {
                   {isLoggedIn && (
                     <li>
                       <div onClick={onToggleMenuHandler}>
-                        <Link className={` ${classes.link} `} to="/dashboard">
+                        <Link
+                          className={` ${classes.link} `}
+                          to={
+                            user.role === ROLES.ADMIN
+                              ? "admin/dashboard"
+                              : "/dashboard"
+                          }
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -66,7 +74,7 @@ const Navigation = () => {
                   {isLoggedIn && (
                     <li>
                       <div onClick={onToggleMenuHandler}>
-                        <Link className={` ${classes.link} `} to="/profile">
+                        <Link className={` ${classes.link} `} to={"/profile"}>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -87,7 +95,7 @@ const Navigation = () => {
                     </li>
                   )}
 
-                  {isLoggedIn && (
+                  {isLoggedIn && user.role === ROLES.USER && (
                     <li>
                       <div onClick={onToggleMenuHandler}>
                         <Link

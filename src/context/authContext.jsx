@@ -46,17 +46,13 @@ export const AuthContextProvider = ({ children }) => {
     const auth = async () => {
       setLoadingLogin(true);
       //closeLoaderLogin();
-
+      console.log(userData);
       try {
         //172.20.10.4
         const response = await axios.post(
           // "http://localhost:3001/api/login",
           `${app_api_url}/login`,
-          {
-            username: userData.email,
-            password: userData.password,
-            // role: formData.role,
-          },
+          userData,
           {
             headers: {
               "Content-Type": "application/json",
@@ -77,6 +73,16 @@ export const AuthContextProvider = ({ children }) => {
         sessionStorage.setItem("expiryTime", JSON.stringify(expiryTimestamp));
 
         if (response.data) setLoadingLogin(false);
+
+        //==========checking for admin login============
+        if (
+          response.data.accessToken &&
+          response.data.user.role === ROLES.ADMIN
+        ) {
+          navigate("/admin/dashboard");
+          setIsLoggedIn(true); // ✅ add this line
+          sessionStorage.setItem("isLoggedIn", JSON.stringify(true));
+        }
 
         //==========checking for user login============
         if (
