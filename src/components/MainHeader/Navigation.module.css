@@ -4,7 +4,7 @@
   align-items: center;
 }
 
-.nav .user{
+.nav .user {
   color: #fff;
   font-size: 1.5rem;
   margin-left: 0.6rem;
@@ -69,12 +69,11 @@ button {
 .nav button:hover,
 .nav button:active {
   color: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.45);
 }
 
 @media (max-width: 750px) {
-  .backdrop{
-
+  .backdrop {
     position: fixed;
     top: 8rem;
     left: 0;

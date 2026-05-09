@@ -352,7 +352,7 @@ const loginRoute = (app) => {
           // ✅ SECURITY: Create minimal payload (no sensitive data in token)
           const tokenPayload = {
             userId: mode === ROLES.USER ? user.studentId : user.adminId,
-            role: user.role,
+            role: mode,
             type: "access", // 🔒 Token type for validation
             iat: Math.floor(Date.now() / 1000), // Issued at time
           };
@@ -371,7 +371,7 @@ const loginRoute = (app) => {
           // 🔒 SECURITY: Long-lived refresh token (7 days)
           const refreshTokenPayload = {
             userId: mode === ROLES.USER ? user.studentId : user.adminId,
-            role: user.role,
+            role: mode,
             type: "refresh",
             iat: Math.floor(Date.now() / 1000),
           };
@@ -439,7 +439,7 @@ const loginRoute = (app) => {
               // contact: user.contact,
               // email: user.email,
               // programme: user.programme,
-              role: user.role,
+              role: mode,
             },
             accessToken: accessToken, // For frontend to store in sessionStorage
             refreshToken: refreshToken, // For frontend to store in sessionStorage

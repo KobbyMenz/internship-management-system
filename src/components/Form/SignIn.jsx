@@ -46,7 +46,7 @@ const SignIn = () => {
     //   password: data.password,
     // };
 
-    console.log(formData);
+    //console.log(formData);
 
     login(formData);
 

@@ -13,7 +13,7 @@ import {
   setupTokenExpiration,
   setupAutoTokenRefresh,
 } from "./Services/secureLogout";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useAuth } from "./context/useAuth";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import HeadDetails from "./pages/Details/HeadDetails";
@@ -22,11 +22,11 @@ import MentorDetails from "./pages/Details/MentorDetails";
 
 function App() {
   // ✅ FIXED: Initialize state from sessionStorage to avoid setState in effect
-  const [isLoggedIn] = useState(() => {
-    return JSON.parse(sessionStorage.getItem("isLoggedIn")) || false;
-  });
+  // const [isLoggedIn] = useState(() => {
+  //   return JSON.parse(sessionStorage.getItem("isLoggedIn")) || false;
+  // });
 
-  const { logout } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
 
   const INACTIVITY_TIME = 20 * 60 * 1000; // 20 minutes
   const inactivityTimerRef = useRef(null);
@@ -157,8 +157,8 @@ function App() {
       {/* Toast notifications */}
       <ToastContainer />
 
-      {/* <AuthContextProvider> */}
-      <MainHeader />
+      {/*========= Header ==========*/}
+      {isLoggedIn && <MainHeader />}
 
       <div className="route-container">
         <Routes>

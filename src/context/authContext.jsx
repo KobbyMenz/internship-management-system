@@ -46,7 +46,7 @@ export const AuthContextProvider = ({ children }) => {
     const auth = async () => {
       setLoadingLogin(true);
       //closeLoaderLogin();
-      console.log(userData);
+      //console.log(userData);
       try {
         //172.20.10.4
         const response = await axios.post(
