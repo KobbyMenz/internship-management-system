@@ -1,9 +1,8 @@
-import { useState, Fragment, useEffect } from "react";
+import { useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import classes from "../../components/Form/SignIn.module.css";
 //import Card from "../UI/Card";
 import Button from "../../components/UI/Button/Button";
-import axios from "axios";
 import Card from "../../components/UI/Card/Card";
 import "./Details.css";
 import { useForm } from "react-hook-form";
@@ -26,7 +25,7 @@ const HeadDetails = () => {
   const {
     register,
     handleSubmit,
-    reset,
+    // reset,
     formState: { errors, isSubmitting },
   } = useForm();
 

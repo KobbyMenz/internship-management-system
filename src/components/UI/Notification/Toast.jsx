@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 // reusable toast function
 const Toast = (type, message) => {
   const options = {
-    position: "top-right",
+    position: "bottom-right",
     autoClose: 6000,
     hideProgressBar: false,
     closeOnClick: true,
