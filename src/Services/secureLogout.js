@@ -1,6 +1,5 @@
 import app_api_url from "./app_api_url";
 
-
 /**
  * 🔒 SECURE LOGOUT SERVICE WITH REFRESH TOKEN SUPPORT
  * 
@@ -183,7 +182,7 @@ export const refreshAccessToken = async () => {
       // ✅ SECURITY: Update stored tokens
       sessionStorage.setItem("accessToken", data.accessToken);
       sessionStorage.setItem("token", data.accessToken); // Keep for backward compatibility
-      sessionStorage.setItem("expiryTime", Date.now() + 15 * 60 * 1000); // 15 minutes
+      sessionStorage.setItem("expiryTime", Date.now() + 30 * 60 * 1000); // 30 minutes
 
       console.log("✅ Access token refreshed successfully");
       return data.accessToken;

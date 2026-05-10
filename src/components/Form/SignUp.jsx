@@ -179,27 +179,27 @@ const SignUp = () => {
 
             <div className={"form_box"}>
               <div className={classes.form_control}>
-                <div className={classes.form_control}>
-                  <label htmlFor="email">
-                    Email<span className={classes.required_field}>*</span>
-                  </label>
+                <label htmlFor="email">
+                  Email<span className={classes.required_field}>*</span>
+                </label>
 
-                  <input
-                    className={
-                      errors.email
-                        ? `${classes.error} ${classes.input}`
-                        : `${classes.input} `
-                    }
-                    type="email"
-                    id="email"
-                    placeholder="Enter your email"
-                    {...register("email", { required: "Email is required" })}
-                  />
-                  {errors.email && (
-                    <small className="error">{errors.email.message}</small>
-                  )}
-                </div>
+                <input
+                  className={
+                    errors.email
+                      ? `${classes.error} ${classes.input}`
+                      : `${classes.input} `
+                  }
+                  type="email"
+                  id="email"
+                  placeholder="Enter your email"
+                  {...register("email", { required: "Email is required" })}
+                />
+                {errors.email && (
+                  <small className="error">{errors.email.message}</small>
+                )}
+              </div>
 
+              <div className={classes.form_control}>
                 <label htmlFor="programme">
                   Programme<span className={classes.required_field}>*</span>
                 </label>

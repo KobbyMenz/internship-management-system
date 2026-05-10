@@ -92,14 +92,18 @@ const SchoolDetails = () => {
       return;
     }
 
-    updateData(`updateSchoolDetails/${formData.studentId}`, formData, Toast);
+    if (window.confirm("Are you sure you want to update records?")) {
+      updateData(`updateSchoolDetails/${formData.studentId}`, formData, Toast);
+    }
   };
 
   //////////////////////////////////
   //    SUBMIT DATA
   /////////////////////////////////
   const onSubmitHandler = (formData) => {
-    insertData(`insertShoolDetails/${user.userId}`, formData, Toast);
+    if (window.confirm("Are you sure you want to submit?")) {
+      insertData(`insertShoolDetails/${user.userId}`, formData, Toast);
+    }
   };
 
   return (

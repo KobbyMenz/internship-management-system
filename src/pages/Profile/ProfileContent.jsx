@@ -1,11 +1,10 @@
-import { Fragment, useCallback } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import "./ProfileContent.css";
 import classes from "../../components/Form/SignIn.module.css";
 import Card from "../../components/UI/Card/Card";
 import Button from "../../components/UI/Button/Button";
 //import defaultProfilePicture from "../../../../src/assets/images/profilePicture.png";
 import PropTypes from "prop-types";
-import axios from "axios";
 //import ErrorIcon from "../../components/UI/Icons/ErrorIcon";
 import Footer from "../../components/Footer/Footer";
 import Toast from "../../components/UI/Notification/Toast";
@@ -14,13 +13,17 @@ import Toast from "../../components/UI/Notification/Toast";
 //import DeleteIcon from "../../components/UI/Icons/DeleteIcon";
 import SaveIcon from "../../components/UI/Icons/SaveIcon";
 import ImageBox from "../../components/UI/ImageBox/ImageBox";
-import app_api_url from "../../Services/app_api_url";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/useAuth";
 import ROLES from "../../Services/ROLES";
+import useUpdateHook from "../../components/CustomHooks/useUpdateHook";
+import app_api_url from "../../Services/app_api_url";
+import axios from "axios";
 //import PasswordInput from "../../UI/PasswordInput/PasswordInput";
 
 const ProfileContent = () => {
+  const [loading, setLoading] = useState(true);
+  const { updateData } = useUpdateHook();
   //const [showModal, setShowModal] = useState(false);
   // const [loading, setLoading] = useState(true);
   // const [file, setFile] = useState(null);
@@ -43,7 +46,9 @@ const ProfileContent = () => {
   const {
     register,
     handleSubmit,
-    // reset,
+    resetField,
+    setError,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -54,6 +59,26 @@ const ProfileContent = () => {
       programme: user.programme,
     },
   });
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const response = await axios.get(
+          `${app_api_url}/getUser/${user.userId}/${user.role}`,
+        );
+
+        if (response.data) setLoading(false);
+
+        reset(response.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getUserData();
+  }, [user, reset]);
 
   //function to change profile image
   // const profilePictureChangeHandler = useCallback((e) => {
@@ -233,43 +258,42 @@ const ProfileContent = () => {
   // );
 
   //////////////////////////////
-  // Updating password
+  // Updating User
   /////////////////////////////
-  const submitFormaHandler = useCallback(async (formData) => {
-    if (formData.password !== formData.confirmPassword) {
-      Toast("error", "Password mismatched!");
-      return;
-    }
+  const submitFormHandler = useCallback(
+    (formData) => {
+      // if (formData.password !== formData.confirmPassword) {
+      //   Toast("error", "Passwords do not match!");
+      //   return;
+      // }
 
-    console.log(formData);
-
-    //confirmation to update
-    if (window.confirm("Are you sure you want to save changes?")) {
-      const userId = formData.userId;
-      try {
-        const response = await axios.put(
-          `${app_api_url}/updateUserProfile/${+userId}`,
-          {
-            userName: formData.userName,
-            password: formData.password,
-          },
-        );
-
-        Toast("success", `${response.data.message}`);
-      } catch (err) {
-        if (err.response && err.response.data && err.response.data.error) {
-          Toast("error", `${err.response.data.error}`);
-        } else {
-          Toast("error", `Error updating records ${err}`);
-        }
+      if (formData.password !== formData.confirmPassword) {
+        setError("confirmPassword", {
+          type: "manual",
+          message: "Passwords do not match!",
+        });
+        return;
       }
-    }
-  }, []);
 
-  ////////////////////////////////
-  // const closeShowModalHandler = useCallback(() => {
-  //   setShowModal((prev) => !prev);
-  // }, []);
+      if (window.confirm("Are you sure you want to save changes?")) {
+        updateData(`updateUser/${+user.userId}/${user.role}`, formData, Toast);
+
+        resetField("password"); // ✅ clears password field
+        resetField("confirmPassword"); // ✅ clears confirmPassword field
+      }
+    },
+    [updateData, user.userId, user.role, setError, resetField],
+  );
+
+  const programmeOptions = [
+    "BSc. Information Technology",
+    "BSc. Mathematics Education",
+    "BSc. Management Education",
+    "BSc. Accounting Education",
+    "BSc. Catering and Hospitality",
+    "BSc. Social/Economics Education",
+    "BSc. Fashion Education",
+  ];
 
   return (
     <Fragment>
@@ -290,11 +314,14 @@ const ProfileContent = () => {
             // loading ? (
             //   <ProfileSkeleton />
             // ) :
-            <form onSubmit={handleSubmit(submitFormaHandler)}>
+            <form onSubmit={handleSubmit(submitFormHandler)}>
               <div className="profile_container">
                 <div className="profile_form">
                   <div className={classes.form_control}>
-                    <label htmlFor="userId">Index Number<span className={classes.required_field}>*</span></label>
+                    <label htmlFor="userId">
+                      Index Number
+                      <span className={classes.required_field}>*</span>
+                    </label>
 
                     <input
                       className={
@@ -316,7 +343,9 @@ const ProfileContent = () => {
                   </div>
 
                   <div className={classes.form_control}>
-                    <label htmlFor="fullName">Full Name<span className={classes.required_field}>*</span></label>
+                    <label htmlFor="fullName">
+                      Full Name<span className={classes.required_field}>*</span>
+                    </label>
 
                     <input
                       className={
@@ -330,7 +359,7 @@ const ProfileContent = () => {
                       {...register("fullName", {
                         required: "Name is required",
                       })}
-                      readOnly
+                      // readOnly
                     />
                     {errors.fullName && (
                       <small className="error">{errors.fullName.message}</small>
@@ -338,7 +367,9 @@ const ProfileContent = () => {
                   </div>
 
                   <div className={classes.form_control}>
-                    <label htmlFor="contact">Phone<span className={classes.required_field}>*</span></label>
+                    <label htmlFor="contact">
+                      Phone<span className={classes.required_field}>*</span>
+                    </label>
 
                     <input
                       className={
@@ -367,7 +398,9 @@ const ProfileContent = () => {
                   </div>
 
                   <div className={classes.form_control}>
-                    <label htmlFor="email">Email<span className={classes.required_field}>*</span></label>
+                    <label htmlFor="email">
+                      Email<span className={classes.required_field}>*</span>
+                    </label>
 
                     <input
                       className={
@@ -388,27 +421,36 @@ const ProfileContent = () => {
 
                   {user.role === ROLES.USER && (
                     <div className={classes.form_control}>
-                      <label htmlFor="programme">Programme<span className={classes.required_field}>*</span></label>
+                      <label htmlFor="programme">
+                        Programme
+                        <span className={classes.required_field}>*</span>
+                      </label>
 
                       <input
                         className={
                           errors.programme
-                            ? `${classes.error} ${classes.input}`
+                            ? `${classes.error} ${classes.select}`
                             : `${classes.input} `
                         }
-                        type="text"
+                        list="programmeOption"
                         id="programme"
-                        placeholder="Enter your email"
+                        type="text"
+                        placeholder="Select your programme of study"
                         {...register("programme", {
-                          required: "Email is required",
+                          required: "Please select an option",
                         })}
-                        readOnly
                       />
                       {errors.programme && (
                         <small className="error">
                           {errors.programme.message}
                         </small>
                       )}
+
+                      <datalist id="programmeOption">
+                        {programmeOptions.sort().map((optionValue, index) => (
+                          <option key={index} value={optionValue} />
+                        ))}
+                      </datalist>
                     </div>
                   )}
                 </div>
@@ -475,9 +517,13 @@ const ProfileContent = () => {
                     }
                     type="password"
                     id="password"
-                    placeholder="Enter your email"
+                    placeholder="Enter your new password"
                     {...register("password", {
-                      required: "Password is required",
+                      // required: "Password is required",
+                      minLength: {
+                        value: 8,
+                        message: "Password must be at least 8 characters long",
+                      },
                     })}
                   />
                   {errors.password && (
@@ -496,9 +542,9 @@ const ProfileContent = () => {
                     }
                     type="password"
                     id="confirmPassword"
-                    placeholder="Enter your email"
+                    placeholder="Confirm your new password"
                     {...register("confirmPassword", {
-                      required: "Password is required",
+                      // required: "Password is required",
                     })}
                   />
                   {errors.confirmPassword && (

@@ -118,7 +118,7 @@
 .card__box .description .amount {
   font-size: 1.5rem;
   margin-top: -0.2rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--text-color);
 }
 

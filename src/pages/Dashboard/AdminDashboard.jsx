@@ -18,7 +18,7 @@ import app_api_url from "../../Services/app_api_url";
 import axios from "axios";
 import WelcomeMessageSkeleton from "../../components/UI/Skeleton/WelcomeMessageSkeleton";
 
-const DashboardContent = () => {
+const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
   const [studentData, setStudentData] = useState({
@@ -48,7 +48,6 @@ const DashboardContent = () => {
         );
 
         setStudentData(response.data);
-
         if (response.data) setLoading(false);
       } catch (err) {
         console.error(err);
@@ -70,13 +69,13 @@ const DashboardContent = () => {
             <div className={classes.message_container}>
               <div className={classes.welcome_text}>
                 <h2 className={classes.welcome_message_header}>
-                  Hi {fullName ? fullName.split(" ")[0] : "Student"}, welcome
-                  back to student dashboard area.
+                  Hi {fullName ? fullName.split(" ")[0] : "Admin"}, welcome back
+                  to admin dashboard area.
                 </h2>
 
                 <p
                   className={classes.welcome_message}
-                >{`Here's the overview of your information .`}</p>
+                >{`Here's the overview of the system.`}</p>
               </div>
 
               <DigitalClock />
@@ -216,135 +215,7 @@ const DashboardContent = () => {
     </Fragment>
   );
 };
-DashboardContent.propTypes = {
+AdminDashboard.propTypes = {
   closeLoader: PropTypes.func,
 };
-export default DashboardContent;
-
-// import classes from "./Dashboard.module.css";
-// import Card from "../../components/UI/Card/Card";
-// //import axios from "axios";
-// import { useAuth } from "../../context/useAuth";
-
-// const Dashboard = () => {
-//   // const [user, setFormData] = useState({
-//   //   indexNumber: " ",
-//   //   firstName: " ",
-//   //   middleName: " ",
-//   //   lastName: " ",
-//   //   contact: " ",
-//   //   email: " ",
-//   //   programme: " ",
-//   //   schoolName: " ",
-//   //   district: " ",
-//   // });
-
-//   const { user } = useAuth();
-
-//   const studentName = `${user.firstName} ${user.middleName} ${user.lastName}`;
-
-//   //Fetching data from local storage
-//   // useEffect(() => {
-//   //   const studentData = JSON.parse(localStorage.getItem("user"));
-//   //   // setFormData(studentData);
-
-//   //   if (studentData.indexNumber) {
-//   //     axios
-//   //       .get(`http://localhost:3001/api/getStudent/${studentData.indexNumber}`)
-//   //       .then((response) => {
-//   //         setFormData(response.data);
-//   //         // console.log(response.data);
-//   //       })
-//   //       .catch((err) => {
-//   //         console.log(err);
-//   //       });
-//   //   }
-//   // }, []);
-
-//   return (
-//     <Fragment>
-//       <div className={classes.wrapper}>
-//         <h1>{`Hi ${user.firstName}, Welcome back`}</h1>
-//         <h2>Basic Information</h2>
-
-//         <div className={classes.card__box__container}>
-//           <Card className={classes.card__box}>
-//             <div className={classes.description__container}>
-//               <div className={classes.description}>Index Number :</div>
-//               <p>{user.userId}</p>
-//             </div>
-
-//             <div className={`${classes.icon} ${classes.icon__red}`}>
-//               <h2>1</h2>
-//             </div>
-//           </Card>
-
-//           <Card className={classes.card__box}>
-//             <div className={classes.description__container}>
-//               <div className={classes.description}>Full Name :</div>
-//               <p>{studentName ? studentName : "N/A"}</p>
-//             </div>
-
-//             <div className={`${classes.icon} ${classes.icon__violet}`}>
-//               <h2>2</h2>
-//             </div>
-//           </Card>
-
-//           <Card className={classes.card__box}>
-//             <div className={classes.description__container}>
-//               <div className={classes.description}>Phone Number :</div>
-//               <p>{user.contact ? user.contact : "N/A"}</p>
-//             </div>
-
-//             <div className={`${classes.icon} ${classes.icon__green}`}>
-//               <h2>3</h2>
-//             </div>
-//           </Card>
-
-//           <Card className={classes.card__box}>
-//             <div className={classes.description__container}>
-//               <div className={classes.description}>Programme :</div>
-//               <p>{user.programme}</p>
-//             </div>
-
-//             <div className={`${classes.icon} ${classes.icon__blue}`}>
-//               <h2>4</h2>
-//             </div>
-//           </Card>
-
-//           <Card className={classes.card__box}>
-//             <div className={classes.description__container}>
-//               <div className={classes.description}>School :</div>
-//               <p>
-//                 {user.schoolName === "" || user.schoolName === null
-//                   ? "N/A"
-//                   : user.schoolName}
-//               </p>
-//             </div>
-
-//             <div className={`${classes.icon} ${classes.icon__orange}`}>
-//               <h2>5</h2>
-//             </div>
-//           </Card>
-
-//           <Card className={classes.card__box}>
-//             <div className={classes.description__container}>
-//               <div className={classes.description}>District :</div>
-//               <p>
-//                 {user.district === "" || user.district === null
-//                   ? "N/A"
-//                   : user.district}
-//               </p>
-//             </div>
-
-//             <div className={`${classes.icon} ${classes.icon__yellow}`}>
-//               <h2>6</h2>
-//             </div>
-//           </Card>
-//         </div>
-//       </div>
-//     </Fragment>
-//   );
-// };
-
-// export default Dashboard;
+export default AdminDashboard;

@@ -93,14 +93,18 @@ const MentorDetails = () => {
       return;
     }
 
-    updateData(`updateMentorDetails/${formData.studentId}`, formData, Toast);
+    if (window.confirm("Are you sure you want to update records?")) {
+      updateData(`updateMentorDetails/${formData.studentId}`, formData, Toast);
+    }
   };
 
   //////////////////////////////////
   //    SUBMIT DATA
   /////////////////////////////////
   const onSubmitHandler = (formData) => {
-    insertData(`insertMentorDetails/${user.userId}`, formData, Toast);
+    if (window.confirm("Are you sure you want to submit?")) {
+      insertData(`insertMentorDetails/${user.userId}`, formData, Toast);
+    }
   };
 
   const titleOptions = ["Mr.", "Mrs.", "Miss.", "Dr."];

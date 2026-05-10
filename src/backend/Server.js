@@ -18,13 +18,14 @@ import {
 import { rateLimit } from "./Middleware/rateLimitMiddleware.js";
 // 🔒 SECURITY: Use secure login route with refresh tokens
 import loginRoute from "./Routes/loginRoute.js";
-import getStudentRoute from "./Routes/getStudentRoute.js";
 import getSchoolDetailsRoute from "./Routes/getSchoolDetailsRoute.js";
 import getMentorDetailsRoute from "./Routes/getMentorDetailsRoute.js";
 import insertSchoolDetailsRoute from "./Routes/insertSchoolDetailsRoute.js";
 import updateSchoolDetailsRoute from "./Routes/updateSchoolDetailsRoute.js";
 import insertMentorDetailsRoute from "./Routes/insertMentorDetailsRoute.js";
 import updateMentorDetails from "./Routes/updateMentorDetailsRoute.js";
+import updateUserRoute from "./Routes/updateUserRoute.js";
+import getUserRoute from "./Routes/getUserRoute.js";
 
 const app = express();
 
@@ -63,9 +64,11 @@ loginRoute(app);
 
 /*
 ==================================
-STUDENT ROUTES
+USER ROUTES
 ===================================*/
-getStudentRoute(app);
+getUserRoute(app);
+
+updateUserRoute(app);
 
 /*
 ==================================

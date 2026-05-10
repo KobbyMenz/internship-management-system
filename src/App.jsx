@@ -19,6 +19,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import HeadDetails from "./pages/Details/HeadDetails";
 import SchoolDetails from "./pages/Details/SchoolDetails";
 import MentorDetails from "./pages/Details/MentorDetails";
+import AdminDashboard from "./pages/Dashboard/AdminDashboard";
 
 function App() {
   // ✅ FIXED: Initialize state from sessionStorage to avoid setState in effect
@@ -28,7 +29,7 @@ function App() {
 
   const { isLoggedIn, logout } = useAuth();
 
-  const INACTIVITY_TIME = 20 * 60 * 1000; // 20 minutes
+  const INACTIVITY_TIME = 30 * 60 * 1000; // 30 minutes
   const inactivityTimerRef = useRef(null);
   const tokenExpirationRef = useRef(null); // 🔒 Track token expiration timer
   const autoRefreshTokenRef = useRef(null); // 🔒 Track auto token refresh timer
@@ -172,9 +173,10 @@ function App() {
             element={<h2 className="not_found_page">401 | Page not found</h2>}
           />
 
-          {/*====== Protected User Routes ======*/}
+          {/*====== Protected Admin Routes ======*/}
           <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
             {/*ADMIN ROUTES HERE*/}
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
           </Route>
 
           {/*====== Protected User Routes ======*/}

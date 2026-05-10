@@ -45,7 +45,9 @@ const HeadDetails = () => {
   };
 
   const onUpdateHandler = (formData) => {
-    console.log("update: ", formData);
+    if (window.confirm("Are you sure you want to update records?")) {
+      console.log("update: ", formData);
+    }
 
     //   if (+formData.contact.length !== 10 || +formData.momoNumber.length !== 10) {
     //     setShowModal({
@@ -89,7 +91,9 @@ const HeadDetails = () => {
   // };
 
   const onSubmitHandler = (formData) => {
-    console.log("submit: ", formData);
+    if (window.confirm("Are you sure you want to submit?")) {
+      console.log("submit: ", formData);
+    }
 
     // const studentData = JSON.parse(localStorage.getItem("user"));
 
