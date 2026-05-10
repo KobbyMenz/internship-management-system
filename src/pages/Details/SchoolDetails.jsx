@@ -11,6 +11,9 @@ import Footer from "../../components/Footer/Footer";
 import { useAuth } from "../../context/useAuth";
 import app_api_url from "../../Services/app_api_url";
 import Skeleton from "../../components/UI/Skeleton/SkeletonPlaceholder";
+import useInsertHook from "../../components/CustomHooks/useInsertHook";
+import useUpdateHook from "../../components/CustomHooks/useUpdateHook";
+import Toast from "../../components/UI/Notification/Toast";
 
 //import HomePageNav from "./components/Home/HomePageNav";
 
@@ -25,8 +28,8 @@ const SchoolDetails = () => {
     district: "",
   });
 
-  //console.log(schoolData);
-
+  const { insertData } = useInsertHook();
+  const { updateData } = useUpdateHook();
   const { user } = useAuth();
 
   const {
@@ -58,6 +61,8 @@ const SchoolDetails = () => {
         reset(response.data);
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -78,83 +83,23 @@ const SchoolDetails = () => {
     navigate("/headDetails");
   };
 
-  //   const onShowSchoolHandler = () => {
-  //     navigate("/");
-  //   };
-
-  //   const onShowMentorHandler = () => {
-  //     navigate("/mentorDetails");
-  //   };
-  //   const onShowHeadHandler = () => {
-  //     navigate("/headDetails");
-  //   };
-
+  ///////////////////////////////////
+  //    UPDATE
+  //////////////////////////////////
   const onUpdateHandler = (formData) => {
-    console.log("Update: ", formData);
-    //   axios
-    //     .put(
-    //       `http://localhost:3001/api/updateSchoolDetails/${formData.indexNumber}`,
-    //       formData,
-    //     )
-    //     .then((response) => {
-    //       console.log(response.data);
-    //       // alert("Registered successfully");
+    if (!formData.studentId) {
+      Toast("error", "No record to update. Click on submit to save records");
+      return;
+    }
 
-    //       setShowModal({
-    //         title: "Message",
-    //         icon: <OkayIcon />,
-    //         message: "Records updated successfully.",
-    //       });
-    //     })
-    //     .catch((err) => {
-    //       console.error("Error updating records: ", err);
-    //       // console.log(err);
-
-    //       setShowModal({
-    //         title: "Error Message",
-    //         icon: <ErrorIcon />,
-    //         message: `Error updating records. You have no records to update in the database`,
-    //       });
-    //     });
+    updateData(`updateSchoolDetails/${formData.studentId}`, formData, Toast);
   };
 
+  //////////////////////////////////
+  //    SUBMIT DATA
+  /////////////////////////////////
   const onSubmitHandler = (formData) => {
-    console.log("submit: ", formData);
-
-    // const studentData = JSON.parse(localStorage.getItem("user"));
-
-    // const formDataOnSave = {
-    //   indexNumber: studentData.indexNumber,
-    //   schoolName: formData.schoolName,
-    //   schoolAddress: formData.schoolAddress,
-    //   town: formData.town,
-    //   region: formData.region,
-    //   district: formData.district,
-    // };
-
-    // axios
-    //   .post("http://localhost:3001/api/insertShoolDetails", formDataOnSave)
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     // alert("Registered successfully");
-
-    //     setShowModal({
-    //       title: "Message",
-    //       icon: <OkayIcon />,
-    //       message: "Records submitted successfully.",
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     console.error("Error inserting data: ", err);
-    //     // console.log(err);
-
-    //     setShowModal({
-    //       title: "Error Message",
-    //       icon: <ErrorIcon />,
-    //       message: `You have already submitted this form. Click on update button to update any changes`,
-    //     });
-    //     return;
-    //   });
+    insertData(`insertShoolDetails/${user.userId}`, formData, Toast);
   };
 
   return (

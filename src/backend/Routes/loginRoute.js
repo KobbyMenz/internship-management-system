@@ -57,6 +57,9 @@ const MAX_FAILED_ATTEMPTS = 5;
 const LOCKOUT_TIME_MS = 15 * 60 * 1000; // 15 minutes
 const ATTEMPT_RESET_TIME_MS = 15 * 60 * 1000; // 15 minutes
 
+const ACCESS_TOKEN_TIME = 30 * 60 * 1000; //30 mins
+const REFRESH_TOKEN_TIME = 24 * 60 * 60 * 1000; //24 h
+
 /**
  * ✅ SECURITY: Check if user account is locked due to too many failed attempts
  * 🔒 REDIS: Uses Redis in production, falls back to in-memory in development
@@ -230,7 +233,7 @@ const storeRefreshTokenSession = async (refreshToken, userId) => {
       // Store for 7 days
       await redisClient.setEx(
         `refresh_session:${refreshToken}`,
-        7 * 24 * 60 * 60,
+        REFRESH_TOKEN_TIME,
         JSON.stringify({ userId, createdAt: Date.now() }),
       );
     } else {
@@ -357,13 +360,13 @@ const loginRoute = (app) => {
             iat: Math.floor(Date.now() / 1000), // Issued at time
           };
 
-          // 🔒 SECURITY: Short-lived access token (15 minutes)
+          // 🔒 SECURITY: Short-lived access token (30 minutes)
           const accessToken = jwt.sign(
             tokenPayload,
             process.env.VITE_JWT_SECRET,
 
             {
-              expiresIn: "30m", // 30 minutes
+              expiresIn: ACCESS_TOKEN_TIME, // 30 mins
               algorithm: "HS256", // Use HS256 algorithm
             },
           );
@@ -380,7 +383,7 @@ const loginRoute = (app) => {
             refreshTokenPayload,
             process.env.VITE_REFRESH_TOKEN_SECRET,
             {
-              expiresIn: "7d",
+              expiresIn: REFRESH_TOKEN_TIME,
               algorithm: "HS256",
             },
           );
@@ -417,7 +420,7 @@ const loginRoute = (app) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
-            maxAge: 30 * 60 * 1000, // 30 minutes
+            maxAge: ACCESS_TOKEN_TIME, // 30 minutes
             path: "/",
           });
 
@@ -426,7 +429,7 @@ const loginRoute = (app) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
-            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+            maxAge: REFRESH_TOKEN_TIME, // 24h
             path: "/",
           });
 
@@ -436,15 +439,12 @@ const loginRoute = (app) => {
             user: {
               userId: mode === ROLES.USER ? user.studentId : user.adminId,
               fullName: user.fullName,
-              // contact: user.contact,
-              // email: user.email,
-              // programme: user.programme,
               role: mode,
             },
             accessToken: accessToken, // For frontend to store in sessionStorage
             refreshToken: refreshToken, // For frontend to store in sessionStorage
-            expiresIn: "30m", // Access token expiry
-            refreshExpiresIn: "7d", // Refresh token expiry
+            expiresIn: ACCESS_TOKEN_TIME, // Access token expiry 30mins
+            refreshExpiresIn: REFRESH_TOKEN_TIME, // Refresh token expiry 24h
           });
         });
 
@@ -512,7 +512,7 @@ const loginRoute = (app) => {
         newAccessTokenPayload,
         process.env.VITE_JWT_SECRET,
         {
-          expiresIn: "30m",
+          expiresIn: ACCESS_TOKEN_TIME, //30mins
           algorithm: "HS256",
         },
       );
@@ -522,7 +522,7 @@ const loginRoute = (app) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
-        maxAge: 30 * 60 * 1000, // 30 minutes
+        maxAge: ACCESS_TOKEN_TIME, // 30 minutes
         path: "/",
       });
 
@@ -551,11 +551,11 @@ const loginRoute = (app) => {
 
       // ✅ SECURITY: Revoke both tokens
       if (accessToken) {
-        await revokeToken(accessToken, "30m");
+        await revokeToken(accessToken, ACCESS_TOKEN_TIME);
       }
 
       if (refreshToken) {
-        await revokeToken(refreshToken, "7d");
+        await revokeToken(refreshToken, REFRESH_TOKEN_TIME);
         await deleteRefreshTokenSession(refreshToken);
       }
 

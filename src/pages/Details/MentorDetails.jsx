@@ -11,15 +11,20 @@ import Footer from "../../components/Footer/Footer";
 import app_api_url from "../../Services/app_api_url";
 import { useAuth } from "../../context/useAuth";
 import Skeleton from "../../components/UI/Skeleton/SkeletonPlaceholder";
+import Toast from "../../components/UI/Notification/Toast";
+import useInsertHook from "../../components/CustomHooks/useInsertHook";
+import useUpdateHook from "../../components/CustomHooks/useUpdateHook";
 
 //import HomePageNav from "./HomePageNav";
 
 const MentorDetails = () => {
   const [loading, setLoading] = useState(true);
+  const { insertData } = useInsertHook();
+  const { updateData } = useUpdateHook();
   const { user } = useAuth();
 
   const [mentorData, setMentorData] = useState({
-     studentId: "",
+    studentId: "",
     title: "",
     name: "",
     contact: "",
@@ -35,7 +40,7 @@ const MentorDetails = () => {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
-      studentId:mentorData.studentId,
+      studentId: mentorData.studentId,
       title: mentorData.title,
       name: mentorData.name,
       contact: mentorData.contact,
@@ -57,6 +62,8 @@ const MentorDetails = () => {
         if (response.data) setLoading(false);
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -77,96 +84,23 @@ const MentorDetails = () => {
     navigate("/headDetails");
   };
 
+  ///////////////////////////////////
+  //    UPDATE
+  //////////////////////////////////
   const onUpdateHandler = (formData) => {
-    console.log("update: ", formData);
-    //   if (+formData.contact.length !== 10 || +formData.momoNumber.length !== 10) {
-    //     setShowModal({
-    //       title: "Error Message",
-    //       icon: <ErrorIcon />,
-    //       message: "Contact and momo number input must be a 10 digit number",
-    //     });
+    if (!formData.studentId) {
+      Toast("error", "No record to update. Click on submit to save records");
+      return;
+    }
 
-    //     return;
-    //   }
-
-    //   axios
-    //     .put(
-    //       `http://localhost:3001/api/updateMentorDetails/${formData.indexNumber}`,
-    //       formData,
-    //     )
-    //     .then((response) => {
-    //       console.log(response.data);
-    //       // alert("Registered successfully");
-
-    //       setShowModal({
-    //         title: "Message",
-    //         icon: <OkayIcon />,
-    //         message: "Records updated successfully.",
-    //       });
-    //     })
-    //     .catch((err) => {
-    //       console.error("Error updating records: ", err);
-    //       // console.log(err);
-
-    //       setShowModal({
-    //         title: "Error Message",
-    //         icon: <ErrorIcon />,
-    //         message: `Error updating records. You have no records to update in the database`,
-    //       });
-    //     });
+    updateData(`updateMentorDetails/${formData.studentId}`, formData, Toast);
   };
 
+  //////////////////////////////////
+  //    SUBMIT DATA
+  /////////////////////////////////
   const onSubmitHandler = (formData) => {
-    console.log("submit: ", formData);
-
-    // const studentData = JSON.parse(localStorage.getItem("user"));
-
-    // const formDataOnSave = {
-    //   indexNumber: studentData.indexNumber,
-    //   title: formData.title,
-    //   name: formData.name,
-    //   contact: formData.contact,
-    //   qualification: formData.qualification,
-    //   status: formData.status,
-    //   momoNumber: formData.momoNumber,
-    // };
-
-    // if (
-    //   +formDataOnSave.contact.length !== 10 ||
-    //   +formDataOnSave.momoNumber.length !== 10
-    // ) {
-    //   setShowModal({
-    //     title: "Error Message",
-    //     icon: <ErrorIcon />,
-    //     message: "Contact and momo number input must be a 10 digit number",
-    //   });
-
-    //   return;
-    // }
-
-    // axios
-    //   .post("http://localhost:3001/api/insertMentorDetails", formDataOnSave)
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     // alert("Registered successfully");
-
-    //     setShowModal({
-    //       title: "Message",
-    //       icon: <OkayIcon />,
-    //       message: "Records submitted successfully.",
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     console.error("Error inserting data: ", err);
-    //     // console.log(err);
-
-    //     setShowModal({
-    //       title: "Error Message",
-    //       icon: <ErrorIcon />,
-    //       message: `You have already submitted this form. Click on update button to update any changes`,
-    //     });
-    //     return;
-    //   });
+    insertData(`insertMentorDetails/${user.userId}`, formData, Toast);
   };
 
   const titleOptions = ["Mr.", "Mrs.", "Miss.", "Dr."];
@@ -209,7 +143,9 @@ const MentorDetails = () => {
             <div className={"form_box_container"}>
               <div className={"form_box"}>
                 <div className={classes.form_control}>
-                  <label htmlFor="title">Title<span className={classes.required_field}>*</span></label>
+                  <label htmlFor="title">
+                    Title<span className={classes.required_field}>*</span>
+                  </label>
                   <select
                     className={
                       errors.title
@@ -234,7 +170,9 @@ const MentorDetails = () => {
                 </div>
 
                 <div className={classes.form_control}>
-                  <label htmlFor="name">Mentor Name<span className={classes.required_field}>*</span></label>
+                  <label htmlFor="name">
+                    Mentor Name<span className={classes.required_field}>*</span>
+                  </label>
 
                   <input
                     className={
@@ -255,7 +193,9 @@ const MentorDetails = () => {
                 </div>
 
                 <div className={classes.form_control}>
-                  <label htmlFor="contact">Phone<span className={classes.required_field}>*</span></label>
+                  <label htmlFor="contact">
+                    Phone<span className={classes.required_field}>*</span>
+                  </label>
 
                   <input
                     className={
@@ -286,7 +226,10 @@ const MentorDetails = () => {
 
               <div className={"form_box"}>
                 <div className={classes.form_control}>
-                  <label htmlFor="qualification">Qualification<span className={classes.required_field}>*</span></label>
+                  <label htmlFor="qualification">
+                    Qualification
+                    <span className={classes.required_field}>*</span>
+                  </label>
                   <select
                     className={
                       errors.qualification
@@ -313,7 +256,9 @@ const MentorDetails = () => {
                 </div>
 
                 <div className={classes.form_control}>
-                  <label htmlFor="status">Status<span className={classes.required_field}>*</span></label>
+                  <label htmlFor="status">
+                    Status<span className={classes.required_field}>*</span>
+                  </label>
                   <select
                     className={
                       errors.status
@@ -338,7 +283,10 @@ const MentorDetails = () => {
                 </div>
 
                 <div className={classes.form_control}>
-                  <label htmlFor="momoNumber">Mobile Money Number<span className={classes.required_field}>*</span></label>
+                  <label htmlFor="momoNumber">
+                    Mobile Money Number
+                    <span className={classes.required_field}>*</span>
+                  </label>
 
                   <input
                     className={

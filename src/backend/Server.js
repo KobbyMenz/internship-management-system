@@ -21,6 +21,10 @@ import loginRoute from "./Routes/loginRoute.js";
 import getStudentRoute from "./Routes/getStudentRoute.js";
 import getSchoolDetailsRoute from "./Routes/getSchoolDetailsRoute.js";
 import getMentorDetailsRoute from "./Routes/getMentorDetailsRoute.js";
+import insertSchoolDetailsRoute from "./Routes/insertSchoolDetailsRoute.js";
+import updateSchoolDetailsRoute from "./Routes/updateSchoolDetailsRoute.js";
+import insertMentorDetailsRoute from "./Routes/insertMentorDetailsRoute.js";
+import updateMentorDetails from "./Routes/updateMentorDetailsRoute.js";
 
 const app = express();
 
@@ -69,11 +73,19 @@ SCHOOL ROUTES
 ===================================*/
 getSchoolDetailsRoute(app);
 
+insertSchoolDetailsRoute(app);
+
+updateSchoolDetailsRoute(app);
+
 /*
 ==================================
 MENTOR ROUTES
 ===================================*/
 getMentorDetailsRoute(app);
+
+insertMentorDetailsRoute(app);
+
+updateMentorDetails(app);
 
 /*Schedule a backup every 1 hour
 ==================================*/

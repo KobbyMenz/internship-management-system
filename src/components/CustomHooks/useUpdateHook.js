@@ -1,5 +1,5 @@
 import axios from "axios";
-import app_api_url from "../../app_api_url";
+import app_api_url from "../../Services/app_api_url";
 
 const useUpdateHook = () => {
   const updateData = async (
