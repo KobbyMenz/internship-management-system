@@ -71,6 +71,10 @@ html {
 }
 
 /*======== Toast Notification styles starts =========*/
+.Toastify__toast-container {
+  margin-top: 5.8rem;
+}
+
 .Toastify__close-button {
   color: var(--text);
   opacity: 1;

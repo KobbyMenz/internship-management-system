@@ -14,6 +14,7 @@ import Skeleton from "../../components/UI/Skeleton/SkeletonPlaceholder";
 import Toast from "../../components/UI/Notification/Toast";
 import useInsertHook from "../../components/CustomHooks/useInsertHook";
 import useUpdateHook from "../../components/CustomHooks/useUpdateHook";
+import UpdateIcon from "../../components/UI/Icons/UpdateIcon";
 
 //import HomePageNav from "./HomePageNav";
 
@@ -140,7 +141,8 @@ const MentorDetails = () => {
                 disabled={isSubmitting}
                 type="button"
               >
-                Update
+                <UpdateIcon />
+                <span>Update</span>
               </Button>
             </div>
 

@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 // reusable toast function
 const Toast = (type, message) => {
   const options = {
-    position: "bottom-right",
+    position: "top-right",
     autoClose: 6000,
     hideProgressBar: false,
     closeOnClick: true,
@@ -18,11 +18,13 @@ const Toast = (type, message) => {
     toastId: message, // Prevent duplicate toasts
 
     style: {
+      
       fontSize: "1.5rem",
       backgroundColor: "var(--bg-color)",
       color: "var(--text-color)",
       boxShadow: "0rem 0.6rem 1.5rem rgba(0, 0, 0, 0.3)",
       border: "0.2rem solid rgba(255, 255, 255, 0.3)",
+      
       // border: "0.2rem solid var(--bg-color)",
     },
   };

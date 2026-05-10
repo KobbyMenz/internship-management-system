@@ -555,9 +555,8 @@ const ProfileContent = () => {
                 </div>
 
                 <Button type="submit" className="btn">
-                  <div className="btn_icon">
-                    <SaveIcon />
-                  </div>
+                  <SaveIcon />
+
                   <span>Save Changes</span>
                 </Button>
               </div>

@@ -74,13 +74,14 @@ const StyledWrapper = styled.div`
     text-align: right;
   }
   .onoffswitch-switch {
-    width: 1.8rem;
+    width: 2.2rem;
+    height:2.2rem;
     margin: 0.6rem;
     background: #ffffff;
     border: 0.2rem solid var(--primary);
     border-radius: 2rem;
     position: absolute;
-    top: 0;
+    top: -0.38rem;
     bottom: 0;
     right: 7rem;
     transition: all 0.3s ease-in 0s;
@@ -89,7 +90,7 @@ const StyledWrapper = styled.div`
     margin-left: 0;
   }
   .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-    right: 0px;
+    right: -0.4rem;
   }
 `;
 

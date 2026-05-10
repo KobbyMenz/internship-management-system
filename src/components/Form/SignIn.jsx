@@ -64,75 +64,76 @@ const SignIn = () => {
           onCloseModal={() => setShowLockoutModal(false)}
         />
       )}
-      <Card className={`${classes.form_container}`}>
-        <h2 className={classes.subtitle}>
-          {switchMode ? `ADMIN LOGIN` : `STUDENT LOGIN`}
-        </h2>
+      <div className={classes.card_container}>
+        <Card className={`${classes.form_container}`}>
+          <h2 className={classes.subtitle}>
+            {switchMode ? `ADMIN LOGIN` : `STUDENT LOGIN`}
+          </h2>
 
-        {/* <Button onClick={switchModeHandler}>Switch</Button> */}
-        <div className={classes.switch}>
-          <Switch onSwitch={switchModeHandler} switchMode={switchMode} />
-        </div>
-
-        <form onSubmit={handleSubmit(onSubmitHandler)}>
-          <div className={classes.form_control}>
-            <label htmlFor="username">Username</label>
-
-            <input
-              className={
-                errors.username
-                  ? `${classes.error} ${classes.input}`
-                  : `${classes.input} `
-              }
-              type="text"
-              id="username"
-              placeholder="Enter your username"
-              {...register("username", { required: "Username is required" })}
-            />
-            {errors.username && (
-              <small className="error">{errors.username.message}</small>
-            )}
+          {/* <Button onClick={switchModeHandler}>Switch</Button> */}
+          <div className={classes.switch}>
+            <Switch onSwitch={switchModeHandler} switchMode={switchMode} />
           </div>
 
-          <div className={classes.form_control}>
-            <label htmlFor="password">Password</label>
-            <input
-              className={
-                errors.password
-                  ? `${classes.error} ${classes.input}`
-                  : `${classes.input} `
-              }
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              {...register("password", {
-                required: "Password is required",
-                // minLength: {
-                //   value: 8,
-                //   message: "Password must be at least 8 characters long",
-                // },
-              })}
-            />
-            {errors.password && (
-              <small className="error">{errors.password.message}</small>
-            )}
-          </div>
+          <form onSubmit={handleSubmit(onSubmitHandler)}>
+            <div className={classes.form_control}>
+              <label htmlFor="username">Username</label>
 
-          <div className={classes.btn_container}>
-            <Button type="submit">
-              {" "}
-              {<LoginIcon />} {loadingLogin ? <LoginLoader /> : `Login`}
-            </Button>
-          </div>
+              <input
+                className={
+                  errors.username
+                    ? `${classes.error} ${classes.input}`
+                    : `${classes.input} `
+                }
+                type="text"
+                id="username"
+                placeholder="Enter your username"
+                {...register("username", { required: "Username is required" })}
+              />
+              {errors.username && (
+                <small className="error">{errors.username.message}</small>
+              )}
+            </div>
 
-          <p className={classes.link_container}>
-            Don't have an account{" "}
-            <Link className={classes.link_btn} to="/signup">
-              signup
-            </Link>
-          </p>
-        </form>
-      </Card>
+            <div className={classes.form_control}>
+              <label htmlFor="password">Password</label>
+              <input
+                className={
+                  errors.password
+                    ? `${classes.error} ${classes.input}`
+                    : `${classes.input} `
+                }
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                {...register("password", {
+                  required: "Password is required",
+                  // minLength: {
+                  //   value: 8,
+                  //   message: "Password must be at least 8 characters long",
+                  // },
+                })}
+              />
+              {errors.password && (
+                <small className="error">{errors.password.message}</small>
+              )}
+            </div>
+
+            <div className={classes.btn_container}>
+              <Button type="submit">
+                {<LoginIcon />} {loadingLogin ? <LoginLoader /> : `Login`}
+              </Button>
+            </div>
+
+            <p className={classes.link_container}>
+              Don't have an account{" "}
+              <Link className={classes.link_btn} to="/signup">
+                signup
+              </Link>
+            </p>
+          </form>
+        </Card>
+      </div>
     </>
   );
 };

@@ -1,4 +1,5 @@
 // import classes from "../UI/LoginLoader.module.css";
+import Loader from "../Icons/Loader";
 import classes from "../Loader/LoginLoader.module.css";
 
 const LoginLoader = () => {
@@ -6,7 +7,8 @@ const LoginLoader = () => {
     <>
       <div className={classes.loader_container}>
         <p>Loading </p>
-        <svg
+        <Loader />
+        {/* <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
           height="24"
@@ -97,7 +99,7 @@ const LoginLoader = () => {
               values="1;0.2"
             />
           </rect>
-        </svg>
+        </svg> */}
       </div>
     </>
   );

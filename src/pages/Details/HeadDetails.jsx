@@ -8,6 +8,7 @@ import "./Details.css";
 import { useForm } from "react-hook-form";
 import Footer from "../../components/Footer/Footer";
 import Skeleton from "../../components/UI/Skeleton/SkeletonPlaceholder";
+import UpdateIcon from "../../components/UI/Icons/UpdateIcon";
 
 //import HomePageNav from "./HomePageNav";
 
@@ -193,7 +194,8 @@ const HeadDetails = () => {
                 disabled={isSubmitting}
                 type="button"
               >
-                Update
+                <UpdateIcon />
+                <span>Update</span>
               </Button>
             </div>
 
