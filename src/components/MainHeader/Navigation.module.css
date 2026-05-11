@@ -41,7 +41,8 @@ button {
 
 .nav .link:hover,
 .nav .link:active {
-  color: #f3cafb;
+  /* color: #f3cafb; */
+  color: var(--secondary2);
   cursor: pointer;
 }
 

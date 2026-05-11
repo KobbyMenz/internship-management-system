@@ -81,7 +81,7 @@ const StyledWrapper = styled.div`
     border: 0.2rem solid var(--primary);
     border-radius: 2rem;
     position: absolute;
-    top: -0.38rem;
+    top: -0.3rem;
     bottom: 0;
     right: 7rem;
     transition: all 0.3s ease-in 0s;
