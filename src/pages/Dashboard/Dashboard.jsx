@@ -104,7 +104,7 @@ const DashboardContent = () => {
                     <div className={classes.description__container}>
                       <div className={classes.description}>
                         <p>Index Number :</p>
-                        <p className={`${classes.amount}`}>{studentId}</p>
+                        <p className={`${classes.value}`}>{studentId}</p>
                       </div>
                     </div>
 
@@ -117,7 +117,7 @@ const DashboardContent = () => {
                     <div className={classes.description__container}>
                       <div className={classes.description}>
                         <p>{`Full Name :`}</p>
-                        <p className={`${classes.amount}`}>
+                        <p className={`${classes.value}`}>
                           {fullName ? formatName(fullName) : "N/A"}
                         </p>
                       </div>
@@ -132,7 +132,7 @@ const DashboardContent = () => {
                     <div className={classes.description__container}>
                       <div className={classes.description}>
                         <p>Phone :</p>
-                        <p className={classes.amount}>{contact}</p>
+                        <p className={classes.value}>{contact}</p>
                       </div>
                     </div>
 
@@ -145,7 +145,7 @@ const DashboardContent = () => {
                     <div className={classes.description__container}>
                       <div className={classes.description}>
                         <p>Programme :</p>
-                        <p className={classes.amount}>{programme}</p>
+                        <p className={classes.value}>{programme}</p>
                       </div>
                     </div>
 
@@ -158,7 +158,7 @@ const DashboardContent = () => {
                     <div className={classes.description__container}>
                       <div className={classes.description}>
                         <p>School Name :</p>
-                        <p className={classes.amount}>{schoolName}</p>
+                        <p className={classes.value}>{schoolName}</p>
                       </div>
                     </div>
 
@@ -172,7 +172,7 @@ const DashboardContent = () => {
                       <div className={classes.description}>
                         <p>District :</p>
 
-                        <p className={` ${classes.amount}`}>{district}</p>
+                        <p className={` ${classes.value} `}>{district}</p>
                       </div>
                     </div>
 
