@@ -1,7 +1,5 @@
 import { useState, Fragment } from "react";
-import { useNavigate } from "react-router-dom";
 import classes from "../../components/Form/SignIn.module.css";
-//import Card from "../UI/Card";
 import Button from "../../components/UI/Button/Button";
 import Card from "../../components/UI/Card/Card";
 import "./Details.css";
@@ -29,20 +27,6 @@ const HeadDetails = () => {
     // reset,
     formState: { errors, isSubmitting },
   } = useForm();
-
-  const navigate = useNavigate();
-
-  const goToSchoolDetails = () => {
-    navigate("/schoolDetails");
-  };
-
-  const goToMentorDetails = () => {
-    navigate("/mentorDetails");
-  };
-
-  const goToHeadDetails = () => {
-    navigate("/headDetails");
-  };
 
   const onUpdateHandler = (formData) => {
     if (window.confirm("Are you sure you want to update records?")) {
