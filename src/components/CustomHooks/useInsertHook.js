@@ -1,13 +1,12 @@
 import axios from "axios";
 import app_api_url from "../../Services/app_api_url";
-import { useState } from "react";
 
 const useInsertHook = () => {
-  const [success, setSuccess] = useState(false);
   const insertData = async (
     apiEndPointName,
     dataToInsert,
     toastModal,
+    onSuccess = () => {},
     refreshTable = () => {},
   ) => {
     try {
@@ -20,7 +19,7 @@ const useInsertHook = () => {
 
       if (response.data.message) {
         toastModal("success", `${response.data.message}`);
-        setSuccess(true);
+        onSuccess();
       }
     } catch (err) {
       if (err.response?.data?.error) {
@@ -31,6 +30,6 @@ const useInsertHook = () => {
     }
   };
 
-  return { insertData, success };
+  return { insertData };
 };
 export default useInsertHook;

@@ -6,14 +6,13 @@ import Button from "../UI/Button/Button";
 import { Link, useNavigate } from "react-router-dom";
 import Toast from "../UI/Notification/Toast";
 import "../../pages/Details/Details.css";
-import { useCallback } from "react";
 import useInsertHook from "../CustomHooks/useInsertHook";
 
 // import { useState } from "react";
 // import Table from "../Table/Table";
 
 const SignUp = () => {
-  const { insertData, success } = useInsertHook();
+  const { insertData } = useInsertHook();
   const {
     register,
     handleSubmit,
@@ -27,27 +26,22 @@ const SignUp = () => {
   ////////////////////////////////////////////
   //      INSERT USER
   ///////////////////////////////////////////s
-  const onSubmitHandler = useCallback(
-    (formData) => {
-      if (formData.password !== formData.confirmPassword) {
-        setError("confirmPassword", {
-          type: "manual",
-          message: "Passwords do not match!",
-        });
-        return;
-      }
+  const onSubmitHandler = (formData) => {
+    if (formData.password !== formData.confirmPassword) {
+      setError("confirmPassword", {
+        type: "manual",
+        message: "Passwords do not match!",
+      });
+      return;
+    }
 
-      if (!window.confirm("Are you want to signup?")) return;
-      //========Register user========
-      insertData(`insertUser`, formData, Toast);
-
-      if (success) {
-        reset();
-        navigate("/");
-      }
-    },
-    [reset, navigate, setError, insertData, success],
-  );
+    if (!window.confirm("Are you want to sign up?")) return;
+    //========Register user========
+    insertData(`insertUser`, formData, Toast, () => {
+      reset();
+      setTimeout(() => navigate("/"), 1000); // redirect after 1s
+    });
+  };
   ////////////////////////////////////////////////
 
   const programmeOptions = [
@@ -150,12 +144,6 @@ const SignUp = () => {
                   {errors.gender && (
                     <small className="error">{errors.gender.message}</small>
                   )}
-
-                  {/* <datalist id="programmeOption">
-                  {programmeOptions.sort().map((optionValue, index) => (
-                    <option key={index} value={optionValue} />
-                  ))}
-                </datalist> */}
                 </div>
 
                 <div className={classes.form_control}>
@@ -300,7 +288,7 @@ const SignUp = () => {
             </div>
 
             <div className={classes.btn_container}>
-              <Button type="submit">Signup</Button>
+              <Button type="submit">Sign up</Button>
             </div>
 
             <p className={classes.link_container}>

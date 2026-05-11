@@ -35,22 +35,22 @@ export default function insertUserRoute(app) {
         [userId, fullName, gender, contact, email, programme, hashedPassword],
         (err) => {
           if (err) {
-            console.log("Database error", err);
+            //console.log("Database error", err);
 
             // MySQL duplicate entry error
             if (err.code === "ER_DUP_ENTRY") {
               if (err.sqlMessage.includes("email")) {
                 return res.status(409).json({
-                  error: "This email address is already registered. ",
+                  error: "Already registered. Please sign in.",
                 });
               }
               if (err.sqlMessage.includes("studentId")) {
                 return res.status(409).json({
-                  error: "This index number is already registered. ",
+                  error: "Already registered. Please sign in.",
                 });
               }
               return res.status(409).json({
-                error: "An account with these details already exists. ",
+                error: "Already registered. Please sign in.",
               });
             }
 
@@ -59,7 +59,7 @@ export default function insertUserRoute(app) {
               .json({ error: "Something went wrong. Please try again." });
           }
 
-          res.status(201).json({ message: "Saved successfully" });
+          res.status(201).json({ message: "Sign up completed." });
           //console.log(result);
         },
       );
