@@ -15,6 +15,7 @@ const SignUp = () => {
   const {
     register,
     handleSubmit,
+    setError,
     reset,
     formState: { errors },
   } = useForm();
@@ -23,7 +24,10 @@ const SignUp = () => {
 
   const onSubmitHandler = (formData) => {
     if (formData.password !== formData.confirmPassword) {
-      Toast("error", "Password do not match");
+      setError("confirmPassword", {
+        type: "manual",
+        message: "Passwords do not match!",
+      });
       return;
     }
 
@@ -34,7 +38,7 @@ const SignUp = () => {
     };
 
     localStorage.setItem("user", JSON.stringify(loginData));
-    Toast("success", "Signup successfully.");
+    Toast("success", "Signup successful.");
     navigate("/");
     reset();
   };
