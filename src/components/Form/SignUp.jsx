@@ -54,9 +54,7 @@ const SignUp = () => {
       {/* 🔒 LOCKOUT MODAL WITH COUNTDOWN TIMER */}
 
       <div className={classes.card_container}>
-        <Card
-          className={`${classes.form_container} ${classes.form_card_container}`}
-        >
+        <Card className={`${classes.form_container_large}`}>
           {/* <h2>SignUp</h2> */}
           <form onSubmit={handleSubmit(onSubmitHandler)}>
             <div className="form_box_container">

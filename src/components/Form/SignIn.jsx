@@ -65,7 +65,7 @@ const SignIn = () => {
         />
       )}
       <div className={classes.card_container}>
-        <Card className={`${classes.form_container}`}>
+        <Card className={`${classes.form_container_small}`}>
           <h2 className={classes.subtitle}>
             {switchMode ? `ADMIN LOGIN` : `STUDENT LOGIN`}
           </h2>

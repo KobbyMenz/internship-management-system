@@ -10,17 +10,32 @@
   transform: translate(-50%, -50%);
 }
 
-body{
+body {
   padding: 0 5%;
 }
 
+@media (max-width: 1024px) {
+  html {
+    font-size: 55%;
+  }
+}
+
+@media (max-width: 992px) {
+  html {
+    font-size: 53%;
+  }
+
+   body {
+    padding: 0 3%;
+  }
+}
 
 @media (max-width: 750px) {
   html {
     font-size: 52%;
   }
 
-  body{
+  body {
     padding: 0 3%;
   }
 }

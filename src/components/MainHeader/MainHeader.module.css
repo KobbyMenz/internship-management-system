@@ -24,15 +24,14 @@
 }
 
 .admin__button {
- display: flex;
- align-items: center;
- gap: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   font-size: 1.4rem;
   background: #7c003e;
   color: #fff;
   padding: 0.5rem 1rem;
   border-radius: 0.4rem;
- 
 }
 
 .admin__button:hover {
@@ -40,16 +39,25 @@
   cursor: pointer;
 }
 
+@media (max-width: 992px) {
+  html {
+    font-size: 53%;
+  }
+
+  .main-header {
+    padding: 0 4%;
+  }
+}
+
 @media (max-width: 750px) {
   html {
     font-size: 52%;
   }
 
-  .main-header{
+  .main-header {
     padding: 0 3%;
   }
 }
-
 
 @media (max-width: 450px) {
   .main-header .logo {
