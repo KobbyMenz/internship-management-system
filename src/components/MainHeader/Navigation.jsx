@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import classes from "./Navigation.module.css";
 import Menu from "./Menu";
 //import PropTypes from "prop-types";
@@ -44,8 +44,12 @@ const Navigation = () => {
                   {isLoggedIn && (
                     <li>
                       <div onClick={onToggleMenuHandler}>
-                        <Link
-                          className={` ${classes.link} `}
+                        <NavLink 
+                          className={({ isActive }) =>
+                            isActive
+                              ? `${classes.link} ${classes.active_link}`
+                              : `${classes.link}`
+                          }
                           to={
                             user.role === ROLES.ADMIN
                               ? "admin/dashboard"
@@ -68,7 +72,7 @@ const Navigation = () => {
                           </svg>
 
                           <div>Dashboard</div>
-                        </Link>
+                        </NavLink>
                       </div>
                     </li>
                   )}
@@ -76,7 +80,14 @@ const Navigation = () => {
                   {isLoggedIn && (
                     <li>
                       <div onClick={onToggleMenuHandler}>
-                        <Link className={` ${classes.link} `} to={"/profile"}>
+                        <NavLink
+                          className={({ isActive }) =>
+                            isActive
+                              ? `${classes.link} ${classes.active_link}`
+                              : `${classes.link}`
+                          }
+                          to={"/profile"}
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -92,7 +103,7 @@ const Navigation = () => {
                             />
                           </svg>
                           <div>Profile</div>
-                        </Link>
+                        </NavLink>
                       </div>
                     </li>
                   )}
@@ -100,8 +111,12 @@ const Navigation = () => {
                   {isLoggedIn && user.role === ROLES.USER && (
                     <li>
                       <div onClick={onToggleMenuHandler}>
-                        <Link
-                          className={` ${classes.link} `}
+                        <NavLink
+                          className={({ isActive }) =>
+                            isActive
+                              ? `${classes.link} ${classes.active_link}`
+                              : `${classes.link}`
+                          }
                           to="/schoolDetails"
                         >
                           <svg
@@ -119,7 +134,7 @@ const Navigation = () => {
                             />
                           </svg>
                           <div>Add Details</div>
-                        </Link>
+                        </NavLink>
                       </div>
                     </li>
                   )}
@@ -127,13 +142,17 @@ const Navigation = () => {
                   {isLoggedIn && user.role === ROLES.ADMIN && (
                     <li>
                       <div onClick={onToggleMenuHandler}>
-                        <Link
-                          className={` ${classes.link} `}
+                        <NavLink
+                          className={({ isActive }) =>
+                            isActive
+                              ? `${classes.link} ${classes.active_link}`
+                              : `${classes.link}`
+                          }
                           to="/admin/settings"
                         >
                           <SettingsIcon />
                           <div>Settings</div>
-                        </Link>
+                        </NavLink>
                       </div>
                     </li>
                   )}

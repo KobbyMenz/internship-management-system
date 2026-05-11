@@ -46,6 +46,13 @@ button {
   cursor: pointer;
 }
 
+.active_link {
+  color: var(--secondary2) !important;
+  /* background: #fff; */
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.5rem;
+}
+
 .nav svg {
   display: block;
   height: 2.1rem;
