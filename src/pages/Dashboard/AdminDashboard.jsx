@@ -17,6 +17,8 @@ import NumberIcon from "../../components/UI/Icons/NumberIcon";
 import app_api_url from "../../Services/app_api_url";
 import axios from "axios";
 import WelcomeMessageSkeleton from "../../components/UI/Skeleton/WelcomeMessageSkeleton";
+import useFetchDataCount from "../../components/CustomHooks/useFetchDataCount";
+import formatNumber from "../../Functions/FormatNumber";
 
 const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -36,9 +38,24 @@ const AdminDashboard = () => {
   const fullName = studentData.fullName ? studentData.fullName : "";
   const studentId = studentData.userId ? studentData.userId : "N/A";
   const contact = studentData.contact ? studentData.contact : "N/A";
-  const programme = studentData.programme ? studentData.programme : "N/A";
-  const schoolName = studentData.schoolName ? studentData.schoolName : "N/A";
-  const district = studentData.district ? studentData.district : "N/A";
+  //const programme = studentData.programme ? studentData.programme : "N/A";
+  //const schoolName = studentData.schoolName ? studentData.schoolName : "N/A";
+  //const district = studentData.district ? studentData.district : "N/A";
+
+  const { dataResult: totalMales } = useFetchDataCount(
+    "getNoOfMales",
+    "totalMales",
+  );
+
+  const { dataResult: totalFemales } = useFetchDataCount(
+    "getNoOfFemales",
+    "totalFemales",
+  );
+
+  const { dataResult: totalUsers } = useFetchDataCount(
+    "getNoOfUsers",
+    "totalUsers",
+  );
 
   useEffect(() => {
     const getStudentData = async () => {
@@ -103,7 +120,7 @@ const AdminDashboard = () => {
                     <div className={classes.description__container}>
                       <div className={classes.description}>
                         <p>Index Number :</p>
-                        <p className={`${classes.amount}`}>{studentId}</p>
+                        <p className={`${classes.value}`}>{studentId}</p>
                       </div>
                     </div>
 
@@ -116,7 +133,7 @@ const AdminDashboard = () => {
                     <div className={classes.description__container}>
                       <div className={classes.description}>
                         <p>{`Full Name :`}</p>
-                        <p className={`${classes.amount}`}>
+                        <p className={`${classes.value}`}>
                           {fullName ? formatName(fullName) : "N/A"}
                         </p>
                       </div>
@@ -131,7 +148,7 @@ const AdminDashboard = () => {
                     <div className={classes.description__container}>
                       <div className={classes.description}>
                         <p>Phone :</p>
-                        <p className={classes.amount}>{contact}</p>
+                        <p className={classes.value}>{contact}</p>
                       </div>
                     </div>
 
@@ -143,8 +160,12 @@ const AdminDashboard = () => {
                   <Card className={classes.card__box}>
                     <div className={classes.description__container}>
                       <div className={classes.description}>
-                        <p>Programme :</p>
-                        <p className={classes.amount}>{programme}</p>
+                        <p>Total Students :</p>
+                        <p
+                          className={`${classes.value} ${classes.value_large}`}
+                        >
+                          {formatNumber(totalUsers)}
+                        </p>
                       </div>
                     </div>
 
@@ -156,8 +177,12 @@ const AdminDashboard = () => {
                   <Card className={classes.card__box}>
                     <div className={classes.description__container}>
                       <div className={classes.description}>
-                        <p>School Name :</p>
-                        <p className={classes.amount}>{schoolName}</p>
+                        <p>Males :</p>
+                        <p
+                          className={`${classes.value} ${classes.value_large}`}
+                        >
+                          {formatNumber(totalMales)}
+                        </p>
                       </div>
                     </div>
 
@@ -169,9 +194,13 @@ const AdminDashboard = () => {
                   <Card className={classes.card__box}>
                     <div className={classes.description__container}>
                       <div className={classes.description}>
-                        <p>District :</p>
+                        <p>Females :</p>
 
-                        <p className={` ${classes.amount}`}>{district}</p>
+                        <p
+                          className={`${classes.value} ${classes.value_large}`}
+                        >
+                          {formatNumber(totalFemales)}
+                        </p>
                       </div>
                     </div>
 

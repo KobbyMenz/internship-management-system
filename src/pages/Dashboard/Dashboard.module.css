@@ -115,11 +115,21 @@
   color: #696969;
 }
 
-.card__box .description .amount {
-  font-size: 1.5rem;
+.card__box .description .value,
+.card__box .description .value_large {
   margin-top: -0.2rem;
-  font-weight: 500;
+
   color: var(--text-color);
+}
+
+.card__box .description .value {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.card__box .description .value_large {
+  font-size: 2.2rem;
+  font-weight: 700;
 }
 
 .card__box .description__container .p2 {
