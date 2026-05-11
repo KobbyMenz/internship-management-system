@@ -177,18 +177,13 @@ function App() {
             {/*ADMIN ROUTES HERE*/}
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
           </Route>
-          {/*====== Protected User Routes ======*/}
-          {/* <Route element={<ProtectedRoute allowedRoles={[ROLES.USER]} />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/schoolDetails" element={<SchoolDetails />} />
-            <Route path="/mentorDetails" element={<MentorDetails />} />
-            <Route path="/headDetails" element={<HeadDetails />} />
-          </Route> */}
-          // Replace with this inside the USER Protected Route:
+
+          {/*====== Protected User(students) Routes ======*/}
           <Route element={<ProtectedRoute allowedRoles={[ROLES.USER]} />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/addDetails" element={<AddDetails />}>
-              <Route index element={<Navigate to="school" replace />} />
+              {/* sub page in addDetails page */}
+              <Route index element={<Navigate to="schoolDetails" replace />} />
               <Route path="schoolDetails" element={<SchoolDetails />} />
               <Route path="mentorDetails" element={<MentorDetails />} />
               <Route path="headDetails" element={<HeadDetails />} />
@@ -196,7 +191,6 @@ function App() {
           </Route>
         </Routes>
       </div>
-      {/* </AuthContextProvider> */}
     </>
   );
 }
