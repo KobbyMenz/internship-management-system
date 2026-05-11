@@ -6,12 +6,15 @@ import Button from "../UI/Button/Button";
 import { Link, useNavigate } from "react-router-dom";
 import Toast from "../UI/Notification/Toast";
 import "../../pages/Details/Details.css";
+import useInsertHook from "../CustomHooks/useInsertHook";
+import app_api_url from "../../Services/app_api_url";
+import axios from "axios";
 
 // import { useState } from "react";
 // import Table from "../Table/Table";
 
 const SignUp = () => {
-  //const [data, setData] = useState([]);
+  const { insertData } = useInsertHook();
   const {
     register,
     handleSubmit,
@@ -31,16 +34,29 @@ const SignUp = () => {
       return;
     }
 
-    const loginData = {
-      name: formData.name,
-      email: formData.email,
-      password: formData.password,
-    };
+    //insertData(`insertUser`, formData, Toast);
 
-    localStorage.setItem("user", JSON.stringify(loginData));
-    Toast("success", "Signup successful.");
-    navigate("/");
-    reset();
+    const insertData = async () => {
+      try {
+        const response = await axios.post(
+          `${app_api_url}/${`insertUser`}`,
+          formData,
+        );
+
+        if (response.data.message) {
+          Toast("success", `${response.data.message}`);
+          reset();
+          navigate("/");
+        }
+      } catch (err) {
+        if (err.response?.data?.error) {
+          Toast("error", err.response.data.error);
+        } else {
+          Toast("error", `Process Failed`);
+        }
+      }
+    };
+    insertData();
   };
 
   const programmeOptions = [
@@ -96,7 +112,7 @@ const SignUp = () => {
                 </div>
 
                 <div className={classes.form_control}>
-                  <label htmlFor="name">
+                  <label htmlFor="fullNamefullName">
                     Full Name<span className={classes.required_field}>*</span>
                   </label>
 
@@ -107,12 +123,14 @@ const SignUp = () => {
                         : `${classes.input} `
                     }
                     type="text"
-                    id="name"
+                    id="fullName"
                     placeholder="Enter your full name"
-                    {...register("name", { required: "Your name is required" })}
+                    {...register("fullName", {
+                      required: "Your Full name is required",
+                    })}
                   />
-                  {errors.name && (
-                    <small className="error">{errors.name.message}</small>
+                  {errors.fullName && (
+                    <small className="error">{errors.fullName.message}</small>
                   )}
                 </div>
 

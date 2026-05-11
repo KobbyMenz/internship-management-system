@@ -26,6 +26,7 @@ import insertMentorDetailsRoute from "./Routes/insertMentorDetailsRoute.js";
 import updateMentorDetails from "./Routes/updateMentorDetailsRoute.js";
 import updateUserRoute from "./Routes/updateUserRoute.js";
 import getUserRoute from "./Routes/getUserRoute.js";
+import insertUserRoute from "./Routes/insertUserRoute.js";
 
 const app = express();
 
@@ -69,6 +70,8 @@ USER ROUTES
 getUserRoute(app);
 
 updateUserRoute(app);
+
+insertUserRoute(app);
 
 /*
 ==================================
