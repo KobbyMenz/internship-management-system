@@ -6,15 +6,14 @@ import Button from "../UI/Button/Button";
 import { Link, useNavigate } from "react-router-dom";
 import Toast from "../UI/Notification/Toast";
 import "../../pages/Details/Details.css";
+import { useCallback } from "react";
 import useInsertHook from "../CustomHooks/useInsertHook";
-import app_api_url from "../../Services/app_api_url";
-import axios from "axios";
 
 // import { useState } from "react";
 // import Table from "../Table/Table";
 
 const SignUp = () => {
-  const { insertData } = useInsertHook();
+  const { insertData, success } = useInsertHook();
   const {
     register,
     handleSubmit,
@@ -25,39 +24,31 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const onSubmitHandler = (formData) => {
-    if (formData.password !== formData.confirmPassword) {
-      setError("confirmPassword", {
-        type: "manual",
-        message: "Passwords do not match!",
-      });
-      return;
-    }
-
-    //insertData(`insertUser`, formData, Toast);
-
-    const insertData = async () => {
-      try {
-        const response = await axios.post(
-          `${app_api_url}/${`insertUser`}`,
-          formData,
-        );
-
-        if (response.data.message) {
-          Toast("success", `${response.data.message}`);
-          reset();
-          navigate("/");
-        }
-      } catch (err) {
-        if (err.response?.data?.error) {
-          Toast("error", err.response.data.error);
-        } else {
-          Toast("error", `Process Failed`);
-        }
+  ////////////////////////////////////////////
+  //      INSERT USER
+  ///////////////////////////////////////////s
+  const onSubmitHandler = useCallback(
+    (formData) => {
+      if (formData.password !== formData.confirmPassword) {
+        setError("confirmPassword", {
+          type: "manual",
+          message: "Passwords do not match!",
+        });
+        return;
       }
-    };
-    insertData();
-  };
+
+      if (!window.confirm("Are you want to signup?")) return;
+      //========Register user========
+      insertData(`insertUser`, formData, Toast);
+
+      if (success) {
+        reset();
+        navigate("/");
+      }
+    },
+    [reset, navigate, setError, insertData, success],
+  );
+  ////////////////////////////////////////////////
 
   const programmeOptions = [
     "BSc. Information Technology",
