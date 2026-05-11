@@ -1,7 +1,5 @@
 import { useState, Fragment, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import classes from "../../components/Form/SignIn.module.css";
-//import Card from "../UI/Card";
 import Button from "../../components/UI/Button/Button";
 import axios from "axios";
 import { useForm } from "react-hook-form";
@@ -70,20 +68,6 @@ const SchoolDetails = () => {
     getSchoolData();
   }, [user.userId, reset]);
 
-  const navigate = useNavigate();
-
-  const goToSchoolDetails = () => {
-    navigate("/schoolDetails");
-  };
-
-  const goToMentorDetails = () => {
-    navigate("/mentorDetails");
-  };
-
-  const goToHeadDetails = () => {
-    navigate("/headDetails");
-  };
-
   ///////////////////////////////////
   //    UPDATE
   //////////////////////////////////
@@ -109,7 +93,7 @@ const SchoolDetails = () => {
 
   return (
     <Fragment>
-      <h1 className={classes.title}>SCHOOL BASE INTERNSHIP FORM</h1>
+      {/* <h1 className={classes.title}>SCHOOL BASE INTERNSHIP FORM</h1>
 
       <nav className={classes.nav}>
         <ul>
@@ -119,7 +103,7 @@ const SchoolDetails = () => {
           <li onClick={goToMentorDetails}>Mentor </li>
           <li onClick={goToHeadDetails}>Headteacher </li>
         </ul>
-      </nav>
+      </nav> */}
 
       <Card className={`${"form_card_container"}`}>
         <h2 className={classes.subtitle}> SCHOOL DETAILS</h2>

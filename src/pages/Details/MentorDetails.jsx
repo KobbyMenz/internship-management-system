@@ -1,5 +1,4 @@
 import { useState, Fragment, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import classes from "../../components/Form/SignIn.module.css";
 //import Card from "../UI/Card";
 import Button from "../../components/UI/Button/Button";
@@ -71,20 +70,6 @@ const MentorDetails = () => {
     getMentorData();
   }, [user.userId, reset]);
 
-  const navigate = useNavigate();
-
-  const goToSchoolDetails = () => {
-    navigate("/schoolDetails");
-  };
-
-  const goToMentorDetails = () => {
-    navigate("/mentorDetails");
-  };
-
-  const goToHeadDetails = () => {
-    navigate("/headDetails");
-  };
-
   ///////////////////////////////////
   //    UPDATE
   //////////////////////////////////
@@ -114,18 +99,6 @@ const MentorDetails = () => {
 
   return (
     <Fragment>
-      <h1 className={classes.title}>SCHOOL BASE INTERNSHIP FORM</h1>
-
-      <nav className={classes.nav}>
-        <ul>
-          <li onClick={goToSchoolDetails}>School </li>
-          <li className={classes.active} onClick={goToMentorDetails}>
-            Mentor
-          </li>
-          <li onClick={goToHeadDetails}>Headteacher </li>
-        </ul>
-      </nav>
-
       <Card className={`${"form_card_container"}`}>
         <div className={classes.update__btn}></div>
 

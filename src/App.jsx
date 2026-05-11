@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import SignIn from "./components/Form/SignIn";
 import MainHeader from "./components/MainHeader/MainHeader";
@@ -20,6 +20,7 @@ import HeadDetails from "./pages/Details/HeadDetails";
 import SchoolDetails from "./pages/Details/SchoolDetails";
 import MentorDetails from "./pages/Details/MentorDetails";
 import AdminDashboard from "./pages/Dashboard/AdminDashboard";
+import AddDetails from "./pages/Details/AddDetails";
 
 function App() {
   // ✅ FIXED: Initialize state from sessionStorage to avoid setState in effect
@@ -167,24 +168,31 @@ function App() {
           <Route path="/" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
-
           <Route
             path="*"
             element={<h2 className="not_found_page">401 | Page not found</h2>}
           />
-
           {/*====== Protected Admin Routes ======*/}
           <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
             {/*ADMIN ROUTES HERE*/}
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
           </Route>
-
           {/*====== Protected User Routes ======*/}
-          <Route element={<ProtectedRoute allowedRoles={[ROLES.USER]} />}>
+          {/* <Route element={<ProtectedRoute allowedRoles={[ROLES.USER]} />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/schoolDetails" element={<SchoolDetails />} />
             <Route path="/mentorDetails" element={<MentorDetails />} />
             <Route path="/headDetails" element={<HeadDetails />} />
+          </Route> */}
+          // Replace with this inside the USER Protected Route:
+          <Route element={<ProtectedRoute allowedRoles={[ROLES.USER]} />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/addDetails" element={<AddDetails />}>
+              <Route index element={<Navigate to="school" replace />} />
+              <Route path="schoolDetails" element={<SchoolDetails />} />
+              <Route path="mentorDetails" element={<MentorDetails />} />
+              <Route path="headDetails" element={<HeadDetails />} />
+            </Route>
           </Route>
         </Routes>
       </div>

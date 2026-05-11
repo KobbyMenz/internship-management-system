@@ -163,24 +163,6 @@ const HeadDetails = () => {
 
   return (
     <Fragment>
-      {/* <HomePageNav
-      // onClickSchool={onShowSchoolHandler}
-      // onClickMentor={onShowMentorHandler}
-      // onClickHead={onShowHeadHandler}
-      /> */}
-
-      <h1 className={classes.title}>SCHOOL BASE INTERNSHIP FORM</h1>
-
-      <nav className={classes.nav}>
-        <ul>
-          <li onClick={goToSchoolDetails}>School </li>
-          <li onClick={goToMentorDetails}>Mentor </li>
-          <li className={classes.active} onClick={goToHeadDetails}>
-            Headteacher
-          </li>
-        </ul>
-      </nav>
-
       <Card className={`${"form_card_container"}`}>
         <h2 className={classes.subtitle}> HEAD TEACHER DETAILS</h2>
 

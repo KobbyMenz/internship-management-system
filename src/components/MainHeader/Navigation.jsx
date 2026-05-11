@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import classes from "./Navigation.module.css";
 import Menu from "./Menu";
 //import PropTypes from "prop-types";
@@ -44,7 +44,7 @@ const Navigation = () => {
                   {isLoggedIn && (
                     <li>
                       <div onClick={onToggleMenuHandler}>
-                        <NavLink 
+                        <NavLink
                           className={({ isActive }) =>
                             isActive
                               ? `${classes.link} ${classes.active_link}`
@@ -117,7 +117,7 @@ const Navigation = () => {
                               ? `${classes.link} ${classes.active_link}`
                               : `${classes.link}`
                           }
-                          to="/schoolDetails"
+                          to="/AddDetails"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -183,6 +183,9 @@ const Navigation = () => {
                   : "User"}
             </p>
           </nav>
+
+          {/* This renders whichever sub-page is active */}
+          <Outlet />
         </div>
       )}
     </Fragment>
