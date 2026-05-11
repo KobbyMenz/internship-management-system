@@ -181,12 +181,12 @@ function App() {
           {/*====== Protected User(students) Routes ======*/}
           <Route element={<ProtectedRoute allowedRoles={[ROLES.USER]} />}>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/addDetails" element={<AddDetails />}>
-              {/* sub page in addDetails page */}
-              <Route index element={<Navigate to="schoolDetails" replace />} />
-              <Route path="schoolDetails" element={<SchoolDetails />} />
-              <Route path="mentorDetails" element={<MentorDetails />} />
-              <Route path="headDetails" element={<HeadDetails />} />
+            <Route path="/add_details" element={<AddDetails />}>
+              {/* sub pages in addDetails page */}
+              <Route index element={<Navigate to="school_details" replace />} />
+              <Route path="school_details" element={<SchoolDetails />} />
+              <Route path="mentor_details" element={<MentorDetails />} />
+              <Route path="head_details" element={<HeadDetails />} />
             </Route>
           </Route>
         </Routes>

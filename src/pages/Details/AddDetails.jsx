@@ -11,21 +11,21 @@ export default function AddDetails() {
       <nav className={"nav"}>
         <ul>
           <NavLink
-            to={"schoolDetails"}
+            to={"school_details"}
             className={({ isActive }) => (isActive ? `${"active li"}` : `li`)}
           >
             School
           </NavLink>
 
           <NavLink
-            to={"mentorDetails"}
+            to={"mentor_details"}
             className={({ isActive }) => (isActive ? `${"active li"}` : `li`)}
           >
             Mentor{" "}
           </NavLink>
 
           <NavLink
-            to={"headDetails"}
+            to={"head_details"}
             className={({ isActive }) => (isActive ? `${"active li"}` : `li`)}
           >
             Headteacher{" "}
@@ -33,8 +33,8 @@ export default function AddDetails() {
         </ul>
       </nav>
 
-      {/* Redirect /add-details → /add-details/school by default */}
-      {location.pathname === "/addDetails" && <Navigate to="school" replace />}
+      {/* Redirect /addDetails → /addDetails/school by default */}
+      {location.pathname === "/add_details" && <Navigate to="school" replace />}
 
       <Outlet />
     </>

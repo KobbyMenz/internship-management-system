@@ -117,7 +117,7 @@ const Navigation = () => {
                               ? `${classes.link} ${classes.active_link}`
                               : `${classes.link}`
                           }
-                          to="/AddDetails"
+                          to="/add_details"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
