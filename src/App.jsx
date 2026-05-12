@@ -21,6 +21,10 @@ import SchoolDetails from "./pages/Details/SchoolDetails";
 import MentorDetails from "./pages/Details/MentorDetails";
 import AdminDashboard from "./pages/Dashboard/AdminDashboard";
 import AddDetails from "./pages/Details/AddDetails";
+import Settings from "./pages/Settings/Settings";
+import ManageSystem from "./pages/Settings/ManageSystem";
+import ManageStudent from "./pages/Settings/ManageStudent";
+import ManageAdmin from "./pages/Settings/ManageAdmin";
 
 function App() {
   // ✅ FIXED: Initialize state from sessionStorage to avoid setState in effect
@@ -176,6 +180,13 @@ function App() {
           <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
             {/*ADMIN ROUTES HERE*/}
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/settings" element={<Settings />}>
+              {/* sub pages in settings page */}
+              <Route index element={<Navigate to="manage_system" replace />} />
+              <Route path="manage_system" element={<ManageSystem />} />
+              <Route path="manage_student" element={<ManageStudent />} />
+              <Route path="manage_admin" element={<ManageAdmin />} />
+            </Route>
           </Route>
 
           {/*====== Protected User(students) Routes ======*/}
