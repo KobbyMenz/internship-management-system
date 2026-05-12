@@ -110,7 +110,11 @@ textarea */ {
   gap: 0.3rem;
   /* justify-content: center; */
   margin-bottom: 0.3rem;
-  color: #3f3f3f;
+  color: #797979;
+}
+
+.details_box_container .details_box p{
+   color: #131313;
 }
 
 .details_box_container svg {
