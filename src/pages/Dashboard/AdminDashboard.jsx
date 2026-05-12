@@ -8,9 +8,6 @@ import SystemOverviewSkeleton from "../../components/UI/Skeleton/SystemOverviewS
 import DigitalClock from "../../components/UI/Clock/DigitalClock";
 import { useAuth } from "../../context/useAuth";
 import formatName from "../../Functions/formatName";
-import SchoolIcon from "../../components/UI/Icons/SchoolIcon";
-import WorkPlaceIcon from "../../components/UI/Icons/WorkPlaceIcon";
-import ProgrammeIcon from "../../components/UI/Icons/ProgrammeIcon";
 import TelephoneIcon from "../../components/UI/Icons/TelephoneIcon";
 import StudentIcon from "../../components/UI/Icons/StudentIcon";
 import NumberIcon from "../../components/UI/Icons/NumberIcon";
@@ -19,6 +16,8 @@ import axios from "axios";
 import WelcomeMessageSkeleton from "../../components/UI/Skeleton/WelcomeMessageSkeleton";
 import useFetchDataCount from "../../components/CustomHooks/useFetchDataCount";
 import formatNumber from "../../Functions/FormatNumber";
+import UsersIcon from "../../components/UI/Icons/UsersIcon";
+import AllUsers from "../../components/UI/Icons/AllUsers";
 
 const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -170,14 +169,14 @@ const AdminDashboard = () => {
                     </div>
 
                     <div className={`${classes.icon} ${classes.icon__blue}`}>
-                      <ProgrammeIcon />
+                      <AllUsers />
                     </div>
                   </Card>
 
                   <Card className={classes.card__box}>
                     <div className={classes.description__container}>
                       <div className={classes.description}>
-                        <p>Males :</p>
+                        <p>Total Males :</p>
                         <p
                           className={`${classes.value} ${classes.value_large}`}
                         >
@@ -187,14 +186,14 @@ const AdminDashboard = () => {
                     </div>
 
                     <div className={`${classes.icon} ${classes.icon__yellow}`}>
-                      <SchoolIcon />
+                      <UsersIcon />
                     </div>
                   </Card>
 
                   <Card className={classes.card__box}>
                     <div className={classes.description__container}>
                       <div className={classes.description}>
-                        <p>Females :</p>
+                        <p>Total Females :</p>
 
                         <p
                           className={`${classes.value} ${classes.value_large}`}
@@ -207,7 +206,7 @@ const AdminDashboard = () => {
                     <div
                       className={`${classes.icon} ${classes.icon__lightblue}`}
                     >
-                      <WorkPlaceIcon />
+                      <UsersIcon />
                     </div>
                   </Card>
                 </div>

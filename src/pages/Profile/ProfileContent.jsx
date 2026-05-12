@@ -19,11 +19,19 @@ import ROLES from "../../Services/ROLES";
 import useUpdateHook from "../../components/CustomHooks/useUpdateHook";
 import app_api_url from "../../Services/app_api_url";
 import axios from "axios";
+import nameInitials from "../../Functions/nameInitials";
+import UsersIcon from "../../components/UI/Icons/UsersIcon";
+import StudentIcon from "../../components/UI/Icons/StudentIcon";
+import UserIcon from "../../components/UI/Icons/UserIcon";
+import AdminIcon from "../../components/UI/Icons/AdminIcon";
 //import PasswordInput from "../../UI/PasswordInput/PasswordInput";
 
 const ProfileContent = () => {
   const [loading, setLoading] = useState(true);
   const { updateData } = useUpdateHook();
+  const [gender, setGender] = useState("");
+  const [name, setName] = useState("");
+
   //const [showModal, setShowModal] = useState(false);
   // const [loading, setLoading] = useState(true);
   // const [file, setFile] = useState(null);
@@ -60,6 +68,29 @@ const ProfileContent = () => {
     },
   });
 
+  // const getUserData = useCallback(async () => {
+  //   if (!user?.userId || !user?.role) return; // ✅ guard against missing user
+  //   try {
+  //     const response = await axios.get(
+  //       `${app_api_url}/getUser/${user.userId}/${user.role}`,
+  //     );
+
+  //     if (response.data) {
+  //       reset(response.data);
+  //       setName(response.data.fullName);
+  //       setGender(response.data.gender);
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //   } finally {
+  //     setLoading(false); // ✅ only here
+  //   }
+  // }, [user, reset]);
+
+  // useEffect(() => {
+  //   getUserData();
+  // }, [getUserData]);
+
   useEffect(() => {
     const getUserData = async () => {
       try {
@@ -70,6 +101,8 @@ const ProfileContent = () => {
         if (response.data) setLoading(false);
 
         reset(response.data);
+        setName(response.data.fullName);
+        setGender(response.data.gender);
       } catch (err) {
         console.error(err);
       } finally {
@@ -262,11 +295,6 @@ const ProfileContent = () => {
   /////////////////////////////
   const submitFormHandler = useCallback(
     (formData) => {
-      // if (formData.password !== formData.confirmPassword) {
-      //   Toast("error", "Passwords do not match!");
-      //   return;
-      // }
-
       if (formData.password !== formData.confirmPassword) {
         setError("confirmPassword", {
           type: "manual",
@@ -463,7 +491,42 @@ const ProfileContent = () => {
                       sx={avatarSx}
                     /> */}
 
-                    <ImageBox width="13rem" height="16rem" />
+                    <Card className="profile_card_container">
+                      <div className="image">
+                        <ImageBox
+                          borderRadius={"50%"}
+                          width="10rem"
+                          height="10rem"
+                          border="0.1rem solid #999999"
+                        />
+                      </div>
+
+                      <div className="profile_name_box">
+                        <h1 className="name_initials">{nameInitials(name)}</h1>
+
+                        <div className="details_box_container">
+                          <div className="details_box">
+                            {user.role === ROLES.USER ? (
+                              <StudentIcon />
+                            ) : (
+                              <AdminIcon />
+                            )}
+
+                            <p>
+                              {user.role === ROLES.USER ? "Student" : "Admin"}
+                            </p>
+                          </div>
+
+                          {user.role === ROLES.USER && (
+                            <div className="details_box">
+                              <UserIcon />
+
+                              <p> {gender}</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </Card>
 
                     {/* <div className="image_chooser_container">
                       <div className="form_control">

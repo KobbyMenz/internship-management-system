@@ -14,7 +14,7 @@ export default function getUserRoute(app) {
 
     const sqlQuery =
       role === ROLES.USER
-        ? `SELECT student.studentId, student.fullName, student.contact, student.email, student.programme, school.schoolName, school.district 
+        ? `SELECT student.studentId, student.fullName, student.contact, student.gender, student.email, student.programme, school.schoolName, school.district 
       FROM internship_db.student 
       LEFT JOIN  internship_db.school ON student.studentId = school.studentId 
       WHERE student.studentId = ?`
@@ -32,6 +32,7 @@ export default function getUserRoute(app) {
         userId: role === ROLES.USER ? result[0].studentId : result[0].adminId,
         fullName: result[0].fullName,
         contact: result[0].contact,
+        gender: role === ROLES.USER ? result[0].gender : "",
         email: result[0].email,
         programme: result[0].programme,
         schoolName: result[0].schoolName,
