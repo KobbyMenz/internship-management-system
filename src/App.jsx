@@ -176,6 +176,7 @@ function App() {
             path="*"
             element={<h2 className="not_found_page">401 | Page not found</h2>}
           />
+
           {/*====== Protected Admin Routes ======*/}
           <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
             {/*ADMIN ROUTES HERE*/}

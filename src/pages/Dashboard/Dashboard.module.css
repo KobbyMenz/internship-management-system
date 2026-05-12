@@ -140,7 +140,7 @@
   width: 4.5rem;
   height: 4.5rem;
   /* display: block; */
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   position: absolute;
   background: transparent;
   right: 1.5rem;
@@ -161,18 +161,18 @@
   text-align: center; */
 }
 
-.status_container p {
+/* .status_container p {
   font-size: 1.4rem;
   font-weight: 400;
   color: #fff;
-}
+} */
 
-.status_container span {
+/* .status_container span {
   padding: 0.2rem 0.8rem;
   border-radius: 2rem;
-}
+} */
 
-.status_container .enabled {
+/* .status_container .enabled {
   background: #0080003d;
   box-shadow: 0rem 0.2rem 1rem rgba(0, 128, 0, 0.301);
   border: 0.1rem solid #015f1d;
@@ -184,14 +184,13 @@
   box-shadow: 0rem 0.2rem 1rem rgba(255, 0, 0, 0.205);
   border: 0.1rem solid red;
   color: red;
-}
+} */
 
-.status_container .enabled,
+/* .status_container .enabled,
 .status_container .disabled {
   border-left: 0.5rem solid;
   border-right: 0.5rem solid;
-  /* border-radius: 2rem; */
-}
+} */
 
 #chart_log_container {
   display: grid;

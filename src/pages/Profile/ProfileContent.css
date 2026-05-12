@@ -79,6 +79,7 @@ textarea */ {
   border-radius: 3rem;
   position: relative;
   border: 0.1rem solid #999999;
+   background: #fff;
 }
 
 .profile_card_container .image {
@@ -86,6 +87,7 @@ textarea */ {
   top: 0%;
   right: 50%;
   transform: translate(50%, -50%);
+ 
 }
 
 .profile_name_box {
@@ -110,7 +112,7 @@ textarea */ {
   gap: 0.3rem;
   /* justify-content: center; */
   margin-bottom: 0.3rem;
-  color: #797979;
+  color: var(--primary);
 }
 
 .details_box_container .details_box p{
