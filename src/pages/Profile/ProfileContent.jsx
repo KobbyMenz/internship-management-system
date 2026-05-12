@@ -20,17 +20,22 @@ import useUpdateHook from "../../components/CustomHooks/useUpdateHook";
 import app_api_url from "../../Services/app_api_url";
 import axios from "axios";
 import nameInitials from "../../Functions/nameInitials";
-import UsersIcon from "../../components/UI/Icons/UsersIcon";
 import StudentIcon from "../../components/UI/Icons/StudentIcon";
 import UserIcon from "../../components/UI/Icons/UserIcon";
 import AdminIcon from "../../components/UI/Icons/AdminIcon";
+import TelephoneIcon from "../../components/UI/Icons/TelephoneIcon";
 //import PasswordInput from "../../UI/PasswordInput/PasswordInput";
 
 const ProfileContent = () => {
   const [loading, setLoading] = useState(true);
   const { updateData } = useUpdateHook();
-  const [gender, setGender] = useState("");
-  const [name, setName] = useState("");
+  // const [gender, setGender] = useState("");
+  // const [name, setName] = useState("");
+  const [userData, setUserData] = useState({
+    fullName: "",
+    contact: "",
+    gender: "",
+  });
 
   //const [showModal, setShowModal] = useState(false);
   // const [loading, setLoading] = useState(true);
@@ -91,27 +96,33 @@ const ProfileContent = () => {
   //   getUserData();
   // }, [getUserData]);
 
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const response = await axios.get(
-          `${app_api_url}/getUser/${user.userId}/${user.role}`,
-        );
-
-        if (response.data) setLoading(false);
-
+  const getUserData = useCallback(async () => {
+    if (!user?.userId || !user?.role) return;
+    try {
+      const response = await axios.get(
+        `${app_api_url}/getUser/${user.userId}/${user.role}`,
+      );
+      if (response.data) {
         reset(response.data);
-        setName(response.data.fullName);
-        setGender(response.data.gender);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
+        // setName(response.data.fullName);
+        // setGender(response.data.gender);
+        setUserData((prev) => ({
+          ...prev,
+          fullName: response.data.fullName,
+          contact: response.data.contact,
+          gender: response.data.gender,
+        }));
       }
-    };
-
-    getUserData();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   }, [user, reset]);
+
+  useEffect(() => {
+    getUserData();
+  }, [getUserData]);
 
   //function to change profile image
   // const profilePictureChangeHandler = useCallback((e) => {
@@ -304,13 +315,19 @@ const ProfileContent = () => {
       }
 
       if (window.confirm("Are you sure you want to save changes?")) {
-        updateData(`updateUser/${+user.userId}/${user.role}`, formData, Toast);
-
-        resetField("password"); // ✅ clears password field
-        resetField("confirmPassword"); // ✅ clears confirmPassword field
+        updateData(
+          `updateUser/${+user.userId}/${user.role}`,
+          formData,
+          Toast,
+          () => {
+            getUserData(); // 👈 refetch after successful update
+            resetField("password");
+            resetField("confirmPassword");
+          },
+        );
       }
     },
-    [updateData, user.userId, user.role, setError, resetField],
+    [updateData, user.userId, user.role, setError, resetField, getUserData], // 👈 add getUserData
   );
 
   const programmeOptions = [
@@ -502,28 +519,39 @@ const ProfileContent = () => {
                       </div>
 
                       <div className="profile_name_box">
-                        <h1 className="name_initials">{nameInitials(name)}</h1>
+                        <h1 className="name_initials">
+                          {nameInitials(userData.fullName)}
+                        </h1>
+                        <h2 className="user_name">{userData.fullName}</h2>
 
                         <div className="details_box_container">
-                          <div className="details_box">
-                            {user.role === ROLES.USER ? (
-                              <StudentIcon />
-                            ) : (
-                              <AdminIcon />
-                            )}
-
-                            <p>
-                              {user.role === ROLES.USER ? "Student" : "Admin"}
-                            </p>
-                          </div>
-
-                          {user.role === ROLES.USER && (
+                          <div>
                             <div className="details_box">
-                              <UserIcon />
+                              {user.role === ROLES.USER ? (
+                                <StudentIcon />
+                              ) : (
+                                <AdminIcon />
+                              )}
 
-                              <p> {gender}</p>
+                              <p>
+                                {user.role === ROLES.USER ? "Student" : "Admin"}
+                              </p>
                             </div>
-                          )}
+
+                            <div className="details_box">
+                              <TelephoneIcon />
+
+                              <p>{userData.contact}</p>
+                            </div>
+
+                            {user.role === ROLES.USER && (
+                              <div className="details_box">
+                                <UserIcon />
+
+                                <p> {userData.gender}</p>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </Card>

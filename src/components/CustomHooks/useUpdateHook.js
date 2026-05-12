@@ -6,6 +6,7 @@ const useUpdateHook = () => {
     apiEndPointName,
     dataToUpdate,
     toastModal,
+    onSuccess = () => {},
     refreshTable = () => {
       // Default empty function if no refresh is needed
     }, // Optional callback to refresh data after update
@@ -20,6 +21,7 @@ const useUpdateHook = () => {
 
       if (response.data.message) {
         toastModal("success", `${response.data.message}`);
+        onSuccess();
       }
     } catch (err) {
       if (err.response?.data?.error) {
