@@ -294,7 +294,7 @@ const SignUp = () => {
             <p className={classes.link_container}>
               Already have an account{" "}
               <Link className={classes.link_btn} to="/">
-                signin
+                sign in
               </Link>
             </p>
           </form>

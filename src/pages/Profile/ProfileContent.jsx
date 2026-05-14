@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 //import ErrorIcon from "../../components/UI/Icons/ErrorIcon";
 import Footer from "../../components/Footer/Footer";
 import Toast from "../../components/UI/Notification/Toast";
-//import ProfileSkeleton from "../../UI/Skeleton/ProfileSkeleton";
+import ProfileSkeleton from "../../components/UI/Skeleton/ProfileSkeleton";
 //import UploadIcon from "../../components/UI/Icons/UploadIcon";
 //import DeleteIcon from "../../components/UI/Icons/DeleteIcon";
 import SaveIcon from "../../components/UI/Icons/SaveIcon";
@@ -356,9 +356,9 @@ const ProfileContent = () => {
       <div className={"content__container"}>
         <Card className={"card__wrapper"}>
           {
-            // loading ? (
-            //   <ProfileSkeleton />
-            // ) :
+            loading ? (
+              <ProfileSkeleton />
+            ) :
             <form onSubmit={handleSubmit(submitFormHandler)}>
               <div className="profile_container">
                 <div className="profile_form">
@@ -527,14 +527,16 @@ const ProfileContent = () => {
                         <div className="details_box_container">
                           <div>
                             <div className="details_box">
-                              {user.role === ROLES.USER ? (
-                                <StudentIcon />
-                              ) : (
+                              {user.role === ROLES.ADMIN ? (
                                 <AdminIcon />
+                              ) : (
+                                <StudentIcon />
                               )}
 
                               <p>
-                                {user.role === ROLES.USER ? "Student" : "Admin"}
+                                {user.role === ROLES.ADMIN
+                                  ? "Admin"
+                                  : "Student"}
                               </p>
                             </div>
 

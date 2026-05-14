@@ -8,13 +8,16 @@ const ProfileSkeleton = () => {
         <Box key={index}>
           <Box
             sx={{
+              
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(30rem, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(28rem, 1fr))",
               alignItems: "center",
-              justifyContent: "center",
-              gap: 2,
+              gap: "2rem",
+              padding: "1rem 1.8rem",
+              marginTop: "4rem",
+
+              
             }}
-            padding="1.5rem 0"
           >
             <Box
               width={"100%"}
@@ -23,68 +26,81 @@ const ProfileSkeleton = () => {
               gap="2rem"
             >
               <Skeleton
-                sx={{ borderRadius: "1rem", maxWidth: "65rem" }}
+                sx={{
+                  borderRadius: "1rem",
+                  maxWidth: "65rem",
+                  marginBottom: "2rem",
+                }}
                 variant="rounded"
                 height="5rem"
                 width="100%"
               />
               <Skeleton
-                sx={{ borderRadius: "1rem", maxWidth: "65rem" }}
+                sx={{
+                  borderRadius: "1rem",
+                  maxWidth: "65rem",
+                  marginBottom: "2rem",
+                }}
                 variant="rounded"
                 height="5rem"
                 width="100%"
               />
               <Skeleton
-                sx={{ borderRadius: "1rem", maxWidth: "65rem" }}
+                sx={{
+                  borderRadius: "1rem",
+                  maxWidth: "65rem",
+                  marginBottom: "2rem",
+                }}
                 variant="rounded"
                 height="5rem"
                 width="100%"
               />
               <Skeleton
-                sx={{ borderRadius: "1rem", maxWidth: "65rem" }}
+                sx={{
+                  borderRadius: "1rem",
+                  maxWidth: "65rem",
+                  marginBottom: "2rem",
+                }}
                 variant="rounded"
                 height="5rem"
                 width="100%"
               />
-              <Skeleton
+              {/* <Skeleton
                 sx={{ borderRadius: "1rem", maxWidth: "65rem" }}
                 variant="rounded"
                 height="5rem"
                 width="100%"
-              />
+              /> */}
             </Box>
 
             <Box
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              gap="2rem"
-              alignItems="center"
+            // display="flex"
+            // flexDirection="column"
+            // justifyContent="center"
+            // gap="2rem"
+            // alignItems="center"
             >
-              {<Skeleton variant="rounded" width={180} height={200} />}
+              {
+                <Skeleton
+                  variant="rounded"
+                  width={"100%"}
+                  height={200}
+                  sx={{
+                    position: "relative",
+                    borderRadius: "2rem",
+                    zIndex: 1,
+                    margin: "0 auto",
+                    maxWidth: "40rem",
+                  }}
+                />
+              }
 
-              <Skeleton
-                sx={{ borderRadius: "1rem" }}
+              {/* <Skeleton
+                sx={{ borderRadius: "50%", position: "absolute", top: "15%" , left:"50%", transform:"translate(100%, -50%)",zIndex:2}}
                 variant="rounded"
-                height="5rem"
-                width="30rem"
-              />
-
-              <Box display="flex" gap="1rem">
-                <Skeleton
-                  variant="rounded"
-                  height="4.5rem"
-                  sx={{ borderRadius: "2rem", background: "var(--nav-bg)" }}
-                  width="13rem"
-                />
-
-                <Skeleton
-                  variant="rounded"
-                  height="4.5rem"
-                  sx={{ borderRadius: "2rem", background: "#bd2207ef" }}
-                  width="13rem"
-                />
-              </Box>
+                height="15rem"
+                width="15rem"
+              /> */}
             </Box>
           </Box>
 
@@ -116,8 +132,8 @@ const ProfileSkeleton = () => {
             variant="rounded"
             height="4.5rem"
             sx={{
-              borderRadius: "2rem",
-              background: "var(--nav-bg)",
+              borderRadius: "1rem",
+              background: "var(--primary)",
               mb: 3,
               mt: 1,
             }}

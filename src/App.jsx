@@ -131,31 +131,31 @@ function App() {
   ///////////////////////////////////////
   //Disabling right click and keyboard shortcuts
   ///////////////////////////////////////
-  // useEffect(() => {
-  //   const handleContextMenu = (e) => {
-  //     e.preventDefault();
-  //   };
+  useEffect(() => {
+    const handleContextMenu = (e) => {
+      e.preventDefault();
+    };
 
-  //   document.addEventListener("contextmenu", handleContextMenu);
+    document.addEventListener("contextmenu", handleContextMenu);
 
-  //   const disableShortcuts = (e) => {
-  //     if (
-  //       (e.ctrlKey && e.shiftKey && e.key === "I") ||
-  //       (e.ctrlKey && e.shiftKey && e.key === "J") ||
-  //       (e.ctrlKey && e.key === "U") ||
-  //       e.key === "F12"
-  //     ) {
-  //       e.preventDefault();
-  //     }
-  //   };
+    const disableShortcuts = (e) => {
+      if (
+        (e.ctrlKey && e.shiftKey && e.key === "I") ||
+        (e.ctrlKey && e.shiftKey && e.key === "J") ||
+        (e.ctrlKey && e.key === "U") ||
+        e.key === "F12"
+      ) {
+        e.preventDefault();
+      }
+    };
 
-  //   document.addEventListener("keydown", disableShortcuts);
+    document.addEventListener("keydown", disableShortcuts);
 
-  //   return () => {
-  //     document.removeEventListener("contextmenu", handleContextMenu);
-  //     document.removeEventListener("keydown", disableShortcuts);
-  //   };
-  // }, []);
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+      document.removeEventListener("keydown", disableShortcuts);
+    };
+  }, []);
   //////////////////////////////////////////////
 
   return (
