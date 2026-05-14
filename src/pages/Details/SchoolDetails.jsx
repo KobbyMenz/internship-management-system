@@ -13,7 +13,7 @@ import useInsertHook from "../../components/CustomHooks/useInsertHook";
 import useUpdateHook from "../../components/CustomHooks/useUpdateHook";
 import Toast from "../../components/UI/Notification/Toast";
 import UpdateIcon from "../../components/UI/Icons/UpdateIcon";
-import { ghanaRegions } from "../../backend/Services/ghanaRegions";
+import { ghanaRegions } from "../../Services/ghanaRegions";
 
 //import HomePageNav from "./components/Home/HomePageNav";
 
