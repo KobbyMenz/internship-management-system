@@ -3,8 +3,8 @@ export default function AdminIcon() {
     <>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        // width={445}
-        // height={512}
+        width={16}
+        height={16}
         viewBox="0 0 448 512"
       >
         <path
