@@ -2,7 +2,7 @@ import { useState, Fragment, useEffect } from "react";
 import classes from "../../components/Form/SignIn.module.css";
 import Button from "../../components/UI/Button/Button";
 import axios from "axios";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import Card from "../../components/UI/Card/Card";
 import "./Details.css";
 import Footer from "../../components/Footer/Footer";
@@ -13,6 +13,7 @@ import useInsertHook from "../../components/CustomHooks/useInsertHook";
 import useUpdateHook from "../../components/CustomHooks/useUpdateHook";
 import Toast from "../../components/UI/Notification/Toast";
 import UpdateIcon from "../../components/UI/Icons/UpdateIcon";
+import { ghanaRegions } from "../../backend/Services/ghanaRegions";
 
 //import HomePageNav from "./components/Home/HomePageNav";
 
@@ -34,6 +35,7 @@ const SchoolDetails = () => {
   const {
     register,
     handleSubmit,
+    control,
     reset,
     formState: { errors, isSubmitting },
   } = useForm({
@@ -46,6 +48,9 @@ const SchoolDetails = () => {
       district: schoolData.district,
     },
   });
+
+  // Watch the selected region to dynamically update district options
+  const selectedRegion = useWatch({ control, name: "region" });
 
   useEffect(() => {
     const getSchoolData = async () => {
@@ -205,7 +210,7 @@ const SchoolDetails = () => {
                     Region<span className={classes.required_field}>*</span>
                   </label>
 
-                  <input
+                  <select
                     className={
                       errors.region
                         ? `${classes.error} ${classes.input}`
@@ -217,7 +222,15 @@ const SchoolDetails = () => {
                     {...register("region", {
                       required: "Region is required",
                     })}
-                  />
+                  >
+                    <option id={classes.empty_value} value="">Select a region</option>
+                    {ghanaRegions.map((region) => (
+                      <option key={region.region} value={region.region}>
+                        {region.region}
+                      </option>
+                    ))}
+                  </select>
+
                   {errors.region && (
                     <small className="error">{errors.region.message}</small>
                   )}
@@ -228,7 +241,7 @@ const SchoolDetails = () => {
                     District<span className={classes.required_field}>*</span>
                   </label>
 
-                  <input
+                  <select
                     className={
                       errors.district
                         ? `${classes.error} ${classes.input}`
@@ -240,7 +253,16 @@ const SchoolDetails = () => {
                     {...register("district", {
                       required: "District is required",
                     })}
-                  />
+                  >
+                    <option value="">Select a district</option>
+                    {ghanaRegions
+                      .find((region) => region.region === selectedRegion)
+                      ?.districts.map((district) => (
+                        <option key={district} value={district}>
+                          {district}
+                        </option>
+                      ))}
+                  </select>
                   {errors.district && (
                     <small className="error">{errors.district.message}</small>
                   )}

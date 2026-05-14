@@ -102,6 +102,10 @@
   font-weight: 500;
 }
 
+/* option::placeholder {
+  border-color: #ccc;
+} */
+
 .form_control .input:focus,
 .form_control .select:focus {
   border: 1px solid var(--primary);
