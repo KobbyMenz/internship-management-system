@@ -1,8 +1,8 @@
 import db from "../Services/dataBaseConnection.js";
 
-export default function insertMentorDetailsRoute(app) {
-  app.post("/api/insertMentorDetails/:studentId", (req, res) => {
-    const studentId = req.params.studentId;
+export default function insertInstructorRoute(app) {
+  app.post("/api/insertInstructor/:studentId/:routeName", (req, res) => {
+    const { studentId, routeName } = req.params;
     // console.log("Request received: ", req.body);
     const { title, name, contact, qualification, status, momoNumber } =
       req.body;
@@ -21,7 +21,11 @@ export default function insertMentorDetailsRoute(app) {
     }
 
     const sqlInsert =
-      "INSERT INTO internship_db.mentor (studentId, title, name, contact, qualification, status, momoNumber) VALUES (?,?,?,?,?,?,? )";
+      routeName === "mentor"
+        ? `INSERT INTO internship_db.mentor (studentId, title, name, contact, qualification, status, momoNumber) VALUES (?,?,?,?,?,?,? )`
+        : routeName === "head"
+          ? `INSERT INTO internship_db.head (studentId, title, name, contact, qualification, status, momoNumber) VALUES (?,?,?,?,?,?,? )`
+          : "";
     db.query(
       sqlInsert,
       [studentId, title, name, contact, qualification, status, momoNumber],

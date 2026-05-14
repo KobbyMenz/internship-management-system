@@ -355,10 +355,9 @@ const ProfileContent = () => {
 
       <div className={"content__container"}>
         <Card className={"card__wrapper"}>
-          {
-            loading ? (
-              <ProfileSkeleton />
-            ) :
+          {loading ? (
+            <ProfileSkeleton />
+          ) : (
             <form onSubmit={handleSubmit(submitFormHandler)}>
               <div className="profile_container">
                 <div className="profile_form">
@@ -521,7 +520,9 @@ const ProfileContent = () => {
 
                       <div className="profile_name_box">
                         <h1 className="name_initials">
-                          {nameInitials(userData.fullName)}
+                          {userData.fullName
+                            ? nameInitials(userData.fullName)
+                            : ""}
                         </h1>
                         <h2 className="user_name">{userData.fullName}</h2>
 
@@ -655,7 +656,7 @@ const ProfileContent = () => {
                 </Button>
               </div>
             </form>
-          }
+          )}
         </Card>
 
         <Footer />

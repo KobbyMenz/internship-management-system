@@ -22,6 +22,7 @@ const MentorDetails = () => {
   const { insertData } = useInsertHook();
   const { updateData } = useUpdateHook();
   const { user } = useAuth();
+  const routeName = "mentor";
 
   const [mentorData, setMentorData] = useState({
     studentId: "",
@@ -54,7 +55,7 @@ const MentorDetails = () => {
     const getMentorData = async () => {
       try {
         const response = await axios.get(
-          `${app_api_url}/getMentorDetails/${user.userId}`,
+          `${app_api_url}/getInstructor/${user.userId}/${routeName}`,
         );
 
         setMentorData(response.data);
@@ -80,7 +81,11 @@ const MentorDetails = () => {
     }
 
     if (window.confirm("Are you sure you want to update records?")) {
-      updateData(`updateMentorDetails/${formData.studentId}`, formData, Toast);
+      updateData(
+        `updateInstructor/${formData.studentId}/${routeName}`,
+        formData,
+        Toast,
+      );
     }
   };
 
@@ -89,7 +94,11 @@ const MentorDetails = () => {
   /////////////////////////////////
   const onSubmitHandler = (formData) => {
     if (window.confirm("Are you sure you want to submit?")) {
-      insertData(`insertMentorDetails/${user.userId}`, formData, Toast);
+      insertData(
+        `insertInstructor/${user.userId}/${routeName}`,
+        formData,
+        Toast,
+      );
     }
   };
 

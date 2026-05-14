@@ -19,15 +19,15 @@ import { rateLimit } from "./Middleware/rateLimitMiddleware.js";
 // 🔒 SECURITY: Use secure login route with refresh tokens
 import loginRoute from "./Routes/loginRoute.js";
 import getSchoolDetailsRoute from "./Routes/getSchoolDetailsRoute.js";
-import getMentorDetailsRoute from "./Routes/getMentorDetailsRoute.js";
 import insertSchoolDetailsRoute from "./Routes/insertSchoolDetailsRoute.js";
 import updateSchoolDetailsRoute from "./Routes/updateSchoolDetailsRoute.js";
-import insertMentorDetailsRoute from "./Routes/insertMentorDetailsRoute.js";
-import updateMentorDetails from "./Routes/updateMentorDetailsRoute.js";
 import updateUserRoute from "./Routes/updateUserRoute.js";
 import getUserRoute from "./Routes/getUserRoute.js";
 import insertUserRoute from "./Routes/insertUserRoute.js";
 import getNoOfUsersRoute from "./Routes/getNoOfUsersRoute.js";
+import getInstructorRoute from "./Routes/getInstructorRoute.js";
+import insertInstructorRoute from "./Routes/insertInstructorRoute.js";
+import updateInstructorRoute from "./Routes/updateInstructorRoute.js";
 
 const app = express();
 
@@ -88,13 +88,13 @@ updateSchoolDetailsRoute(app);
 
 /*
 ==================================
-MENTOR ROUTES
+INSTRUCTOR ROUTES
 ===================================*/
-getMentorDetailsRoute(app);
+getInstructorRoute(app);
 
-insertMentorDetailsRoute(app);
+insertInstructorRoute(app);
 
-updateMentorDetails(app);
+updateInstructorRoute(app);
 
 /*Schedule a backup every 1 hour
 ==================================*/

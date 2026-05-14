@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 import classes from "../../components/Form/SignIn.module.css";
 import Button from "../../components/UI/Button/Button";
 import Card from "../../components/UI/Card/Card";
@@ -7,30 +7,82 @@ import { useForm } from "react-hook-form";
 import Footer from "../../components/Footer/Footer";
 import Skeleton from "../../components/UI/Skeleton/SkeletonPlaceholder";
 import UpdateIcon from "../../components/UI/Icons/UpdateIcon";
+import useInsertHook from "../../components/CustomHooks/useInsertHook";
+import useUpdateHook from "../../components/CustomHooks/useUpdateHook";
+import { useAuth } from "../../context/useAuth";
+import Toast from "../../components/UI/Notification/Toast";
+import app_api_url from "../../Services/app_api_url";
+import axios from "axios";
 
 //import HomePageNav from "./HomePageNav";
 
 const HeadDetails = () => {
-  // const [formData, setFormData] = useState({
-  //   title: "",
-  //   name: "",
-  //   contact: "",
-  //   qualification: "",
-  //   status: "",
-  //   momoNumber: "",
-  // });
   const [loading, setLoading] = useState(true);
+  const { insertData } = useInsertHook();
+  const { updateData } = useUpdateHook();
+  const { user } = useAuth();
+
+  const routeName = "head";
+
+  const [instructData, setInstructorData] = useState({
+    studentId: "",
+    title: "",
+    name: "",
+    contact: "",
+    qualification: "",
+    status: "",
+    momoNumber: "",
+  });
 
   const {
     register,
     handleSubmit,
-    // reset,
+    reset,
     formState: { errors, isSubmitting },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      studentId: instructData.studentId,
+      title: instructData.title,
+      name: instructData.name,
+      contact: instructData.contact,
+      qualification: instructData.qualification,
+      status: instructData.status,
+      momoNumber: instructData.momoNumber,
+    },
+  });
+
+  useEffect(() => {
+    const getInstructorData = async () => {
+      try {
+        const response = await axios.get(
+          `${app_api_url}/getInstructor/${user.userId}/${routeName}`,
+        );
+
+        setInstructorData(response.data);
+        reset(response.data);
+        if (response.data) setLoading(false);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getInstructorData();
+  }, [user.userId, reset]);
 
   const onUpdateHandler = (formData) => {
+    if (!formData.studentId) {
+      Toast("error", "No record to update. Click on submit to save records");
+      return;
+    }
+
     if (window.confirm("Are you sure you want to update records?")) {
-      console.log("update: ", formData);
+      updateData(
+        `updateInstructor/${formData.studentId}/${routeName}`,
+        formData,
+        Toast,
+      );
     }
 
     //   if (+formData.contact.length !== 10 || +formData.momoNumber.length !== 10) {
@@ -76,7 +128,11 @@ const HeadDetails = () => {
 
   const onSubmitHandler = (formData) => {
     if (window.confirm("Are you sure you want to submit?")) {
-      console.log("submit: ", formData);
+      insertData(
+        `insertInstructor/${user.userId}/${routeName}`,
+        formData,
+        Toast,
+      );
     }
 
     // const studentData = JSON.parse(localStorage.getItem("user"));
@@ -150,7 +206,7 @@ const HeadDetails = () => {
       <Card className={`${"form_card_container"}`}>
         <h2 className={classes.subtitle}> HEAD TEACHER DETAILS</h2>
 
-        {!loading ? (
+        {loading ? (
           <Skeleton />
         ) : (
           <form className={classes.mentor__details}>

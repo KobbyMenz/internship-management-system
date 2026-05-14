@@ -1,8 +1,8 @@
 import db from "../Services/dataBaseConnection.js";
 
-export default function getMentorDetailsRoute(app) {
-  app.get("/api/getMentorDetails/:studentId", (req, res) => {
-    const studentId = req.params.studentId;
+export default function getInstructorRoute(app) {
+  app.get("/api/getInstructor/:studentId/:routeName", (req, res) => {
+    const { studentId, routeName } = req.params;
 
     // ✅ SECURITY: Input validation
     if (!studentId) {
@@ -10,7 +10,11 @@ export default function getMentorDetailsRoute(app) {
     }
 
     const sqlQuery =
-      "SELECT * FROM internship_db.mentor WHERE mentor.studentId = ?";
+      routeName === "mentor"
+        ? "SELECT * FROM internship_db.mentor WHERE mentor.studentId = ?"
+        : routeName === "head"
+          ? "SELECT * FROM internship_db.head WHERE head.studentId = ?"
+          : "";
 
     db.query(sqlQuery, [studentId], (err, result) => {
       if (err) {
@@ -27,7 +31,7 @@ export default function getMentorDetailsRoute(app) {
         status: result[0] ? result[0].status : "",
         momoNumber: result[0] ? result[0].momoNumber : "",
       }); //Sending the query result back to json.
-      // console.log(result);
+      //console.log(result);
     });
   });
 }

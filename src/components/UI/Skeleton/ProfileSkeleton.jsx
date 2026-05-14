@@ -8,22 +8,21 @@ const ProfileSkeleton = () => {
         <Box key={index}>
           <Box
             sx={{
-              
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(28rem, 1fr))",
               alignItems: "center",
               gap: "2rem",
               padding: "1rem 1.8rem",
               marginTop: "4rem",
-
-              
             }}
           >
             <Box
-              width={"100%"}
-              display="flex"
-              flexDirection="column"
-              gap="2rem"
+              sx={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                gap: "2rem",
+              }}
             >
               <Skeleton
                 sx={{

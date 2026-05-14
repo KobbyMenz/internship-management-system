@@ -1,8 +1,8 @@
 import db from "../Services/dataBaseConnection.js";
 
-export default function updateMentorDetails(app) {
-  app.put("/api/updateMentorDetails/:studentId", (req, res) => {
-    const studentId = req.params.studentId;
+export default function updateInstructorRoute(app) {
+  app.put("/api/updateInstructor/:studentId/:routeName", (req, res) => {
+    const { studentId, routeName } = req.params;
     // console.log("Request received: ", req.body);
     const { title, name, contact, qualification, status, momoNumber } =
       req.body;
@@ -21,7 +21,12 @@ export default function updateMentorDetails(app) {
     }
 
     const sqlUpdate =
-      "UPDATE internship_db.mentor SET title = ?, name = ?, contact = ?, qualification = ?, status = ?, momoNumber = ? WHERE studentId = ? ";
+      routeName === "mentor"
+        ? "UPDATE internship_db.mentor SET title = ?, name = ?, contact = ?, qualification = ?, status = ?, momoNumber = ? WHERE studentId = ? "
+        : routeName === "head"
+          ? "UPDATE internship_db.head SET title = ?, name = ?, contact = ?, qualification = ?, status = ?, momoNumber = ? WHERE studentId = ? "
+          : "";
+
     db.query(
       sqlUpdate,
       [title, name, contact, qualification, status, momoNumber, studentId],
