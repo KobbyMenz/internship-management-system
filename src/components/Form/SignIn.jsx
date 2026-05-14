@@ -11,6 +11,7 @@ import LoginLoader from "../UI/Loader/LoginLoader";
 import { useState } from "react";
 import ROLES from "../../Services/ROLES";
 import Switch from "../UI/Switch/Switch";
+import PasswordInput from "../UI/PasswordInput/PasswordInput";
 // import { useState } from "react";
 // import Table from "../Table/Table";
 
@@ -97,7 +98,7 @@ const SignIn = () => {
 
             <div className={classes.form_control}>
               <label htmlFor="password">Password</label>
-              <input
+              <PasswordInput
                 className={
                   errors.password
                     ? `${classes.error} ${classes.input}`

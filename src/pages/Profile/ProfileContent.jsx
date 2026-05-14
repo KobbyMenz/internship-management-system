@@ -24,6 +24,7 @@ import StudentIcon from "../../components/UI/Icons/StudentIcon";
 import UserIcon from "../../components/UI/Icons/UserIcon";
 import AdminIcon from "../../components/UI/Icons/AdminIcon";
 import TelephoneIcon from "../../components/UI/Icons/TelephoneIcon";
+import PasswordInput from "../../components/UI/PasswordInput/PasswordInput";
 //import PasswordInput from "../../UI/PasswordInput/PasswordInput";
 
 const ProfileContent = () => {
@@ -520,9 +521,7 @@ const ProfileContent = () => {
 
                       <div className="profile_name_box">
                         <h1 className="name_initials">
-                          {userData.fullName
-                            ? nameInitials(userData.fullName)
-                            : ""}
+                          {nameInitials(userData.fullName)}
                         </h1>
                         <h2 className="user_name">{userData.fullName}</h2>
 
@@ -604,7 +603,7 @@ const ProfileContent = () => {
                 <div className={classes.form_control}>
                   <label htmlFor="password">New Password</label>
 
-                  <input
+                  <PasswordInput
                     className={
                       errors.password
                         ? `${classes.error} ${classes.input}`
@@ -629,7 +628,7 @@ const ProfileContent = () => {
                 <div className={classes.form_control}>
                   <label htmlFor="confirmPassword">Confirm Password</label>
 
-                  <input
+                  <PasswordInput
                     className={
                       errors.confirmPassword
                         ? `${classes.error} ${classes.input}`

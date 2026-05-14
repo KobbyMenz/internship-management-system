@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Toast from "../UI/Notification/Toast";
 import "../../pages/Details/Details.css";
 import useInsertHook from "../CustomHooks/useInsertHook";
+import PasswordInput from "../UI/PasswordInput/PasswordInput";
 
 // import { useState } from "react";
 // import Table from "../Table/Table";
@@ -103,7 +104,7 @@ const SignUp = () => {
 
                   <input
                     className={
-                      errors.name
+                      errors.fullName
                         ? `${classes.error} ${classes.input}`
                         : `${classes.input} `
                     }
@@ -234,7 +235,8 @@ const SignUp = () => {
                   <label htmlFor="password">
                     Password<span className={classes.required_field}>*</span>
                   </label>
-                  <input
+
+                  <PasswordInput
                     className={
                       errors.password
                         ? `${classes.error} ${classes.input}`
@@ -261,7 +263,8 @@ const SignUp = () => {
                     Confirm Password
                     <span className={classes.required_field}>*</span>
                   </label>
-                  <input
+
+                  <PasswordInput
                     className={
                       errors.password
                         ? `${classes.error} ${classes.input}`
