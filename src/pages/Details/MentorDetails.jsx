@@ -1,4 +1,4 @@
-import { useState, Fragment, useEffect } from "react";
+import { useState, Fragment, useEffect, useCallback } from "react";
 import classes from "../../components/Form/SignIn.module.css";
 //import Card from "../UI/Card";
 import Button from "../../components/UI/Button/Button";
@@ -51,25 +51,25 @@ const MentorDetails = () => {
     },
   });
 
-  useEffect(() => {
-    const getMentorData = async () => {
-      try {
-        const response = await axios.get(
-          `${app_api_url}/getInstructor/${user.userId}/${routeName}`,
-        );
+  const getMentorData = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `${app_api_url}/getInstructor/${user.userId}/${routeName}`,
+      );
 
-        setMentorData(response.data);
-        reset(response.data);
-        if (response.data) setLoading(false);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getMentorData();
+      setMentorData(response.data);
+      reset(response.data);
+      if (response.data) setLoading(false);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   }, [user.userId, reset]);
+
+  useEffect(() => {
+    getMentorData();
+  }, [getMentorData]);
 
   ///////////////////////////////////
   //    UPDATE
@@ -98,6 +98,7 @@ const MentorDetails = () => {
         `insertInstructor/${user.userId}/${routeName}`,
         formData,
         Toast,
+        () => getMentorData(), // refetch after successful insert
       );
     }
   };

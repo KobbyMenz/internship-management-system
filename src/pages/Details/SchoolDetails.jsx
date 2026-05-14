@@ -1,4 +1,4 @@
-import { useState, Fragment, useEffect } from "react";
+import { useState, Fragment, useEffect, useCallback } from "react";
 import classes from "../../components/Form/SignIn.module.css";
 import Button from "../../components/UI/Button/Button";
 import axios from "axios";
@@ -52,26 +52,28 @@ const SchoolDetails = () => {
   // Watch the selected region to dynamically update district options
   const selectedRegion = useWatch({ control, name: "region" });
 
-  useEffect(() => {
-    const getSchoolData = async () => {
-      try {
-        const response = await axios.get(
-          `${app_api_url}/getSchoolDetails/${user.userId}`,
-        );
+  // Fetch school details for the logged-in user
+  const getSchoolData = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `${app_api_url}/getSchoolDetails/${user.userId}`,
+      );
 
-        setSchoolData(response.data);
-        if (response.data) setLoading(false);
+      setSchoolData(response.data);
+      if (response.data) setLoading(false);
 
-        reset(response.data);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getSchoolData();
+      reset(response.data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   }, [user.userId, reset]);
+
+  // Refetch school data when the component mounts
+  useEffect(() => {
+    getSchoolData();
+  }, [getSchoolData]);
 
   ///////////////////////////////////
   //    UPDATE
@@ -92,7 +94,9 @@ const SchoolDetails = () => {
   /////////////////////////////////
   const onSubmitHandler = (formData) => {
     if (window.confirm("Are you sure you want to submit?")) {
-      insertData(`insertShoolDetails/${user.userId}`, formData, Toast);
+      insertData(`insertShoolDetails/${user.userId}`, formData, Toast, () =>
+        getSchoolData(), // Refetch data after successful insert
+      );
     }
   };
 
