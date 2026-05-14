@@ -14,21 +14,21 @@ export default function AddDetails() {
             to={"school_details"}
             className={({ isActive }) => (isActive ? `${"active li"}` : `li`)}
           >
-            School
+            SCHOOL
           </NavLink>
 
           <NavLink
             to={"mentor_details"}
             className={({ isActive }) => (isActive ? `${"active li"}` : `li`)}
           >
-            Mentor{" "}
+            MENTOR{" "}
           </NavLink>
 
           <NavLink
             to={"head_details"}
             className={({ isActive }) => (isActive ? `${"active li"}` : `li`)}
           >
-            Headteacher{" "}
+            HEAD{" "}
           </NavLink>
         </ul>
       </nav>
