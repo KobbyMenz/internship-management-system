@@ -223,7 +223,7 @@ const SchoolDetails = () => {
                       required: "Region is required",
                     })}
                   >
-                    <option id={classes.empty_value} value="">Select a region</option>
+                    <option value="">-----Select a region-----</option>
                     {ghanaRegions.map((region) => (
                       <option key={region.region} value={region.region}>
                         {region.region}
@@ -254,7 +254,7 @@ const SchoolDetails = () => {
                       required: "District is required",
                     })}
                   >
-                    <option value="">Select a district</option>
+                    <option value="">-----Select a district-----</option>
                     {ghanaRegions
                       .find((region) => region.region === selectedRegion)
                       ?.districts.map((district) => (

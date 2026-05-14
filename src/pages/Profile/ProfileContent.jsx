@@ -515,6 +515,7 @@ const ProfileContent = () => {
                           width="10rem"
                           height="10rem"
                           border="0.1rem solid #999999"
+                          background={"#ccc"}
                         />
                       </div>
 
