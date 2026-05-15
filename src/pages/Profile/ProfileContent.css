@@ -79,7 +79,7 @@ textarea */ {
   border-radius: 3rem;
   position: relative;
   border: 0.1rem solid #999999;
-   background: #fff;
+  background: #fff;
 }
 
 .profile_card_container .image {
@@ -87,7 +87,6 @@ textarea */ {
   top: 0%;
   right: 50%;
   transform: translate(50%, -50%);
- 
 }
 
 .profile_name_box {
@@ -115,8 +114,8 @@ textarea */ {
   color: var(--primary);
 }
 
-.details_box_container .details_box p{
-   color: #131313;
+.details_box_container .details_box p {
+  color: #131313;
 }
 
 .details_box_container svg {
@@ -175,7 +174,7 @@ textarea */ {
 }
 
 .password_header {
-  border-top: 0.1rem solid #ccc;
+  border-top: 0.1rem dashed #ccc;
   /* font-size: 1.3rem; */
   color: #ff0000;
   font-size: 1.5rem;
