@@ -38,7 +38,7 @@ export default function insertInstructorRoute(app) {
           }); //returning HTTP status
         }
 
-        res.status(201).json({ message: "Records submited" });
+        res.status(201).json({ message: "Records submitted successfully" });
       },
     );
   });

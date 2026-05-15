@@ -5,8 +5,8 @@ import bcrypt from "bcryptjs";
 export default function updateUserRoute(app) {
   app.put("/api/updateUser/:userId/:role", (req, res) => {
     const { userId, role } = req.params;
-    console.log("Request received Params: ", req.params);
-    console.log("Request received body: ", req.body);
+    // console.log("Request received Params: ", req.params);
+    // console.log("Request received body: ", req.body);
     const { fullName, contact, email, programme, password } = req.body;
 
     // ✅ SECURITY: Input validation
