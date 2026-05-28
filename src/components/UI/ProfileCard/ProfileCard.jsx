@@ -142,6 +142,10 @@ const ProfileCard = () => {
                     "&:hover": {
                       background: "var(--bg-color2)",
                     },
+
+                    "@media (max-width: 750px)": {
+                      width: "50%",
+                    },
                   }}
                 >
                   <ImageBox

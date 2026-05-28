@@ -364,7 +364,7 @@ const ProfileContent = () => {
                 <div className="profile_form">
                   <div className={classes.form_control}>
                     <label htmlFor="userId">
-                      Index Number
+                      {user.role === ROLES.USER?"Index Number":"Admin ID"}
                       <span className={classes.required_field}>*</span>
                     </label>
 
