@@ -7,7 +7,7 @@ const SearchIcon = () => {
         viewBox="0 0 24 24"
         strokeWidth={2}
         width={"2.2rem"}
-        stroke="#fff"
+        stroke="var(--primary)"
       >
         <path
           strokeLinecap="round"

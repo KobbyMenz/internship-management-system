@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import classes from "../components/UI/Modal/LockoutModal.module.css";
+import classes from "../components/UI/Modal/LockoutModal";
 
 const STORAGE_KEY = "LOCKOUT_TIMESTAMP_KEY";
 
@@ -8,11 +8,24 @@ export default function CountdownTimer({ onCloseModal }) {
   const [timeLeft, setTimeLeft] = useState(null);
   const intervalRef = useRef(null);
 
-  useEffect(() => {
-    const saved = parseInt(JSON.parse(localStorage.getItem(STORAGE_KEY)));
+  // useEffect(() => {
+  //   const saved = parseInt(JSON.parse(localStorage.getItem(STORAGE_KEY)));
 
-    if (!isNaN(saved) && saved > 0) {
-      setTimeLeft(saved);
+  //   if (!isNaN(saved) && saved > 0) {
+  //     setTimeLeft(saved);
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      const saved = parseInt(JSON.parse(raw));
+
+      if (!isNaN(saved) && saved > 0) {
+        setTimeLeft(saved);
+      }
+    } catch {
+      localStorage.removeItem(STORAGE_KEY); // clear the corrupted value
     }
   }, []);
 

@@ -160,7 +160,7 @@ const SignUp = () => {
                     }
                     type="tel"
                     id="contact"
-                    placeholder="Enter your index number"
+                    placeholder="Enter your phone number"
                     {...register("contact", {
                       required: "Contact is required",
                       maxLength: {

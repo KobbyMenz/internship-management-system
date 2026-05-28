@@ -1,16 +1,18 @@
 import { Skeleton, Box } from "@mui/material";
-import Card from "../Card";
+import Card from "../Card/Card";
 
 const TableSkeleton = () => (
-  <Card style={{ padding: "2rem" }}>
+  <Card style={{ padding: "2rem" ,background: "var(--bg-color)"}}>
     <Box
-      display="flex"
-      flexWrap={"wrap"}
-      rowGap={1}
-      columnGap={"20%"}
-      justifyContent="space-between"
-      alignItems="center"
-      mb={2}
+      sx={{
+        display: "flex",
+        flexWrap: "wrap",
+        rowGap: "1",
+        columnGap: "20%",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: "2rem",
+      }}
     >
       <Box width="30rem">
         {/*======= text =======*/}
@@ -19,11 +21,13 @@ const TableSkeleton = () => (
       </Box>
 
       <Box
-        display="flex"
-        gap={1}
-        flexGrow={1}
-        justifyContent={"flex-end"}
-        alignItems={"center"}
+        sx={{
+          display: "flex",
+          gap: "1rem",
+          flexGrow: 1,
+          justifyContent: "flex-end",
+          alignItems: "center",
+        }}
       >
         {/*======= textbox =======*/}
         <Skeleton

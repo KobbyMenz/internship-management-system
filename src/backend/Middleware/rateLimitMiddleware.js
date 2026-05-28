@@ -49,10 +49,12 @@ export const rateLimit = (identifier = "general") => {
   return (req, res, next) => {
     try {
       const clientIP = getClientIP(req);
-      // const key = `${identifier}:${clientIP}`;
+      const role = req.body?.mode;
       const username = req.body?.username; //"anonymous" 👈 extract username
-      const key = `${identifier}:${clientIP}:${username}`;
+      const key = `${identifier}:${clientIP}:${role}:${username}`;
       const now = Date.now();
+
+      console.log(`Rate limit check for ${key}`);
 
       // ✅ Cleanup old entries periodically
       if (Math.random() < 0.1) {
@@ -114,9 +116,9 @@ export const rateLimit = (identifier = "general") => {
 export const resetRateLimit = (req) => {
   try {
     const clientIP = getClientIP(req);
-    //const key = `login:${clientIP}`;
-    const username = req.body?.username; //
-    const key = `login:${clientIP}:${username}`;
+    const role = req.body?.mode || "unknown";
+    const username = req.body?.username || "unknown";
+    const key = `login:${clientIP}:${role}:${username}`;
 
     rateLimitStore.delete(key);
   } catch (err) {
@@ -130,9 +132,9 @@ export const resetRateLimit = (req) => {
 export const getRateLimitStatus = (req) => {
   try {
     const clientIP = getClientIP(req);
-    //const key = `login:${clientIP}`;
-    const username = req.body?.username; //
-    const key = `login:${clientIP}:${username}`;
+    const role = req.body?.mode || "unknown";
+    const username = req.body?.username || "unknown";
+    const key = `login:${clientIP}:${role}:${username}`;
 
     const record = rateLimitStore.get(key);
 

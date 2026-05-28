@@ -15,7 +15,7 @@ const Toast = (type, message) => {
     progress: undefined,
     closeButton: true,
     // className: "toast_className",
-    toastId: message, // Prevent duplicate toasts
+    //toastId: message, // Prevent duplicate toasts
 
     style: {
       

@@ -123,13 +123,12 @@ button {
     /* text-align: left; */
   }
 
-  .nav li:last-child {
+  /* .nav li:last-child {
     position: absolute;
     bottom: 1.5rem;
-    /* right: 7.5rem; */
     transform: translateX(20%);
     padding: 0.5rem;
-  }
+  } */
 
   .nav .link {
     padding: 0.5rem;

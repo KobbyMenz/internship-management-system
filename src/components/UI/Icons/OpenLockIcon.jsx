@@ -1,4 +1,4 @@
-const OpenLockIcon = () => {
+const OpenLockIcon = ({ color }) => {
   return (
     <>
       <svg
@@ -6,7 +6,7 @@ const OpenLockIcon = () => {
         width={64}
         height={64}
         viewBox="0 0 24 24"
-        style={{ width: "1.7rem", height: "1.7rem" }}
+        style={{ width: "1.7rem", height: "1.7rem", color: color }}
       >
         <path
           fill="currentColor"
@@ -16,4 +16,4 @@ const OpenLockIcon = () => {
     </>
   );
 };
-export default OpenLockIcon
+export default OpenLockIcon;

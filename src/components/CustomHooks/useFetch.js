@@ -29,9 +29,11 @@ const useFetch = (apiEndPointName, autoRefreshInterval = 0) => {
 
         const json = await response.json();
 
-        if (json.result) {
+        // ✅ Handle both array and { result: [...] } responses
+        if (Array.isArray(json)) {
+          setData(json);
+        } else if (json.result) {
           setData(json.result);
-          setError(null);
         } else {
           throw new Error("No result in response");
         }

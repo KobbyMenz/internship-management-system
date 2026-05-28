@@ -3,11 +3,12 @@ import { NavLink, Outlet } from "react-router-dom";
 import classes from "./Navigation.module.css";
 import Menu from "./Menu";
 //import PropTypes from "prop-types";
-import Button from "../UI/Button/Button";
+//import Button from "../UI/Button/Button";
 import { useAuth } from "../../context/useAuth";
 import ROLES from "../../Services/ROLES";
 import SettingsIcon from "../UI/Icons/SettingsIcon";
-import LogoutIcon from "../UI/Icons/LogoutIcon";
+//import LogoutIcon from "../UI/Icons/LogoutIcon";
+import ProfileCard from "../UI/ProfileCard/ProfileCard";
 
 const Navigation = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -16,12 +17,12 @@ const Navigation = () => {
   const onToggleMenuHandler = () => setToggleMenu((prevToggle) => !prevToggle);
 
   //Get user data and authentication status from auth context
-  const { user, isLoggedIn, logout } = useAuth();
+  const { user, isLoggedIn } = useAuth();
 
   //Logout handler to call the logout function from auth context
-  const onLogoutHandler = () => {
-    logout();
-  };
+  // const onLogoutHandler = () => {
+  //   logout();
+  // };
 
   return (
     <Fragment>
@@ -77,7 +78,7 @@ const Navigation = () => {
                     </li>
                   )}
 
-                  {isLoggedIn && (
+                  {/* {isLoggedIn && (
                     <li>
                       <div onClick={onToggleMenuHandler}>
                         <NavLink
@@ -106,7 +107,7 @@ const Navigation = () => {
                         </NavLink>
                       </div>
                     </li>
-                  )}
+                  )} */}
 
                   {isLoggedIn && user.role === ROLES.USER && (
                     <li>
@@ -157,7 +158,7 @@ const Navigation = () => {
                     </li>
                   )}
 
-                  {isLoggedIn && (
+                  {/* {isLoggedIn && (
                     <li>
                       <div onClick={onToggleMenuHandler}>
                         <Button
@@ -170,18 +171,24 @@ const Navigation = () => {
                         </Button>
                       </div>
                     </li>
-                  )}
+                  )} */}
                 </ul>
               </>
             }
 
-            <p className={classes.user}>
+            {/* <p className={classes.user}>
               {user.fullName
                 ? user.fullName.split(" ")[0]
                 : user.role === ROLES.ADMIN
                   ? "Admin"
                   : "User"}
-            </p>
+            </p> */}
+
+            {/* <div className="profile_card"> */}
+              <ProfileCard
+              //  profileImage={props.profileImage}
+              />
+            {/* </div> */}
           </nav>
 
           {/* This renders whichever sub-page is active */}

@@ -165,18 +165,18 @@ textarea */ {
   gap: 0.5rem;
   margin-top: 1.5rem;
 }
-.delete_btn {
+/* .delete_btn {
   background: #ca0202;
 }
 
 .delete_btn:hover {
   background: #ff0000;
-}
+} */
 
 .password_header {
   border-top: 0.1rem dashed #ccc;
   /* font-size: 1.3rem; */
-  color: #ff0000;
+  color: var(--danger);
   font-size: 1.5rem;
   padding-top: 1rem;
   padding-left: 2rem;

@@ -1,54 +1,51 @@
 import dayjs from "dayjs";
 //import formatDateTime from "../../Functions/formatDateTime";
-import PaginationTable from "../../components/UI/PaginationTable/PaginationTable";
+import PaginationTable from "../../UI/PaginationTable/PaginationTable";
 import { useCallback, useEffect, useMemo, useState } from "react";
-//import AddVoterModal from "../../UI/Modals/AddVoterModal";
-//import EditVoterModal from "../../UI/Modals/EditVoterModal";
-import Toast from "../../components/UI/Notification/Toast";
-import Footer from "../../components/Footer/Footer";
-import Button from "../../components/UI/Button/Button";
-import PrintIcon from "../../components/UI/Icons/PrintIcon";
-//import { printVoters } from "../../Functions/printVoters";
-import useDeleteHook from "../../components/CustomHooks/useDeleteHook";
-import useFetch from "../../components/CustomHooks/useFetch";
-//import app_api_url from "../../../app_api_url";
-import TableSkeleton from "../../components/UI/Skeleton/TableSkeleton";
-// import formatDateTime from "../../Functions/formatDateTime";
-// import app_api_url from "../../Services/app_api_url";
-import classes from "./Settings.module.css";
-import ROLES from "../../Services/ROLES";
+import AddVoterModal from "../../UI/Modals/AddVoterModal";
+import EditVoterModal from "../../UI/Modals/EditVoterModal";
+import Toast from "../../UI/Notification/Toast";
+import Footer from "../../Footer/Footer";
+import Button from "../../UI/Button/Button";
+import PrintIcon from "../../UI/Icons/PrintIcon";
+import { printVoters } from "../../Functions/printVoters";
+import useDeleteHook from "../../CustomHooks/useDeleteHook";
+import useFetch from "../../CustomHooks/useFetch";
+import app_api_url from "../../../app_api_url";
+import TableSkeleton from "../../UI/Skeleton/TableSkeleton";
+import formatDateTime from "../../Functions/formatDateTime";
 
-// const allStudents = [
-//   {
-//     id: 2026001,
+const allStudents = [
+  {
+    id: 2026001,
 
-//     fullName: "Adu-Boahen Charles",
-//     gender: "Male",
-//     contact: "0245874744",
-//     email: "Adu-BoahenCharles@gmail.com",
-//     programme: "Accounting Education",
-//   },
+    name: "Adu-Boahen Charles",
+    gender: "Male",
+    contact: "0245874744",
+    email: "Adu-BoahenCharles@gmail.com",
+    programme: "Accounting Education",
+  },
 
-//   {
-//     id: 2026002,
-//     image: "",
-//     fullName: "Martha Kwayisi",
-//     gender: "Female",
-//     contact: "0245874744",
-//     email: "marthakwayisis@gmail.com",
-//     programme: "Management Education",
-//   },
+  {
+    id: 2026002,
+    image: "",
+    name: "Martha Kwayisi",
+    gender: "Female",
+    contact: "0245874744",
+    email: "marthakwayisis@gmail.com",
+    programme: "Management Education",
+  },
 
-//   {
-//     id: 2026004,
-//     image: "",
-//     fullName: "Cecilia Boateng",
-//     gender: "Female",
-//     contact: "0245874744",
-//     email: "ceciliaboateng@gmail.com",
-//     programme: "Management Education",
-//   },
-// ];
+  {
+    id: 2026004,
+    image: "",
+    name: "Cecilia Boateng",
+    gender: "Female",
+    contact: "0245874744",
+    email: "ceciliaboateng@gmail.com",
+    programme: "Management Education",
+  },
+];
 
 const ManageStudent = () => {
   const [showAddVoterModal, setShowAddVoterModal] = useState(false);
@@ -57,15 +54,14 @@ const ManageStudent = () => {
   //const [voters, setVoters] = useState([]);
 
   const { deleteData } = useDeleteHook();
-  const role = ROLES.USER; // Set the role based on your application logic
 
-  const { data, setRefetch } = useFetch(`getAllUsers/${role}`); //Getting all users details
+  const { data, setRefetch } = useFetch(`${app_api_url}/getAllUser`); //Getting all users details
 
-  // //Getting all users details
-  const allStudents = useMemo(() => (data !== null ? data : []), [data]);
+  //Getting all users details
+  const allVoters = useMemo(() => (data !== null ? data : allStudents), [data]);
 
   // Track initial load separately from polling refreshes
-   const [initialLoading, setInitialLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
 
   // Only show skeleton on first load, not on polling refreshes
   useEffect(() => {
@@ -120,30 +116,31 @@ const ManageStudent = () => {
         //     : prev;
         // });
 
-        deleteData(`deleteVoter/${id}`, ToastHandler);
+        deleteData(`deleteVoter/${id}`, ToastHandler, setRefetchHandler);
       }
     },
-    [deleteData, ToastHandler],
+    [deleteData, ToastHandler, setRefetchHandler],
   );
 
   /////////////////////////////////////////////////////////
   //* Handler to print all registered voters */
   /////////////////////////////////////////////////////
   const onPrintAllVotersHandler = useCallback(() => {
-    if (Array.isArray(allStudents) && allStudents.length > 0) {
+    if (Array.isArray(allVoters) && allVoters.length > 0) {
       // Format voters data for printing
-      const formattedVoters = allStudents.map((voter) => ({
-        id: voter.voterId,
-        image: voter.photo,
+      const formattedVoters = allVoters.map((voter) => ({
+        id: voter.id,
+        image: "",
         name: voter.fullName,
-        dob: dayjs(voter.DOB).format("DD MMM, YYYY"),
-        dateCreated: dayjs(voter.dateCreated).format("DD MMM, YYYY"),
+        gender: voter.gender,
+        contact: voter.contact,
+        programme: voter.programme,
       }));
-      //printVoters(formattedVoters, "Registered Voters Report");
+      printVoters(formattedVoters, "Registered Voters Report");
     } else {
       Toast("info", "No voters to print");
     }
-  }, [allStudents]);
+  }, [allVoters]);
 
   /// Define columns for the pagination table
   const columns = [
@@ -158,15 +155,15 @@ const ManageStudent = () => {
   ];
 
   // Format rows for the pagination table
-  const rows = allStudents.map((student, index) => ({
+  const rows = allStudents.map((voter, index) => ({
     sn: index + 1,
-    id: student.id,
+    id: voter.id,
     image: "",
-    name: student.fullName,
-    gender: student.gender,
-    contact: student.contact,
-    email: student.email,
-    programme: student.programme,
+    name: voter.fullName,
+    gender: voter.gender,
+    contact: voter.contact,
+    email: voter.email,
+    programme: voter.programme,
   }));
 
   return (
@@ -188,38 +185,33 @@ const ManageStudent = () => {
           //   onEditVoterHandler(showEditVoterModal, voterData)
           // }
           toastModal={ToastHandler}
-          //refreshTable={setRefetchHandler}
+          refreshTable={setRefetchHandler}
           submitEditData={submitEditData}
           onCloseModal={closeShowEditVoterModalHandler}
         />
       )}
 
-      <div className={`${classes.table__container}`}>
-        <div className="table_wrapper">
-          {
-            initialLoading ? (
-              <TableSkeleton />
-            ) :
-            <PaginationTable
-              // key={id}
-              columns={columns}
-              rows={rows}
-              onEdit={onEditVoterHandler}
-              onDelete={onDeleteHandler}
-              onAdd={onAddVoterHandler}
-              customHeaderButtons={
-                <Button onClick={onPrintAllVotersHandler}>
-                  <PrintIcon /> <span>Print</span>
-                </Button>
-              }
-            />
-          }
-        </div>
+      <div className="table_wrapper">
+        {initialLoading ? (
+          <TableSkeleton />
+        ) : (
+          <PaginationTable
+            // key={id}
+            columns={columns}
+            rows={rows}
+            onEdit={onEditVoterHandler}
+            onDelete={onDeleteHandler}
+            onAdd={onAddVoterHandler}
+            customHeaderButtons={
+              <Button onClick={onPrintAllVotersHandler}>
+                <PrintIcon size="20" /> Print
+              </Button>
+            }
+          />
+        )}
       </div>
 
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 };

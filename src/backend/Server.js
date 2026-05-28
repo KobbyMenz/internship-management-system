@@ -28,6 +28,7 @@ import getNoOfUsersRoute from "./Routes/getNoOfUsersRoute.js";
 import getInstructorRoute from "./Routes/getInstructorRoute.js";
 import insertInstructorRoute from "./Routes/insertInstructorRoute.js";
 import updateInstructorRoute from "./Routes/updateInstructorRoute.js";
+import getAllUsersRoute from "./Routes/getAllUsersRoute.js";
 
 const app = express();
 
@@ -75,6 +76,8 @@ updateUserRoute(app);
 insertUserRoute(app);
 
 getNoOfUsersRoute(app);
+
+getAllUsersRoute(app); //New route to get all students details
 
 /*
 ==================================

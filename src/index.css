@@ -3,6 +3,9 @@
   --secondary: #003803;
   --bg-color: #fff;
   --bg-color2: #eee;
+  --danger: #d30133;
+  --danger-hover: #bd002c;
+  --table-strip: #e5e4e7;
   --header-color: rgba(255, 255, 255, 0.651);
   --border: #e5e4e7;
   --text-color: #16171d;
@@ -85,7 +88,7 @@ html {
 }
 
 .Toastify__close-button > svg:hover {
-  fill: #ff0000; /* change color on hover */
+  fill: var(--danger); /* change color on hover */
 }
 /*======== Toast Notification styles ends =========*/
 

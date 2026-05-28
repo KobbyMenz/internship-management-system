@@ -1,0 +1,94 @@
+/* .search_container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  
+} */
+
+.search {
+  position: relative;
+  /* width: auto; */
+}
+
+.input {
+  font-size: 1.5rem;
+  /* background: var(--bg-color2); */
+  color: var(--text-color);
+  padding: 1.2rem 4.5rem 1.2rem 2rem;
+  border-radius: 0.5rem;
+  margin-bottom: -0.2rem;
+  width: 100%;
+   border: 0.1rem solid #ccc;
+}
+
+.input::-webkit-calendar-picker-indicator {
+  opacity: 1;
+  visibility: visible;
+  /* background: #ccc; */
+  z-index: 5;
+  cursor: pointer;
+}
+
+.input::placeholder {
+  color: #727272;
+}
+
+.date_picker__icon {
+  position: absolute;
+  right: 4.6rem;
+  bottom: 1rem;
+  z-index: 1;
+}
+
+.date_picker__icon svg {
+  color: var(--text-color);
+}
+
+.search__icon {
+  position: absolute;
+  top: 2.15rem;
+  right: 0;
+  bottom: 0;
+  height: 4.23rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  padding: 1.14rem 1rem;
+  /* background: var(--primary); */
+  /* color: var(--primary); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+.search__icon svg{
+  color: var(--primary);
+  
+}
+
+.search__icon:hover {
+  cursor: auto;
+}
+
+.search__icon:hover,
+.input:not(:placeholder-shown) ~ .search__icon,
+.input:hover + .search__icon {
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+.input:focus {
+  border: 1px solid var(--primary);
+}
+
+@media (max-width: 750px) {
+  html {
+    font-size: 52%;
+  }
+}
+
+@media (max-width: 450px) {
+  html {
+    font-size: 50%;
+  }
+}

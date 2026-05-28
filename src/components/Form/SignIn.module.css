@@ -89,7 +89,7 @@
 }
 
 .required_field {
-  color: #dc143c;
+  color: var(--danger);
 }
 
 .form_control .input,
@@ -132,8 +132,6 @@
   justify-content: center;
   margin-top: 1.5rem;
 }
-
-
 
 .link_container {
   text-align: center;

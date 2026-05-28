@@ -24,7 +24,7 @@ import AddDetails from "./pages/Details/AddDetails";
 import Settings from "./pages/Settings/Settings";
 import ManageSystem from "./pages/Settings/ManageSystem";
 import ManageStudent from "./pages/Settings/ManageStudent";
-import ManageAdmin from "./pages/Settings/ManageAdmin";
+import ManageAdmin from "./pages/Settings/ManageAdmin/ManageAdmin";
 
 function App() {
   // ✅ FIXED: Initialize state from sessionStorage to avoid setState in effect

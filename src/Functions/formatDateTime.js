@@ -1,10 +1,16 @@
-import moment from "moment";
-import FormatDate from "./FormatDate";
+import dayjs from "dayjs";
 
-const formatDateTime = (dateTime) => {
-  const date = FormatDate(dateTime.split(" ")[0]);
-  return date === "Today" || date === "Yesterday"
-    ? `${date}, ${moment(dateTime).format("ddd, hh:mm:ss A")}`
-    : moment(dateTime).format("MMM DD, YYYY, ddd, hh:mm:ss A");
-};
-export default formatDateTime;
+export default function formatDateTime(date) {
+  const inputDate = dayjs(date);
+  const now = dayjs();
+
+  if (inputDate.isSame(now, "day")) {
+    return `Today, ${inputDate.format("ddd @ hh:mm a")}`;
+  }
+
+  if (inputDate.isSame(now.subtract(1, "day"), "day")) {
+    return `Yesterday, ${inputDate.format("ddd @ hh:mm a")}`;
+  }
+
+  return inputDate.format("ddd, DD MMM, YYYY @ hh:mm a");
+}
