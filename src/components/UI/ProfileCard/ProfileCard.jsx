@@ -1,5 +1,5 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+//import axios from "axios";
+import { useState } from "react";
 import classes from "./ProfileCard.module.css";
 //import defaultProfilePicture from "../../../assets/images/profilePicture.png";
 import PropTypes from "prop-types";
@@ -26,7 +26,7 @@ import ImageBox from "../ImageBox/ImageBox";
 import ROLES from "../../../Services/ROLES";
 import User from "../Icons/UserIcon";
 import Logout from "../Icons/LogoutIcon";
-import app_api_url from "../../../Services/app_api_url";
+//import app_api_url from "../../../Services/app_api_url";
 import { useAuth } from "../../../context/useAuth";
 
 //Profile menu list
@@ -35,33 +35,12 @@ const settings = [
   { key: "logout", label: "Logout", Icon: Logout },
 ];
 
-const ProfileCard = (props) => {
+const ProfileCard = () => {
   const [showQuestionModal, setShowQuestionModal] = useState(false);
-  // const [userDetails, setUserDetails] = useState({
-  //   fullName: "",
-  //   lastLogin: "",
-  //   loginType: "",
-  // });
-  const [selectedImage, setSelectedImage] = useState("");
+  // const [selectedImage, setSelectedImage] = useState("");
   //const [loading, setLoading] = useState(true);
 
   const { user, logout } = useAuth();
-
-  //========Getting user's info from local storage ============
-  // useEffect(() => {
-  //   //const userDataFromLocalStorage = JSON.parse(localStorage.getItem("user"));
-  //   /*/ Getting user details from local storage and setting it to state.
-  //   This is done to display the user's name and last login time on the profile card.
-  //   The user details are also used to navigate to the correct profile page when the
-  //   user clicks on the profile option in the menu.*/
-  //   const userDataFromLocalStorage = authLocalStorage();
-
-  //   setUserDetails({
-  //     fullName: userDataFromLocalStorage?.fullName || "N/A",
-  //     lastLogin: userDataFromLocalStorage?.lastLogin || "N/A",
-  //     loginType: userDataFromLocalStorage?.loginType || "N/A",
-  //   });
-  // }, []);
 
   //////////////////////////////////////////////////////////////
   // useEffect(() => {
@@ -94,19 +73,10 @@ const ProfileCard = (props) => {
   // }, [selectedImage, props.profileImage, user.userId]);
   //////////////////////////////////////////////////////
 
-  //Getting user name from props
-  //const userName = formatName(userDetails.fullName);
-  //const lastLoginDate = userDetails.lastLogin.split(" ")[0];
-
-  // const time = moment(userDetails.lastLogin).format("hh:mm:ss A");
-  // const day = FormatDate(lastLoginDate.trim());
-  // const dayName = moment(userDetails.lastLogin).format("ddd");
-
   //Navigating to the various user profile
   const navigate = useNavigate();
   const onClickProfileHandler = () => {
     //Navigate to profile
-
     navigate("/profile");
   };
 
@@ -178,7 +148,7 @@ const ProfileCard = (props) => {
                     width="4.1rem"
                     height="4.1rem"
                     borderRadius="50%"
-                    src={selectedImage}
+                    // src={selectedImage}
                     alt="profile picture"
                     background="var(--primary)"
                     border="2px solid #fff"
