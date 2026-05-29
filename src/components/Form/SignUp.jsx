@@ -98,7 +98,7 @@ const SignUp = () => {
                 </div>
 
                 <div className={classes.form_control}>
-                  <label htmlFor="fullNamefullName">
+                  <label htmlFor="fullName">
                     Full Name<span className={classes.required_field}>*</span>
                   </label>
 
