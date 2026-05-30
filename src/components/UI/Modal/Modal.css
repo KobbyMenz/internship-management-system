@@ -109,7 +109,7 @@
   background: var(--bg-color);
   font-size: 1.6rem;
   position: relative;
-  height: 64vh;
+  height: fit-content;
   /* overflow-y: scroll; */
 }
 
@@ -312,7 +312,7 @@ option {
   display: flex;
   justify-content: right;
   flex-direction: row;
-  margin-top: 2.5rem;
+  margin-top: 3rem;
   /* margin-top: 1.5rem; */
 }
 

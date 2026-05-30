@@ -17,6 +17,7 @@ import qualificationOptions from "../../../Services/qualificationOptions";
 import statusOptions from "../../../Services/statusOptions";
 import { ghanaRegions } from "../../../Services/ghanaRegions";
 import Box from "@mui/material/Box";
+import CapitalizeWords from "../../../Functions/CapitalizeWords";
 
 const Backdrop = ({ onClose }) => (
   <div className="modal-overlay" onClick={onClose} />
@@ -68,6 +69,7 @@ const EditStudentsModal = ({
   const {
     register: sRegister,
     handleSubmit: sHandleSubmit,
+    resetField,
     reset: sReset,
     setError: sSetError,
     formState: { errors: sErrors },
@@ -210,9 +212,11 @@ const EditStudentsModal = ({
     return () => document.removeEventListener("keydown", trap);
   }, []);
 
+  //button handlers for next and prev page
   const goNext = () => setPage((p) => Math.min(p + 1, steps.length - 1));
   const goPrev = () => setPage((p) => Math.max(p - 1, 0));
 
+  //Student save handler
   const saveStudent = async (data) => {
     setLoading(true);
     setGeneralError("");
@@ -228,9 +232,11 @@ const EditStudentsModal = ({
       const j = await res.json();
       if (!res.ok) throw new Error(j.error || j.message || "Save failed");
 
-      notify("success", "Student saved");
-      setSuccessMessage("Student saved successfully");
-      setTimeout(() => setSuccessMessage(""), 3000);
+      resetField("password");
+
+      notify("success", `Student details ${j.message}`);
+      setSuccessMessage(`Student details ${j.message}`);
+      setTimeout(() => setSuccessMessage(""), 6000);
       if (typeof refreshTable === "function") refreshTable();
     } catch (err) {
       try {
@@ -266,9 +272,9 @@ const EditStudentsModal = ({
       const j = await res.json();
       if (!res.ok) throw new Error(j.error || j.message || "Save failed");
 
-      notify("success", `${routeName} saved`);
-      setSuccessMessage(`${routeName} saved successfully`);
-      setTimeout(() => setSuccessMessage(""), 3000);
+      notify("success", `${CapitalizeWords(routeName)} details ${j.message}`);
+      setSuccessMessage(`${CapitalizeWords(routeName)} details ${j.message}`);
+      setTimeout(() => setSuccessMessage(""), 6000);
     } catch (err) {
       try {
         const parsed = typeof err === "string" ? { error: err } : err;
@@ -306,9 +312,9 @@ const EditStudentsModal = ({
       const j = await res.json();
       if (!res.ok) throw new Error(j.error || j.message || "Save failed");
 
-      notify("success", `School saved`);
-      setSuccessMessage(`School saved successfully`);
-      setTimeout(() => setSuccessMessage(""), 3000);
+      notify("success", `School details ${j.message}`);
+      setSuccessMessage(`School details ${j.message}`);
+      setTimeout(() => setSuccessMessage(""), 6000);
     } catch (err) {
       try {
         const parsed = typeof err === "string" ? { error: err } : err;
@@ -377,7 +383,6 @@ const EditStudentsModal = ({
                 justifyContent: "space-between",
                 alignItems: "center",
 
-
                 "@media (max-width: 750px)": {
                   flexDirection: "column",
                   gap: "0.6rem",
@@ -395,7 +400,7 @@ const EditStudentsModal = ({
               </h3>
 
               <div
-                style={{ display: "flex", gap: "0.6rem", alignItems: "center" }}
+                style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}
               >
                 {steps.map((s, i) => (
                   <Button
@@ -405,7 +410,7 @@ const EditStudentsModal = ({
                     id={
                       i === page ? classes.btn_primary : classes.btn_secondary
                     }
-                    style={{ padding: "1rem 3rem" }}
+                    style={{ padding: "0.6rem 2rem" }}
                   >
                     {s}
                   </Button>
@@ -581,8 +586,33 @@ const EditStudentsModal = ({
                       </div>
 
                       <div className={classes.form_control}>
-                        <label>Password (leave blank to keep)</label>
-                        <PasswordInput {...sRegister("password")} />
+                        <label htmlFor="password">
+                          Password (Leave blank to keep)
+                        </label>
+
+                        <PasswordInput
+                          className={
+                            sErrors.password
+                              ? `${classes.error} ${classes.input}`
+                              : `${classes.input} `
+                          }
+                          type="password"
+                          id="password"
+                          placeholder="Enter your new password"
+                          {...sRegister("password", {
+                            // required: "Password is required",
+                            minLength: {
+                              value: 8,
+                              message:
+                                "Password must be at least 8 characters long",
+                            },
+                          })}
+                        />
+                        {sErrors.password && (
+                          <small className="error">
+                            {sErrors.password.message}
+                          </small>
+                        )}
                       </div>
 
                       <div className={"btn_container"}>
