@@ -21,12 +21,11 @@ const useInsertHook = () => {
         toastModal("success", `${response.data.message}`);
         onSuccess();
       }
+      return { success: true, data: response.data };
     } catch (err) {
-      if (err.response?.data?.error) {
-        toastModal("error", err.response.data.error);
-      } else {
-        toastModal("error", `Process Failed`);
-      }
+      const errorMsg = err.response?.data?.error || "Process Failed";
+      toastModal("error", errorMsg);
+      return { success: false, error: errorMsg };
     }
   };
 

@@ -5,6 +5,7 @@ import classes from "../../UI/Button/Button.module.css";
 const Button = forwardRef((props, ref) => {
   const {
     className = "",
+    
     type,
     onClick,
     disabled,
@@ -19,6 +20,7 @@ const Button = forwardRef((props, ref) => {
       ref={ref}
       className={`${classes.button} ${className}`}
       type={type}
+      
       onClick={onClick}
       disabled={disabled}
       id={id}

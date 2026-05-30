@@ -27,6 +27,7 @@
   z-index: 105;
   overflow: hidden;
   transition: all 0.5s ease-in-out;
+  border: 0.3rem solid var(--primary);
   /* animation: bounce 0.3s cubic-bezier(0.4, 0, 0.2, 1); */
   /* animation-delay: 0.2s; */
 }
@@ -74,9 +75,9 @@
   align-items: center;
 }
 
-/* .modal .btn {
-  padding: 1.2rem 3rem;
-} */
+.modal .btn {
+  padding: 1.1rem 2rem;
+}
 
 /* .modal .btn:hover {
   border: 0.2rem solid var(--secondary);
@@ -93,11 +94,11 @@
   /* border: 0.1rem solid var(--primary); */
   color: var(--primary);
   font-weight: bolder;
-  border: 0.3rem solid var(--primary);
+  border: 0.1rem solid var(--primary);
 }
 
 #btn__no:hover {
-  background: var(--hover-color);
+  background: var(--bg-color2);
 }
 
 @media (max-width: 750px) {

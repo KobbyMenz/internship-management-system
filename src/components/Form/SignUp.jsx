@@ -36,7 +36,7 @@ const SignUp = () => {
       return;
     }
 
-    if (!window.confirm("Are you want to sign up?")) return;
+    if (!window.confirm("Are you sure you want to sign up?")) return;
     //========Register user========
     insertData(`insertUser`, formData, Toast, () => {
       reset();

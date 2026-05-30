@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 //import formatDateTime from "../../Functions/formatDateTime";
 import PaginationTable from "../../components/UI/PaginationTable/PaginationTable";
 import { useCallback, useEffect, useMemo, useState } from "react";
-//import AddVoterModal from "../../UI/Modals/AddVoterModal";
+import AddStudentsModal from "../../components/UI/Modal/AddStudentsModal";
 //import EditVoterModal from "../../UI/Modals/EditVoterModal";
 import Toast from "../../components/UI/Notification/Toast";
 import Footer from "../../components/Footer/Footer";
@@ -17,6 +17,7 @@ import TableSkeleton from "../../components/UI/Skeleton/TableSkeleton";
 // import app_api_url from "../../Services/app_api_url";
 import classes from "./Settings.module.css";
 import ROLES from "../../Services/ROLES";
+import EditStudentsModal from "../../components/UI/Modal/EditStudentsModal";
 
 // const allStudents = [
 //   {
@@ -51,9 +52,11 @@ import ROLES from "../../Services/ROLES";
 // ];
 
 const ManageStudent = () => {
-  const [showAddVoterModal, setShowAddVoterModal] = useState(false);
+  const [showAddUserModal, setShowAddUserModal] = useState(false);
   const [showEditVoterModal, setShowEditVoterModal] = useState(false);
   const [submitEditData, setSubmitEditData] = useState({});
+  const [showEditUserModal, setShowEditUserModal] = useState(false);
+  const [editStudentId, setEditStudentId] = useState(null);
   //const [voters, setVoters] = useState([]);
 
   const { deleteData } = useDeleteHook();
@@ -65,7 +68,7 @@ const ManageStudent = () => {
   const allStudents = useMemo(() => (data !== null ? data : []), [data]);
 
   // Track initial load separately from polling refreshes
-   const [initialLoading, setInitialLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
 
   // Only show skeleton on first load, not on polling refreshes
   useEffect(() => {
@@ -75,8 +78,27 @@ const ManageStudent = () => {
   }, [data]);
 
   // Handler to open the Add Voter Modal
-  const onAddVoterHandler = useCallback(() => {
-    setShowAddVoterModal(true);
+  const onAddUserHandler = useCallback(() => {
+    setShowAddUserModal(true);
+  }, []);
+
+  // Handler to open edit modal
+  const onEditHandler = useCallback((id) => {
+    setEditStudentId(id);
+    setShowEditUserModal(true);
+  }, []);
+
+  // const closeShowEditUserModalHandler = useCallback(() => {
+  //   setShowEditUserModal(false);
+  // }, []);
+
+  const closeShowAddUserModalHandler = useCallback(() => {
+    setShowAddUserModal(false);
+  }, []);
+
+  const closeShowEditUserModalHandler = useCallback(() => {
+    setShowEditUserModal(false);
+    setEditStudentId(null);
   }, []);
 
   const onEditVoterHandler = useCallback((id, image, name, dob) => {
@@ -92,10 +114,6 @@ const ManageStudent = () => {
 
   const closeShowEditVoterModalHandler = useCallback(() => {
     setShowEditVoterModal(false);
-  }, []);
-
-  const closeShowAddVoterModalHandler = useCallback(() => {
-    setShowAddVoterModal(false);
   }, []);
 
   //Function to call toast modal
@@ -171,49 +189,47 @@ const ManageStudent = () => {
 
   return (
     <>
-      {showAddVoterModal && (
-        <AddVoterModal
-          onAddVoter={(voterData) =>
-            onAddVoterHandler(showAddVoterModal, voterData)
-          }
+      {showAddUserModal && (
+        <AddStudentsModal
+          // onAddVoter={(voterData) =>
+          //   onAddUserHandler(showAddUserModal, voterData)
+          // }
           toastModal={ToastHandler}
           refreshTable={setRefetchHandler}
-          onCloseModal={closeShowAddVoterModalHandler}
+          onCloseModal={closeShowAddUserModalHandler}
         />
       )}
 
-      {showEditVoterModal && (
-        <EditVoterModal
-          // onAddCandidate={(voterData) =>
-          //   onEditVoterHandler(showEditVoterModal, voterData)
-          // }
+      {showEditUserModal && editStudentId && (
+        <EditStudentsModal
+          studentId={editStudentId}
           toastModal={ToastHandler}
-          //refreshTable={setRefetchHandler}
-          submitEditData={submitEditData}
-          onCloseModal={closeShowEditVoterModalHandler}
+          refreshTable={setRefetchHandler}
+          onCloseModal={closeShowEditUserModalHandler}
         />
       )}
+
+      {/* Edit modal not available yet; remove or implement EditVoterModal to enable editing */}
 
       <div className={`${classes.table__container}`}>
         <div className="table_wrapper">
-          {
-            initialLoading ? (
-              <TableSkeleton />
-            ) :
+          {initialLoading ? (
+            <TableSkeleton />
+          ) : (
             <PaginationTable
               // key={id}
               columns={columns}
               rows={rows}
-              onEdit={onEditVoterHandler}
+              onEdit={onEditHandler}
               onDelete={onDeleteHandler}
-              onAdd={onAddVoterHandler}
+              onAdd={onAddUserHandler}
               customHeaderButtons={
                 <Button onClick={onPrintAllVotersHandler}>
                   <PrintIcon /> <span>Print</span>
                 </Button>
               }
             />
-          }
+          )}
         </div>
       </div>
 

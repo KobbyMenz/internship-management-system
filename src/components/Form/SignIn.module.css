@@ -102,6 +102,78 @@
   font-weight: 500;
 }
 
+/* Layout helpers used by AddStudentsModal */
+.form_box_container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem 2.4rem;
+  padding: 1.2rem 1.6rem;
+}
+
+.form_box {
+  width: 100%;
+}
+
+.form_error {
+  color: #ca0202;
+  font-size: 1.3rem;
+  /* margin-top: 0.4rem; */
+}
+
+.input {
+  width: 100%;
+  padding: 1rem 0.9rem;
+  font-size: 1.4rem;
+  border-radius: 0.6rem;
+  /* background: #eee; */
+  border: 0.12rem solid #ddd;
+  color: #222;
+}
+
+.select {
+  width: 100%;
+  padding: 1rem 0.9rem;
+  font-size: 1.4rem;
+  border-radius: 0.6rem;
+  /* background: #eee; */
+  border: 0.12rem solid #ddd;
+  color: #222;
+}
+
+.btn_container {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: 1.6rem;
+}
+
+.btn_primary,
+#btn_primary {
+  background: #6b0033;
+  color: #fff;
+  padding: 0.9rem 2.4rem;
+  border-radius: 0.8rem;
+  border: none;
+  font-weight: 600;
+}
+
+#btn_secondary {
+  background: #fff;
+  border: 0.12rem solid #6b0033;
+  color: #6b0033;
+  padding: 0.9rem 2.2rem;
+  border-radius: 0.8rem;
+}
+
+#btn_secondary:hover {
+  background: var(--bg-color2);
+}
+
+.full_width {
+  grid-column: 1 / -1;
+}
+
 /* option::placeholder {
   border-color: #ccc;
 } */
@@ -122,8 +194,8 @@
 
 .form_control small {
   color: #dc143c;
-  margin-top: 0.25rem;
-  margin-top: -0.1rem;
+  /* margin-top: 0.25rem; */
+  margin-top: -0.2rem;
   font-size: 1.3rem;
 }
 
@@ -184,6 +256,31 @@ button:hover {
   .form_container_large {
     width: 85%;
     /* margin: 2rem auto 1rem auto; */
+  }
+
+  .form_box_container {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+  .btn_container {
+    flex-direction: column-reverse;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .btn_primary,
+  #btn_secondary {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .input,
+  .select {
+    font-size: 1.2rem;
+    padding: 0.9rem 0.8rem;
   }
 }
 

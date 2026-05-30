@@ -29,6 +29,9 @@ import getInstructorRoute from "./Routes/getInstructorRoute.js";
 import insertInstructorRoute from "./Routes/insertInstructorRoute.js";
 import updateInstructorRoute from "./Routes/updateInstructorRoute.js";
 import getAllUsersRoute from "./Routes/getAllUsersRoute.js";
+//import uploadPhotoRoute from "./Routes/uploadPhotoRoute.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 
@@ -54,6 +57,13 @@ app.use(cors(securityCORS));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser());
+// Serve uploaded files from /uploads
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(
+  "/uploads",
+  express.static(path.join(__dirname, "../../public/uploads")),
+);
 ////////////////////////////////////////////////////////////////
 
 /*
@@ -78,6 +88,9 @@ insertUserRoute(app);
 getNoOfUsersRoute(app);
 
 getAllUsersRoute(app); //New route to get all students details
+
+// Photo upload route
+//uploadPhotoRoute(app);
 
 /*
 ==================================
