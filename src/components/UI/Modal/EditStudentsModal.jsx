@@ -54,6 +54,7 @@ const steps = ["Student", "School", "Mentor", "Head"];
 const EditStudentsModal = ({
   onCloseModal,
   studentId,
+  fullName,
   toastModal,
   refreshTable,
 }) => {
@@ -134,6 +135,7 @@ const EditStudentsModal = ({
           });
         }
 
+        //
         if (scRes.ok) {
           // If API returned an actual record (studentId present), treat as existing
           const hasRecord = scJson && scJson.studentId;
@@ -381,10 +383,7 @@ const EditStudentsModal = ({
       )}
 
       {ReactDOM.createPortal(
-        <ModalOverlay
-          onClose={onCloseModal}
-          title={`Edit Student: ${studentId}`}
-        >
+        <ModalOverlay onClose={onCloseModal} title={`Edit: ${fullName}`}>
           <div className={classes.form_box_container} ref={modalRef}>
             {generalError && (
               <div
@@ -1325,6 +1324,7 @@ EditStudentsModal.propTypes = {
   onCloseModal: PropTypes.func.isRequired,
   studentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
     .isRequired,
+  fullName: PropTypes.string.isRequired,
   toastModal: PropTypes.func,
   refreshTable: PropTypes.func,
 };

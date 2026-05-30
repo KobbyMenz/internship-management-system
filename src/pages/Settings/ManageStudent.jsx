@@ -203,6 +203,7 @@ const ManageStudent = () => {
       {showEditUserModal && editStudentId && (
         <EditStudentsModal
           studentId={editStudentId}
+          fullName={rows.find((row) => row.id === editStudentId)?.name || ""}
           toastModal={ToastHandler}
           refreshTable={setRefetchHandler}
           onCloseModal={closeShowEditUserModalHandler}
