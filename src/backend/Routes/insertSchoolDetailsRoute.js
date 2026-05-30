@@ -32,7 +32,9 @@ export default function insertSchoolDetailsRoute(app) {
           }); //returning HTTP status
         }
 
-        res.status(201).json({ message: "Records submitted successfully" });
+        res
+          .status(201)
+          .json({ message: "School details submitted successfully" });
       },
     );
   });

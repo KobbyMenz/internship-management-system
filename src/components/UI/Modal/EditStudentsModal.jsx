@@ -17,7 +17,7 @@ import qualificationOptions from "../../../Services/qualificationOptions";
 import statusOptions from "../../../Services/statusOptions";
 import { ghanaRegions } from "../../../Services/ghanaRegions";
 import Box from "@mui/material/Box";
-import CapitalizeWords from "../../../Functions/CapitalizeWords";
+import axios from "axios";
 
 const Backdrop = ({ onClose }) => (
   <div className="modal-overlay" onClick={onClose} />
@@ -65,13 +65,16 @@ const EditStudentsModal = ({
   const [initialLoading, setInitialLoading] = useState(true);
   const [generalError, setGeneralError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [hasSchool, setHasSchool] = useState(false);
+  const [hasMentor, setHasMentor] = useState(false);
+  const [hasHead, setHasHead] = useState(false);
 
   const {
     register: sRegister,
     handleSubmit: sHandleSubmit,
     resetField,
     reset: sReset,
-    setError: sSetError,
+    // setError: sSetError,
     formState: { errors: sErrors },
   } = useForm();
 
@@ -79,7 +82,7 @@ const EditStudentsModal = ({
     register: mRegister,
     handleSubmit: mHandleSubmit,
     reset: mReset,
-    setError: mSetError,
+    // setError: mSetError,
     formState: { errors: mErrors },
   } = useForm();
 
@@ -87,7 +90,7 @@ const EditStudentsModal = ({
     register: scRegister,
     handleSubmit: scHandleSubmit,
     reset: scReset,
-    setError: scSetError,
+    // setError: scSetError,
     formState: { errors: scErrors },
     control: scControl,
   } = useForm();
@@ -98,7 +101,7 @@ const EditStudentsModal = ({
     register: hRegister,
     handleSubmit: hHandleSubmit,
     reset: hReset,
-    setError: hSetError,
+    // setError: hSetError,
     formState: { errors: hErrors },
   } = useForm();
 
@@ -132,36 +135,44 @@ const EditStudentsModal = ({
         }
 
         if (scRes.ok) {
+          // If API returned an actual record (studentId present), treat as existing
+          const hasRecord = scJson && scJson.studentId;
           scReset({
-            studentId: scJson.studentId,
-            schoolName: scJson.schoolName,
-            schoolAddress: scJson.schoolAddress,
-            town: scJson.town,
-            region: scJson.region,
-            district: scJson.district,
+            studentId: scJson.studentId || "",
+            schoolName: scJson.schoolName || "",
+            schoolAddress: scJson.schoolAddress || "",
+            town: scJson.town || "",
+            region: scJson.region || "",
+            district: scJson.district || "",
           });
+          setHasSchool(Boolean(hasRecord));
         }
 
         if (mRes.ok) {
+          // API returns empty fields with 200 when no record exists — check name/studentId
+          const hasRecord = mJson && (mJson.name || mJson.studentId);
           mReset({
-            title: mJson.title,
-            name: mJson.name,
-            contact: mJson.contact,
-            qualification: mJson.qualification,
-            status: mJson.status,
-            momoNumber: mJson.momoNumber,
+            title: mJson.title || "",
+            name: mJson.name || "",
+            contact: mJson.contact || "",
+            qualification: mJson.qualification || "",
+            status: mJson.status || "",
+            momoNumber: mJson.momoNumber || "",
           });
+          setHasMentor(Boolean(hasRecord));
         }
 
         if (hRes.ok) {
+          const hasRecord = hJson && (hJson.name || hJson.studentId);
           hReset({
-            title: hJson.title,
-            name: hJson.name,
-            contact: hJson.contact,
-            qualification: hJson.qualification,
-            status: hJson.status,
-            momoNumber: hJson.momoNumber,
+            title: hJson.title || "",
+            name: hJson.name || "",
+            contact: hJson.contact || "",
+            qualification: hJson.qualification || "",
+            status: hJson.status || "",
+            momoNumber: hJson.momoNumber || "",
           });
+          setHasHead(Boolean(hasRecord));
         }
       } catch (err) {
         console.error(err);
@@ -221,37 +232,28 @@ const EditStudentsModal = ({
     setLoading(true);
     setGeneralError("");
     try {
-      const res = await fetch(
+      const response = await axios.put(
         `${app_api_url}/updateUser/${data.userId}/${ROLES.USER}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        },
+        data,
       );
-      const j = await res.json();
-      if (!res.ok) throw new Error(j.error || j.message || "Save failed");
 
-      resetField("password");
+      if (response.data.message) {
+        resetField("password");
 
-      notify("success", `Student details ${j.message}`);
-      setSuccessMessage(`Student details ${j.message}`);
-      setTimeout(() => setSuccessMessage(""), 6000);
-      if (typeof refreshTable === "function") refreshTable();
-    } catch (err) {
-      try {
-        const parsed = typeof err === "string" ? { error: err } : err;
-        if (parsed && parsed.fieldErrors) {
-          Object.entries(parsed.fieldErrors).forEach(([k, v]) => {
-            sSetError(k, { type: "server", message: v });
-          });
-        } else {
-          setGeneralError(parsed.error || parsed.message || String(err));
-        }
-      } catch (parseErr) {
-        setGeneralError(err.message || String(parseErr));
+        notify("success", `${response.data.message}`);
+        setSuccessMessage(`${response.data.message}`);
+        setTimeout(() => setSuccessMessage(""), 6000);
+        if (typeof refreshTable === "function") refreshTable();
       }
-      notify("error", err.message || "Failed to save student");
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.error) {
+        Toast("error", err.response.data.error);
+      } else {
+        //alert("Server cannot be reached", err);
+        notify("error", "Server cannot be reached.");
+        setGeneralError("Server cannot be reached.");
+        // console.log("error", `Server cannot be reached. ${err}`);
+      }
     } finally {
       setLoading(false);
     }
@@ -261,74 +263,111 @@ const EditStudentsModal = ({
     setLoading(true);
     setGeneralError("");
     try {
-      const res = await fetch(
+      const response = await axios.put(
         `${app_api_url}/updateInstructor/${studentId}/${routeName}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        },
+        data,
       );
-      const j = await res.json();
-      if (!res.ok) throw new Error(j.error || j.message || "Save failed");
 
-      notify("success", `${CapitalizeWords(routeName)} details ${j.message}`);
-      setSuccessMessage(`${CapitalizeWords(routeName)} details ${j.message}`);
-      setTimeout(() => setSuccessMessage(""), 6000);
-    } catch (err) {
-      try {
-        const parsed = typeof err === "string" ? { error: err } : err;
-        if (parsed && parsed.fieldErrors) {
-          Object.entries(parsed.fieldErrors).forEach(([k, v]) => {
-            if (routeName === "mentor")
-              mSetError(k, { type: "server", message: v });
-            if (routeName === "head")
-              hSetError(k, { type: "server", message: v });
-          });
-        } else {
-          setGeneralError(parsed.error || parsed.message || String(err));
-        }
-      } catch (parseErr) {
-        setGeneralError(err.message || String(parseErr));
+      if (response.data.message) {
+        notify("success", `${response.data.message}`);
+        setSuccessMessage(`${response.data.message}`);
+        setTimeout(() => setSuccessMessage(""), 6000);
       }
-      notify("error", err.message || `Failed to save ${routeName}`);
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.error) {
+        Toast("error", err.response.data.error);
+      } else {
+        //alert("Server cannot be reached", err);
+        notify("error", "Server cannot be reached.");
+        setGeneralError("Server cannot be reached.");
+      }
     } finally {
       setLoading(false);
     }
   };
 
+  //Save School details
   const saveSchool = async (data) => {
     setLoading(true);
     setGeneralError("");
-    try {
-      const res = await fetch(
-        `${app_api_url}/updateSchoolDetails/${studentId}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        },
-      );
-      const j = await res.json();
-      if (!res.ok) throw new Error(j.error || j.message || "Save failed");
 
-      notify("success", `School details ${j.message}`);
-      setSuccessMessage(`School details ${j.message}`);
-      setTimeout(() => setSuccessMessage(""), 6000);
-    } catch (err) {
-      try {
-        const parsed = typeof err === "string" ? { error: err } : err;
-        if (parsed && parsed.fieldErrors) {
-          Object.entries(parsed.fieldErrors).forEach(([k, v]) => {
-            scSetError(k, { type: "server", message: v });
-          });
-        } else {
-          setGeneralError(parsed.error || parsed.message || String(err));
-        }
-      } catch (parseErr) {
-        setGeneralError(err.message || String(parseErr));
+    try {
+      const response = await axios.put(
+        `${app_api_url}/updateSchoolDetails/${studentId}`,
+        data,
+      );
+
+      if (response.data.message) {
+        notify("success", `${response.data.message}`);
+        setSuccessMessage(`${response.data.message}`);
+        setTimeout(() => setSuccessMessage(""), 6000);
       }
-      notify("error", err.message || `Failed to save school`);
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.error) {
+        Toast("error", err.response.data.error);
+      } else {
+        Toast("error", "Server cannot be reached");
+        setGeneralError("Server cannot be reached.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Insert school details when no record exists
+  const insertSchool = async (data) => {
+    setLoading(true);
+    setGeneralError("");
+
+    try {
+      const response = await axios.post(
+        `${app_api_url}/insertShoolDetails/${studentId}`,
+        data,
+      );
+
+      if (response.data.message) {
+        setHasSchool(true);
+        notify("success", `${response.data.message}`);
+        setSuccessMessage(`${response.data.message}`);
+        setTimeout(() => setSuccessMessage(""), 6000);
+      }
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.error) {
+        Toast("error", err.response.data.error);
+      } else {
+        Toast("error", "Server cannot be reached");
+        setGeneralError("Server cannot be reached.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Insert instructor (mentor/head)
+  const insertInstructor = async (data, routeName) => {
+    setLoading(true);
+    setGeneralError("");
+    try {
+      const response = await axios.post(
+        `${app_api_url}/insertInstructor/${studentId}/${routeName}`,
+        data,
+      );
+
+      if (response.data.message) {
+        if (routeName === "mentor") setHasMentor(true);
+        if (routeName === "head") setHasHead(true);
+
+        notify("success", ` ${response.data.message}`);
+        setSuccessMessage(`${response.data.message}`);
+        setTimeout(() => setSuccessMessage(""), 6000);
+      }
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.error) {
+        Toast("error", err.response.data.error);
+      } else {
+        Toast("error", "Server cannot be reached");
+        setGeneralError("Server cannot be reached.");
+      }
     } finally {
       setLoading(false);
     }
@@ -648,7 +687,9 @@ const EditStudentsModal = ({
                 {page === 1 && (
                   <form
                     style={{ display: "contents" }}
-                    onSubmit={scHandleSubmit((d) => saveSchool(d))}
+                    onSubmit={scHandleSubmit((d) =>
+                      hasSchool ? saveSchool(d) : insertSchool(d),
+                    )}
                   >
                     <div className={classes.form_box}>
                       <div className={classes.form_control}>
@@ -747,7 +788,7 @@ const EditStudentsModal = ({
                       <div className={"btn_container"}>
                         <div
                           style={{
-                            marginLeft: "auto",
+                            // marginLeft: "auto",
                             display: "flex",
                             gap: "0.6rem",
                           }}
@@ -772,7 +813,7 @@ const EditStudentsModal = ({
                             className={classes.btn_primary}
                             disabled={loading}
                           >
-                            {loading ? "Saving..." : "Save"}
+                            {loading ? "Saving..." : hasSchool ? "Save" : "Add"}
                           </Button>
 
                           <Button
@@ -793,7 +834,11 @@ const EditStudentsModal = ({
                 {page === 2 && (
                   <form
                     style={{ display: "contents" }}
-                    onSubmit={mHandleSubmit((d) => saveInstructor(d, "mentor"))}
+                    onSubmit={mHandleSubmit((d) =>
+                      hasMentor
+                        ? saveInstructor(d, "mentor")
+                        : insertInstructor(d, "mentor"),
+                    )}
                   >
                     <div className={classes.form_box}>
                       <div className={classes.form_control}>
@@ -960,7 +1005,7 @@ const EditStudentsModal = ({
                           }
                           type="tel"
                           id="momoNumber"
-                          placeholder="Enter your mentor's mobile money number"
+                          placeholder="Enter mentor's mobile money number"
                           {...mRegister("momoNumber", {
                             required: "Mobile Money Number is required",
                             maxLength: {
@@ -983,7 +1028,7 @@ const EditStudentsModal = ({
                       <div className={"btn_container"}>
                         <div
                           style={{
-                            marginLeft: "auto",
+                            // marginLeft: "auto",
                             display: "flex",
                             gap: "0.6rem",
                           }}
@@ -1009,7 +1054,7 @@ const EditStudentsModal = ({
                             className={classes.btn_primary}
                             disabled={loading}
                           >
-                            {loading ? "Saving..." : "Save"}
+                            {loading ? "Saving..." : hasMentor ? "Save" : "Add"}
                           </Button>
 
                           <Button
@@ -1030,7 +1075,11 @@ const EditStudentsModal = ({
                 {page === 3 && (
                   <form
                     style={{ display: "contents" }}
-                    onSubmit={hHandleSubmit((d) => saveInstructor(d, "head"))}
+                    onSubmit={hHandleSubmit((d) =>
+                      hasHead
+                        ? saveInstructor(d, "head")
+                        : insertInstructor(d, "head"),
+                    )}
                   >
                     <div className={classes.form_box}>
                       <div className={classes.form_control}>
@@ -1197,7 +1246,7 @@ const EditStudentsModal = ({
                           }
                           type="tel"
                           id="momoNumber"
-                          placeholder="Enter your head's mobile money number"
+                          placeholder="Enter head's mobile money number"
                           {...hRegister("momoNumber", {
                             required: "Mobile Money Number is required",
                             maxLength: {
@@ -1220,7 +1269,7 @@ const EditStudentsModal = ({
                       <div className={"btn_container"}>
                         <div
                           style={{
-                            marginLeft: "auto",
+                            // marginLeft: "auto",
                             display: "flex",
                             gap: "0.6rem",
                           }}
@@ -1246,7 +1295,7 @@ const EditStudentsModal = ({
                             className={classes.btn_primary}
                             disabled={loading}
                           >
-                            {loading ? "Saving..." : "Save"}
+                            {loading ? "Saving..." : hasHead ? "Save" : "Add"}
                           </Button>
 
                           <Button

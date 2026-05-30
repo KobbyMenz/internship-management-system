@@ -18,19 +18,49 @@ export default function updateSchoolDetailsRoute(app) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
+    // First check if a school record exists for this studentId
+    // const sqlCheck =
+    //   "SELECT 1 FROM internship_db.school WHERE studentId = ? LIMIT 1";
+    // db.query(sqlCheck, [studentId], (checkErr, checkResults) => {
+    //   if (checkErr) {
+    //     console.log("Database error (check)", checkErr);
+    //     return res
+    //       .status(500)
+    //       .json({ error: "Error checking existing records" });
+    //   }
+
+    //   if (!checkResults || checkResults.length === 0) {
+    //     // No existing record found — inform frontend to insert first
+    //     return res
+    //       .status(404)
+    //       .json({
+    //         error: "No school details found. Please add before updating.",
+    //       });
+    //   }
+
     const sqlUpdate =
-      "UPDATE internship_db.school SET schoolName = ?, schoolAddress = ?, town = ?, region = ?, district = ? WHERE studentId = ? ";
+      "UPDATE internship_db.school SET schoolName = ?, schoolAddress = ?, town = ?, region = ?, district = ? WHERE studentId = ?";
     db.query(
       sqlUpdate,
       [schoolName, schoolAddress, town, region, district, studentId],
-      (err) => {
-        if (err) {
-          console.log("Database error", err);
-          return res.status(500).send("Error updating records"); //returning HTTP status
+      (updateErr, updateResults) => {
+        if (updateErr) {
+          console.log("Database error (update)", updateErr);
+          return res.status(500).json({ error: "Error updating records" });
         }
 
-        res.status(201).json({ message: "updated successfully" });
+        // If no rows were affected, the update did not change anything (or studentId didn't match)
+        if (updateResults && updateResults.affectedRows === 0) {
+          return res
+            .status(200)
+            .json({ message: "No changes made to the record." });
+        }
+
+        return res
+          .status(200)
+          .json({ message: "School details updated successfully" });
       },
     );
+    // });
   });
 }

@@ -1,3 +1,4 @@
+import CapitalizeWords from "../../Functions/CapitalizeWords.js";
 import db from "../Services/dataBaseConnection.js";
 
 export default function insertInstructorRoute(app) {
@@ -38,7 +39,9 @@ export default function insertInstructorRoute(app) {
           }); //returning HTTP status
         }
 
-        res.status(201).json({ message: "Records submitted successfully" });
+        res.status(201).json({
+          message: `${CapitalizeWords(routeName)} details submitted successfully`,
+        });
       },
     );
   });
