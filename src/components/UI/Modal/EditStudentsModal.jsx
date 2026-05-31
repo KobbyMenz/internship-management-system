@@ -18,6 +18,7 @@ import statusOptions from "../../../Services/statusOptions";
 import { ghanaRegions } from "../../../Services/ghanaRegions";
 import Box from "@mui/material/Box";
 import axios from "axios";
+import EditStudentsModalSkeleton from "../Skeleton/EditStudentsModalSkeleton";
 
 const Backdrop = ({ onClose }) => (
   <div className="modal-overlay" onClick={onClose} />
@@ -457,7 +458,9 @@ const EditStudentsModal = ({
             </Box>
 
             {initialLoading ? (
-              <div style={{ gridColumn: "1 / -1" }}>Loading...</div>
+              <div style={{ gridColumn: "1 / -1" }}>
+                <EditStudentsModalSkeleton />
+              </div>
             ) : (
               <>
                 {/*============ Student page ============*/}
