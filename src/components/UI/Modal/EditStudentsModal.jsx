@@ -812,7 +812,13 @@ const EditStudentsModal = ({
                             className={classes.btn_primary}
                             disabled={loading}
                           >
-                            {loading ? "Saving..." : hasSchool ? "Save" : "Add"}
+                            {loading && hasSchool
+                              ? "Saving..."
+                              : loading && !hasSchool
+                                ? "Adding..."
+                                : hasSchool
+                                  ? "Save"
+                                  : "Add"}
                           </Button>
 
                           <Button
@@ -1053,7 +1059,13 @@ const EditStudentsModal = ({
                             className={classes.btn_primary}
                             disabled={loading}
                           >
-                            {loading ? "Saving..." : hasMentor ? "Save" : "Add"}
+                            {loading && hasMentor
+                              ? "Saving..."
+                              : loading && !hasMentor
+                                ? "Adding..."
+                                : hasMentor
+                                  ? "Save"
+                                  : "Add"}
                           </Button>
 
                           <Button
@@ -1294,7 +1306,13 @@ const EditStudentsModal = ({
                             className={classes.btn_primary}
                             disabled={loading}
                           >
-                            {loading ? "Saving..." : hasHead ? "Save" : "Add"}
+                            {loading && hasHead
+                              ? "Saving..."
+                              : loading && !hasHead
+                                ? "Adding..."
+                                : hasHead
+                                  ? "Save"
+                                  : "Add"}
                           </Button>
 
                           <Button
