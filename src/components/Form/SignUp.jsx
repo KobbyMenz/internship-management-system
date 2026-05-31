@@ -9,6 +9,7 @@ import "../../pages/Details/Details.css";
 import useInsertHook from "../CustomHooks/useInsertHook";
 import PasswordInput from "../UI/PasswordInput/PasswordInput";
 import DotLoader from "../UI/Icons/DotLoader";
+import programmeOptions from "../../Services/programmeOptions";
 
 // import { useState } from "react";
 // import Table from "../Table/Table";
@@ -47,15 +48,7 @@ const SignUp = () => {
   };
   ////////////////////////////////////////////////
 
-  const programmeOptions = [
-    "BSc. Information Technology",
-    "BSc. Mathematics Education",
-    "BSc. Management Education",
-    "BSc. Accounting Education",
-    "BSc. Catering and Hospitality",
-    "BSc. Social/Economics Education",
-    "BSc. Fashion Education",
-  ];
+  
 
   return (
     <>
