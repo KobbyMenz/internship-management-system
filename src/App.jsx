@@ -22,7 +22,7 @@ import MentorDetails from "./pages/Details/MentorDetails";
 import AdminDashboard from "./pages/Dashboard/AdminDashboard";
 import AddDetails from "./pages/Details/AddDetails";
 import Settings from "./pages/Settings/Settings";
-import ManageSystem from "./pages/Settings/ManageSystem";
+//import ManageSystem from "./pages/Settings/ManageSystem";
 import ManageStudent from "./pages/Settings/ManageStudent";
 import ManageAdmin from "./pages/Settings/ManageAdmin/ManageAdmin";
 

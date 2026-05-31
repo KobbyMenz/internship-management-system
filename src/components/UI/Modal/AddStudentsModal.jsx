@@ -201,7 +201,10 @@ const AddStudentsModal = ({
                 style={{
                   gridColumn: "1 / -1",
                   color: "#ca0202",
+                  background: "#ca02024f",
                   marginBottom: "0.6rem",
+                  padding: "0.6rem",
+                  textAlign: "center",
                 }}
               >
                 {generalError}

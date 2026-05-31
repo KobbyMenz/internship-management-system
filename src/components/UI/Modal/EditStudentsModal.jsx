@@ -371,6 +371,7 @@ const EditStudentsModal = ({
       } else {
         Toast("error", "Server cannot be reached");
         setGeneralError("Server cannot be reached.");
+        // setTimeout(() => setGeneralError(""), 6000);
       }
     } finally {
       setLoading(false);
@@ -390,9 +391,16 @@ const EditStudentsModal = ({
             {generalError && (
               <div
                 style={{
+                  // gridColumn: "1 / -1",
+                  // color: "#ca0202",
+                  // marginBottom: "0.6rem",
                   gridColumn: "1 / -1",
-                  color: "#ca0202",
+                  color: "#df0000",
+                  background: "#ca020252",
+                  borderRadius: "0.6rem",
                   marginBottom: "0.6rem",
+                  padding: "0.6rem",
+                  textAlign: "center",
                 }}
               >
                 {generalError}

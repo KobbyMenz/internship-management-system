@@ -70,7 +70,8 @@ export const AuthContextProvider = ({ children }) => {
 
         // Calculate 15-minute expiry time
         const expiryTimestamp = Date.now() + 15 * 60 * 1000; // 15 minutes in milliseconds
-        sessionStorage.setItem("expiryTime", JSON.stringify(expiryTimestamp));
+        // Store as plain number string to keep parsing simple elsewhere
+        sessionStorage.setItem("expiryTime", String(expiryTimestamp));
 
         if (response.data) setLoadingLogin(false);
 

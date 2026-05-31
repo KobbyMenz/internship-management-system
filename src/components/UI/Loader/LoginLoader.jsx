@@ -6,7 +6,7 @@ const LoginLoader = () => {
   return (
     <>
       <div className={classes.loader_container}>
-        <p>Loading </p>
+        
         <Loader />
         {/* <svg
           xmlns="http://www.w3.org/2000/svg"

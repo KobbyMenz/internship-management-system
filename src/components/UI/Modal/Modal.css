@@ -109,8 +109,9 @@
   background: var(--bg-color);
   font-size: 1.6rem;
   position: relative;
+  /* max-height: 70rem; */
   height: fit-content;
-  /* overflow-y: scroll; */
+  overflow-y: auto;
 }
 
 /* .modal .content {
@@ -367,8 +368,8 @@ option {
   }
 
   .content {
-    /* height: 80vh; */
-    overflow-y: scroll;
+    height: 80rem;
+    /* overflow-y: scroll; */
   }
 }
 
@@ -384,7 +385,7 @@ option {
 
   .content {
     /* height: fit-content; */
-    
+
     overflow-y: scroll;
   }
 

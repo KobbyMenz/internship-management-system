@@ -111,7 +111,19 @@ export const getTokenTimeRemaining = () => {
   const expiryTime = sessionStorage.getItem("expiryTime");
   if (!expiryTime) return null;
 
-  const expiryDate = new Date(parseInt(expiryTime));
+  // expiryTime may be stored as a plain number string, or as a JSON-stringified number
+  // e.g. "168..." (including quotes) — handle both robustly
+  let expiryTimestamp = Number(expiryTime);
+  if (Number.isNaN(expiryTimestamp)) {
+    try {
+      expiryTimestamp = Number(JSON.parse(expiryTime));
+    } catch (e) {
+      console.error("Error parsing expiry time:", e);
+      return null;
+    }
+  }
+
+  const expiryDate = new Date(expiryTimestamp);
   const now = new Date();
   const timeRemaining = expiryDate - now;
 
