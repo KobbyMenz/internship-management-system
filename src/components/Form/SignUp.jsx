@@ -8,12 +8,13 @@ import Toast from "../UI/Notification/Toast";
 import "../../pages/Details/Details.css";
 import useInsertHook from "../CustomHooks/useInsertHook";
 import PasswordInput from "../UI/PasswordInput/PasswordInput";
+import DotLoader from "../UI/Icons/DotLoader";
 
 // import { useState } from "react";
 // import Table from "../Table/Table";
 
 const SignUp = () => {
-  const { insertData } = useInsertHook();
+  const { insertData, loading } = useInsertHook();
   const {
     register,
     handleSubmit,
@@ -38,10 +39,11 @@ const SignUp = () => {
 
     if (!window.confirm("Are you sure you want to sign up?")) return;
     //========Register user========
+
     insertData(`insertUser`, formData, Toast, () => {
       reset();
       setTimeout(() => navigate("/"), 1000); // redirect after 1s
-    });
+    }); // stop loading when done;
   };
   ////////////////////////////////////////////////
 
@@ -291,7 +293,18 @@ const SignUp = () => {
             </div>
 
             <div className={classes.btn_container}>
-              <Button type="submit">Sign up</Button>
+              <Button type="submit" disabled={loading}>
+                {loading ? "Signing up" : "Sign up"}
+                {loading && (
+                  <DotLoader
+                    style={{
+                      width: "1.5rem",
+                      height: "1.5rem",
+                      marginBottom: "-0.6rem",
+                    }}
+                  />
+                )}
+              </Button>
             </div>
 
             <p className={classes.link_container}>

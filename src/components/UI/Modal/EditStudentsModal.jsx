@@ -19,6 +19,7 @@ import { ghanaRegions } from "../../../Services/ghanaRegions";
 import Box from "@mui/material/Box";
 import axios from "axios";
 import EditStudentsModalSkeleton from "../Skeleton/EditStudentsModalSkeleton";
+import DotLoader from "../Icons/DotLoader";
 
 const Backdrop = ({ onClose }) => (
   <div className="modal-overlay" onClick={onClose} />
@@ -669,7 +670,16 @@ const EditStudentsModal = ({
                           className={classes.btn_primary}
                           disabled={loading}
                         >
-                          {loading ? "Saving..." : "Save"}
+                          {loading ? `Saving` : "Save"}
+                          {loading && (
+                            <DotLoader
+                              style={{
+                                width: "1.5rem",
+                                height: "1.5rem",
+                                marginBottom: "-0.6rem",
+                              }}
+                            />
+                          )}
                         </Button>
 
                         <Button
@@ -816,12 +826,21 @@ const EditStudentsModal = ({
                             disabled={loading}
                           >
                             {loading && hasSchool
-                              ? "Saving..."
+                              ? "Saving"
                               : loading && !hasSchool
-                                ? "Adding..."
+                                ? "Adding"
                                 : hasSchool
                                   ? "Save"
                                   : "Add"}
+                            {loading && (
+                              <DotLoader
+                                style={{
+                                  width: "1.5rem",
+                                  height: "1.5rem",
+                                  marginBottom: "-0.6rem",
+                                }}
+                              />
+                            )}
                           </Button>
 
                           <Button
@@ -1063,12 +1082,22 @@ const EditStudentsModal = ({
                             disabled={loading}
                           >
                             {loading && hasMentor
-                              ? "Saving..."
+                              ? "Saving"
                               : loading && !hasMentor
-                                ? "Adding..."
+                                ? "Adding"
                                 : hasMentor
                                   ? "Save"
                                   : "Add"}
+
+                            {loading && (
+                              <DotLoader
+                                style={{
+                                  width: "1.5rem",
+                                  height: "1.5rem",
+                                  marginBottom: "-0.6rem",
+                                }}
+                              />
+                            )}
                           </Button>
 
                           <Button
@@ -1310,12 +1339,22 @@ const EditStudentsModal = ({
                             disabled={loading}
                           >
                             {loading && hasHead
-                              ? "Saving..."
+                              ? "Saving"
                               : loading && !hasHead
-                                ? "Adding..."
+                                ? "Adding"
                                 : hasHead
                                   ? "Save"
                                   : "Add"}
+
+                            {loading && (
+                              <DotLoader
+                                style={{
+                                  width: "1.5rem",
+                                  height: "1.5rem",
+                                  marginBottom: "-0.6rem",
+                                }}
+                              />
+                            )}
                           </Button>
 
                           <Button

@@ -121,7 +121,7 @@ const SignIn = () => {
             </div>
 
             <div className={classes.btn_container}>
-              <Button type="submit">
+              <Button type="submit" disabled={loadingLogin}>
                 {<LoginIcon />} {loadingLogin ? <LoginLoader /> : `Login`}
               </Button>
             </div>

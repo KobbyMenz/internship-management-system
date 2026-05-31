@@ -11,6 +11,8 @@ import Toast from "../../UI/Notification/Toast";
 import PasswordInput from "../../UI/PasswordInput/PasswordInput";
 //import app_api_url from "../../../Services/app_api_url";
 import Button from "../Button/Button";
+import programmeOptions from "../../../Services/programmeOptions";
+import DotLoader from "../Icons/DotLoader";
 
 const Backdrop = ({ onClose }) => (
   <div className="modal-overlay" onClick={onClose} />
@@ -359,25 +361,34 @@ const AddStudentsModal = ({
               </div>
 
               <div className={classes.form_control}>
-                <label>
-                  Programme<span className="required_field">*</span>
+                <label htmlFor="programme">
+                  Programme
+                  <span className={classes.required_field}>*</span>
                 </label>
+
                 <input
                   className={
                     errors.programme
-                      ? `${classes.error} ${classes.input}`
+                      ? `${classes.error} ${classes.select}`
                       : `${classes.input} `
                   }
-                  placeholder="Select programme of study"
+                  list="programmeOption"
+                  id="programme"
+                  type="text"
+                  placeholder="Select your programme of study"
                   {...register("programme", {
-                    required: "Programme is required",
+                    required: "Please select an option",
                   })}
                 />
                 {errors.programme && (
-                  <div className={classes.form_error}>
-                    {errors.programme.message}
-                  </div>
+                  <small className="error">{errors.programme.message}</small>
                 )}
+
+                <datalist id="programmeOption">
+                  {programmeOptions.sort().map((optionValue, index) => (
+                    <option key={index} value={optionValue} />
+                  ))}
+                </datalist>
               </div>
 
               <div className={classes.form_control}>
@@ -453,7 +464,17 @@ const AddStudentsModal = ({
                   className={classes.btn_primary}
                   disabled={loading}
                 >
-                  {loading ? "Saving..." : "Register"}
+                  {loading ? "Registering" : "Register"}
+
+                  {loading && (
+                    <DotLoader
+                      style={{
+                        width: "1.5rem",
+                        height: "1.5rem",
+                        marginBottom: "-0.6rem",
+                      }}
+                    />
+                  )}
                 </Button>
 
                 <Button
