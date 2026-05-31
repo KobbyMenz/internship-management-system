@@ -35,7 +35,7 @@ export default function Settings() {
 
       {/* Redirect /settings → /settings/manage_system by default */}
       {location.pathname === "/admin/settings" && (
-        <Navigate to="manage_system" replace />
+        <Navigate to="manage_student" replace />
       )}
 
       <Outlet />

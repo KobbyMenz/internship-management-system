@@ -183,8 +183,8 @@ function App() {
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/settings" element={<Settings />}>
               {/* sub pages in settings page */}
-              <Route index element={<Navigate to="manage_system" replace />} />
-              <Route path="manage_system" element={<ManageSystem />} />
+              <Route index element={<Navigate to="manage_student" replace />} />
+              {/* <Route path="manage_system" element={<ManageSystem />} /> */}
               <Route path="manage_student" element={<ManageStudent />} />
               <Route path="manage_admin" element={<ManageAdmin />} />
             </Route>
