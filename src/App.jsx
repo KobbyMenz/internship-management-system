@@ -34,7 +34,7 @@ function App() {
 
   const { isLoggedIn, logout } = useAuth();
 
-  const INACTIVITY_TIME = 60 * 60 * 1000; // 30 minutes
+  const INACTIVITY_TIME = 15 * 60 * 1000; // 15 minutes
   const inactivityTimerRef = useRef(null);
   const tokenExpirationRef = useRef(null); // 🔒 Track token expiration timer
   const autoRefreshTokenRef = useRef(null); // 🔒 Track auto token refresh timer

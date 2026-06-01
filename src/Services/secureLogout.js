@@ -194,7 +194,8 @@ export const refreshAccessToken = async () => {
       // ✅ SECURITY: Update stored tokens
       sessionStorage.setItem("accessToken", data.accessToken);
       sessionStorage.setItem("token", data.accessToken); // Keep for backward compatibility
-      sessionStorage.setItem("expiryTime", Date.now() + 30 * 60 * 1000); // 30 minutes
+      // Align refreshed token expiry with initial login expiry (15 minutes)
+      sessionStorage.setItem("expiryTime", String(Date.now() + 15 * 60 * 1000)); // 15 minutes
 
       console.log("✅ Access token refreshed successfully");
       return data.accessToken;
