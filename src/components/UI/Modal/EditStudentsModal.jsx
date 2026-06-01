@@ -396,7 +396,7 @@ const EditStudentsModal = ({
                   // marginBottom: "0.6rem",
                   gridColumn: "1 / -1",
                   color: "#df0000",
-                  background: "#ca020252",
+                  background: "#ca020221",
                   borderRadius: "0.6rem",
                   marginBottom: "0.6rem",
                   padding: "0.6rem",

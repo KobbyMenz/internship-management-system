@@ -118,7 +118,7 @@ const AdminDashboard = () => {
                   <Card className={classes.card__box}>
                     <div className={classes.description__container}>
                       <div className={classes.description}>
-                        <p>Index Number :</p>
+                        <p>Admin ID :</p>
                         <p className={`${classes.value}`}>{studentId}</p>
                       </div>
                     </div>

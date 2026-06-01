@@ -10,12 +10,12 @@ export default function Settings() {
 
       <nav className={"nav"}>
         <ul>
-          <NavLink
+          {/* <NavLink
             to={"manage_system"}
             className={({ isActive }) => (isActive ? `${"active li"}` : `li`)}
           >
             Manage System
-          </NavLink>
+          </NavLink> */}
 
           <NavLink
             to={"manage_student"}
